@@ -140,7 +140,7 @@
             this.mydata.TabIndex = 12;
             this.mydata.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.mydata_CellContentClick);
             this.mydata.CellContentDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.mydata_CellContentDoubleClick);
-            this.mydata.CellMouseEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.mydata_CellMouseEnter);
+           
             // 
             // id
             // 

@@ -577,54 +577,70 @@ namespace Printer
 
         private void 版本信息ToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("云因南开打印店客户端：\n     made by NKsjc 2015.01.08。\n    欢迎交流，qq：2634329276");
+            MessageBox.Show("云印南开打印店客户端：\n     made by NKsjc 2015.01.08。\n    欢迎交流，qq：2634329276");
         }
 
         /// <summary>
-        /// 双击打开文件，若不存在，则自动下载
+        /// 双击打开文件，若不存在，则自动下载，双击ID显示用户基本信息
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
         private void mydata_CellContentDoubleClick(object sender, DataGridViewCellEventArgs e)
         {
-             string id = mydata.Rows[e.RowIndex].Cells["id"].Value.ToString();
-             foreach (var item in jsonlist)
-             {
-                 if (id == item.id)
-                 {
-                     string filename = "";
-                     filename = path + "\\" + item.id + "_" + item.copies + "_" + item.double_side + "_" + item.student_number + "_" + item.name;
-                     if (File.Exists(@filename))
-                     {
-                         //filename = path + filename;
-                         System.Diagnostics.Process.Start(filename);
-                         break;
-                     }
-                     else
-                     {
-                         filename = item.id + "_" + item.copies + "_" + item.double_side + "_" + item.student_number + "_" + item.name;
-                         //get 文件详细信息 URI操作示意: GET /File/1234
-                         string jsonUrl = API.GetMethod("/File/" + item.id);
-                         JObject jo = JObject.Parse(jsonUrl);
-                         ToJsonMy thisOne = new ToJsonMy();
-                         thisOne.url = (jo)["url"].ToString();
-                         if (!Directory.Exists(path))
-                         {
-                             Directory.CreateDirectory(path);
-                         }
-                         WebClient webClient = new WebClient();
-                         String pathDoc = path + "/" + filename;
+            if ((e.ColumnIndex >= 1) && (e.ColumnIndex < 2))
+            {
+                string id = mydata.Rows[e.RowIndex].Cells["id"].Value.ToString();
+                foreach (var item in jsonlist)
+                {
+                    if (id == item.id)
+                    {
+                        userInfo user = new userInfo();
+                        user = usermessage(item.use_id);
+                        MessageBox.Show("用户：" + user.name + "  手机号：" + user.phone);
+                    }
+                }
+            }
 
-                         webClient.DownloadFileAsync(new Uri(thisOne.url), pathDoc, id);
+            else
+            {
+                string id = mydata.Rows[e.RowIndex].Cells["id"].Value.ToString();
+                foreach (var item in jsonlist)
+                {
+                    if (id == item.id)
+                    {
+                        string filename = "";
+                        filename = path + "\\" + item.id + "_" + item.copies + "_" + item.double_side + "_" + item.student_number + "_" + item.name;
+                        if (File.Exists(@filename))
+                        {
+                            //filename = path + filename;
+                            System.Diagnostics.Process.Start(filename);
+                            break;
+                        }
+                        else
+                        {
+                            filename = item.id + "_" + item.copies + "_" + item.double_side + "_" + item.student_number + "_" + item.name;
+                            //get 文件详细信息 URI操作示意: GET /File/1234
+                            string jsonUrl = API.GetMethod("/File/" + item.id);
+                            JObject jo = JObject.Parse(jsonUrl);
+                            ToJsonMy thisOne = new ToJsonMy();
+                            thisOne.url = (jo)["url"].ToString();
+                            if (!Directory.Exists(path))
+                            {
+                                Directory.CreateDirectory(path);
+                            }
+                            WebClient webClient = new WebClient();
+                            String pathDoc = path + "/" + filename;
 
-                       
-                         //fileDownload(thisOne.url, filename, item.id);
-                         MessageBox.Show("正在下载该文件！\n等待会儿再打开");
-                     }
-                     break;
-                 }
-             }
+                            webClient.DownloadFileAsync(new Uri(thisOne.url), pathDoc, id);
 
+
+                            //fileDownload(thisOne.url, filename, item.id);
+                            MessageBox.Show("正在下载该文件！\n等待会儿再打开");
+                        }
+                        break;
+                    }
+                }
+            }
         }
 
         /// <summary>
@@ -684,27 +700,27 @@ namespace Printer
             return user;
         }
 
-        /// <summary>
-        /// 悬浮窗显示用户信息
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void mydata_CellMouseEnter(object sender, DataGridViewCellEventArgs e)
-        {
-            if ((e.ColumnIndex >= 1)&&(e.ColumnIndex<2))
-            {
-                string id = mydata.Rows[e.RowIndex].Cells["id"].Value.ToString();
-                foreach (var item in jsonlist)
-                {
-                    if (id == item.id)
-                    {
-                        userInfo user = new userInfo();
-                        user = usermessage(item.use_id);
-                        mydata[e.ColumnIndex, e.RowIndex].ToolTipText = "用户：" + user.name + "  手机号：" + user.phone;
-                    }
-                }
-            }
-        }
+        ///// <summary>
+        ///// 悬浮窗显示用户信息
+        ///// </summary>
+        ///// <param name="sender"></param>
+        ///// <param name="e"></param>
+        //private void mydata_CellMouseEnter(object sender, DataGridViewCellEventArgs e)
+        //{
+        //    if ((e.ColumnIndex >= 1)&&(e.ColumnIndex<2))
+        //    {
+        //        string id = mydata.Rows[e.RowIndex].Cells["id"].Value.ToString();
+        //        foreach (var item in jsonlist)
+        //        {
+        //            if (id == item.id)
+        //            {
+        //                userInfo user = new userInfo();
+        //                user = usermessage(item.use_id);
+        //                mydata[e.ColumnIndex, e.RowIndex].ToolTipText = "用户：" + user.name + "  手机号：" + user.phone;
+        //            }
+        //        }
+        //    }
+        //}
 
         
 
