@@ -32,11 +32,13 @@ namespace Printer
         /// <param name="e"></param>
         private void login_download_Load(object sender, EventArgs e)
         {
+            this.FormBorderStyle = FormBorderStyle.FixedSingle;
             Control.CheckForIllegalCrossThreadCalls = false;
             login.Visible = true;        //登录控件可见
             download.Visible = false;    //下载控件隐藏
             login.Enabled = true;        //登录控件使能
             //System.Windows.Forms.Control.CheckForIllegalCrossThreadCalls = false;
+            checkbox.Checked = true;
             myLogin = remember.ReadTextFileToList(@"pwd.sjc");
             if (myLogin.Count == 2)
             {
@@ -139,7 +141,7 @@ namespace Printer
                         myRem.Add(password.Text);
 
                     }
-                    
+                    File.WriteAllText(@"pwd.sjc", "");
                     remember.WriteListToTextFile(myRem, @"pwd.sjc");
                     Console.WriteLine(my.token);
                     Console.WriteLine(my.name);
@@ -202,6 +204,8 @@ namespace Printer
             
             login.Hide();
             this.Size = new Size(1300, 400);
+            this.Location = new Point(50, 200);
+            this.FormBorderStyle = FormBorderStyle.Sizable;
             download.Show();
 
             downloadToken = my.token;
@@ -643,19 +647,64 @@ namespace Printer
         private void 一分钟ToolStripMenuItem_Click(object sender, EventArgs e)
         {
             autorefresh.Interval = 60 * 1000;
+            一分钟ToolStripMenuItem.Checked = true;
+            十分钟ToolStripMenuItem.Checked = false;
+            三十分钟ToolStripMenuItem.Checked = false;
         }
 
         private void 十分钟ToolStripMenuItem_Click(object sender, EventArgs e)
         {
             autorefresh.Interval = 60 * 1000 * 10;
+            一分钟ToolStripMenuItem.Checked = false;
+            十分钟ToolStripMenuItem.Checked = true;
+            三十分钟ToolStripMenuItem.Checked = false;
         }
 
         private void 三十分钟ToolStripMenuItem_Click(object sender, EventArgs e)
         {
             autorefresh.Interval = 60 * 1000 * 30;
+            一分钟ToolStripMenuItem.Checked = false;
+            十分钟ToolStripMenuItem.Checked = false;
+            三十分钟ToolStripMenuItem.Checked = true;
         }
 
-       
+        /// <summary>
+        /// 获得用户信息
+        /// </summary>
+        /// <param name="use_id"></param>
+        /// <returns></returns>
+        public userInfo usermessage(string use_id)
+        {
+            string jsonUrl = API.GetMethod("/User/" + use_id);
+            JObject jo = JObject.Parse(jsonUrl);
+            userInfo user = new userInfo();
+            user.name = jo["name"].ToString();
+            user.phone = jo["phone"].ToString();
+            user.email = jo["email"].ToString();
+            return user;
+        }
+
+        /// <summary>
+        /// 悬浮窗显示用户信息
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void mydata_CellMouseEnter(object sender, DataGridViewCellEventArgs e)
+        {
+            if ((e.ColumnIndex >= 1)&&(e.ColumnIndex<2))
+            {
+                string id = mydata.Rows[e.RowIndex].Cells["id"].Value.ToString();
+                foreach (var item in jsonlist)
+                {
+                    if (id == item.id)
+                    {
+                        userInfo user = new userInfo();
+                        user = usermessage(item.use_id);
+                        mydata[e.ColumnIndex, e.RowIndex].ToolTipText = "用户：" + user.name + "  手机号：" + user.phone;
+                    }
+                }
+            }
+        }
 
         
 
