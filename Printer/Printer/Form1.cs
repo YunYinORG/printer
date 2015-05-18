@@ -374,7 +374,19 @@ namespace Printer
         public void display(ToJsonMy json)
         {
             string userName1 = json.student_number + json.use_name;
-            this.mydata.Rows.Add(json.id, userName1, json.name, json.copies, json.double_side, json.strcolor,json.ppt,json.time,json.status);
+            string buttontext = "";
+            switch (json.status)
+            {
+                case "已下载":
+                    buttontext = "通知已打印";
+                    break;
+                case "已打印":
+                    buttontext = "确认付款";
+                    break;
+            }
+            this.mydata.Rows.Add(json.id, userName1, json.name, json.copies, json.double_side, json.strcolor,json.ppt,json.time,json.status,buttontext);
+
+        
         }
 
         /// <summary>
@@ -487,6 +499,108 @@ namespace Printer
 
 
         }
+
+        /// <summary>
+        /// 编辑改变状态按钮函数
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void mydata_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0)
+            {
+                if (e.ColumnIndex == mydata.Columns["operation"].Index)
+                {
+                    string id = mydata.Rows[e.RowIndex].Cells["id"].Value.ToString();
+                    switch (mydata.Rows[e.RowIndex].Cells["status"].Value.ToString())
+                    {
+                        case "已下载":
+                            changeStatusById(id, "printed");
+                            mydata.Rows[e.RowIndex].Cells["status"].Value = "已打印";
+                            mydata.Rows[e.RowIndex].Cells["operation"].Value = "确认付款";
+                            break;
+                        case "已打印":
+                            changeStatusById(id, "5");
+                            mydata.Rows.Remove(mydata.Rows[e.RowIndex]);
+                            break;
+                    }
+                }
+            }
+        }
+
+        /// <summary>
+        /// 手动刷新，同时进行手动下载
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void refresh_Click(object sender, EventArgs e)
+        {
+            myRefresh();
+            foreach (var item in jsonlist)
+            {
+                if (item.status == "未下载")
+                {
+                    Download(item.id);
+                }
+            }
+
+        }
+
+        private void 版本信息ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            MessageBox.Show("云因南开打印店客户端：\n     made by NKsjc 2015.01.08。\n    欢迎交流，qq：2634329276");
+        }
+
+        /// <summary>
+        /// 双击打开文件，若不存在，则自动下载
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void mydata_CellContentDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+             string id = mydata.Rows[e.RowIndex].Cells["id"].Value.ToString();
+             foreach (var item in jsonlist)
+             {
+                 if (id == item.id)
+                 {
+                     string filename = "";
+                     filename = path + "\\" + item.id + "_" + item.copies + "_" + item.double_side + "_" + item.student_number + "_" + item.name;
+                     if (File.Exists(@filename))
+                     {
+                         //filename = path + filename;
+                         System.Diagnostics.Process.Start(filename);
+                         break;
+                     }
+                     else
+                     {
+                         filename = item.id + "_" + item.copies + "_" + item.double_side + "_" + item.student_number + "_" + item.name;
+                         //get 文件详细信息 URI操作示意: GET /File/1234
+                         string jsonUrl = API.GetMethod("/File/" + item.id);
+                         JObject jo = JObject.Parse(jsonUrl);
+                         ToJsonMy thisOne = new ToJsonMy();
+                         thisOne.url = (jo)["url"].ToString();
+                         if (!Directory.Exists(path))
+                         {
+                             Directory.CreateDirectory(path);
+                         }
+                         WebClient webClient = new WebClient();
+                         String pathDoc = path + "/" + filename;
+
+                         webClient.DownloadFileAsync(new Uri(thisOne.url), pathDoc, id);
+
+                       
+                         //fileDownload(thisOne.url, filename, item.id);
+                         MessageBox.Show("正在下载该文件！\n等待会儿再打开");
+                     }
+                     break;
+                 }
+             }
+
+        }
+
+        
+
+        
 
         
        
