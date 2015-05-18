@@ -28,29 +28,27 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(login_download));
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle13 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle14 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle15 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle16 = new System.Windows.Forms.DataGridViewCellStyle();
             this.download = new System.Windows.Forms.Panel();
             this.mydata = new System.Windows.Forms.DataGridView();
-            this.id = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.use_id = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.filename = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.copies = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.single_double = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.color = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.ppt = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.time = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.status = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.operation = new System.Windows.Forms.DataGridViewButtonColumn();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.tool = new System.Windows.Forms.ToolStripMenuItem();
-            this.刷新ToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.refreshtime = new System.Windows.Forms.ToolStripMenuItem();
+            this.一分钟ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.十分钟ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.三十分钟ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.help = new System.Windows.Forms.ToolStripMenuItem();
             this.版本信息ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.refresh = new System.Windows.Forms.ToolStripMenuItem();
@@ -65,6 +63,18 @@
             this.loginbutton = new System.Windows.Forms.Button();
             this.un = new System.Windows.Forms.Label();
             this.pw = new System.Windows.Forms.Label();
+            this.autorefresh = new System.Windows.Forms.Timer(this.components);
+            this.notifyIcon1 = new System.Windows.Forms.NotifyIcon(this.components);
+            this.id = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.use_id = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.filename = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.copies = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.single_double = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.color = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ppt = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.time = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.status = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.operation = new System.Windows.Forms.DataGridViewButtonColumn();
             this.download.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.mydata)).BeginInit();
             this.menuStrip1.SuspendLayout();
@@ -93,13 +103,13 @@
             this.mydata.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.mydata.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleHorizontal;
             this.mydata.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
-            dataGridViewCellStyle9.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle9.BackColor = System.Drawing.Color.PowderBlue;
-            dataGridViewCellStyle9.Font = new System.Drawing.Font("微软雅黑", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            dataGridViewCellStyle9.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle9.SelectionBackColor = System.Drawing.Color.PowderBlue;
-            dataGridViewCellStyle9.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            this.mydata.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle9;
+            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle1.BackColor = System.Drawing.Color.PowderBlue;
+            dataGridViewCellStyle1.Font = new System.Drawing.Font("微软雅黑", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.Color.PowderBlue;
+            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            this.mydata.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
             this.mydata.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.mydata.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.id,
@@ -125,94 +135,6 @@
             this.mydata.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.mydata_CellContentClick);
             this.mydata.CellContentDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.mydata_CellContentDoubleClick);
             // 
-            // id
-            // 
-            dataGridViewCellStyle10.BackColor = System.Drawing.Color.PowderBlue;
-            dataGridViewCellStyle10.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.id.DefaultCellStyle = dataGridViewCellStyle10;
-            this.id.HeaderText = "序号";
-            this.id.Name = "id";
-            this.id.ReadOnly = true;
-            this.id.Width = 70;
-            // 
-            // use_id
-            // 
-            dataGridViewCellStyle11.BackColor = System.Drawing.Color.PowderBlue;
-            dataGridViewCellStyle11.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.use_id.DefaultCellStyle = dataGridViewCellStyle11;
-            this.use_id.HeaderText = "用户名";
-            this.use_id.Name = "use_id";
-            this.use_id.ReadOnly = true;
-            // 
-            // filename
-            // 
-            dataGridViewCellStyle12.BackColor = System.Drawing.Color.PowderBlue;
-            dataGridViewCellStyle12.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.filename.DefaultCellStyle = dataGridViewCellStyle12;
-            this.filename.HeaderText = "文件名";
-            this.filename.Name = "filename";
-            this.filename.ReadOnly = true;
-            this.filename.Width = 150;
-            // 
-            // copies
-            // 
-            dataGridViewCellStyle13.BackColor = System.Drawing.Color.PowderBlue;
-            dataGridViewCellStyle13.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.copies.DefaultCellStyle = dataGridViewCellStyle13;
-            this.copies.HeaderText = "份数";
-            this.copies.Name = "copies";
-            this.copies.ReadOnly = true;
-            this.copies.Width = 70;
-            // 
-            // single_double
-            // 
-            dataGridViewCellStyle14.BackColor = System.Drawing.Color.PowderBlue;
-            dataGridViewCellStyle14.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.single_double.DefaultCellStyle = dataGridViewCellStyle14;
-            this.single_double.HeaderText = "单双";
-            this.single_double.Name = "single_double";
-            this.single_double.ReadOnly = true;
-            this.single_double.Width = 70;
-            // 
-            // color
-            // 
-            dataGridViewCellStyle15.BackColor = System.Drawing.Color.PowderBlue;
-            dataGridViewCellStyle15.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.color.DefaultCellStyle = dataGridViewCellStyle15;
-            this.color.HeaderText = "是否彩印";
-            this.color.Name = "color";
-            this.color.ReadOnly = true;
-            this.color.Width = 120;
-            // 
-            // ppt
-            // 
-            this.ppt.HeaderText = "ppt版式";
-            this.ppt.Name = "ppt";
-            this.ppt.ReadOnly = true;
-            this.ppt.Width = 150;
-            // 
-            // time
-            // 
-            this.time.HeaderText = "上传时间";
-            this.time.Name = "time";
-            this.time.ReadOnly = true;
-            this.time.Width = 150;
-            // 
-            // status
-            // 
-            this.status.HeaderText = "状态";
-            this.status.Name = "status";
-            this.status.ReadOnly = true;
-            // 
-            // operation
-            // 
-            dataGridViewCellStyle16.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle16.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
-            this.operation.DefaultCellStyle = dataGridViewCellStyle16;
-            this.operation.HeaderText = "操作";
-            this.operation.Name = "operation";
-            this.operation.ReadOnly = true;
-            // 
             // menuStrip1
             // 
             this.menuStrip1.AutoSize = false;
@@ -232,17 +154,42 @@
             // tool
             // 
             this.tool.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.刷新ToolStripMenuItem1});
+            this.refreshtime});
             this.tool.ForeColor = System.Drawing.SystemColors.ButtonHighlight;
             this.tool.Name = "tool";
             this.tool.Size = new System.Drawing.Size(43, 26);
             this.tool.Text = "工具";
             // 
-            // 刷新ToolStripMenuItem1
+            // refreshtime
             // 
-            this.刷新ToolStripMenuItem1.Name = "刷新ToolStripMenuItem1";
-            this.刷新ToolStripMenuItem1.Size = new System.Drawing.Size(122, 22);
-            this.刷新ToolStripMenuItem1.Text = "自动刷新";
+            this.refreshtime.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.一分钟ToolStripMenuItem,
+            this.十分钟ToolStripMenuItem,
+            this.三十分钟ToolStripMenuItem});
+            this.refreshtime.Name = "refreshtime";
+            this.refreshtime.Size = new System.Drawing.Size(146, 22);
+            this.refreshtime.Text = "自动刷新时间";
+            // 
+            // 一分钟ToolStripMenuItem
+            // 
+            this.一分钟ToolStripMenuItem.Name = "一分钟ToolStripMenuItem";
+            this.一分钟ToolStripMenuItem.Size = new System.Drawing.Size(122, 22);
+            this.一分钟ToolStripMenuItem.Text = "一分钟";
+            this.一分钟ToolStripMenuItem.Click += new System.EventHandler(this.一分钟ToolStripMenuItem_Click);
+            // 
+            // 十分钟ToolStripMenuItem
+            // 
+            this.十分钟ToolStripMenuItem.Name = "十分钟ToolStripMenuItem";
+            this.十分钟ToolStripMenuItem.Size = new System.Drawing.Size(122, 22);
+            this.十分钟ToolStripMenuItem.Text = "十分钟";
+            this.十分钟ToolStripMenuItem.Click += new System.EventHandler(this.十分钟ToolStripMenuItem_Click);
+            // 
+            // 三十分钟ToolStripMenuItem
+            // 
+            this.三十分钟ToolStripMenuItem.Name = "三十分钟ToolStripMenuItem";
+            this.三十分钟ToolStripMenuItem.Size = new System.Drawing.Size(122, 22);
+            this.三十分钟ToolStripMenuItem.Text = "三十分钟";
+            this.三十分钟ToolStripMenuItem.Click += new System.EventHandler(this.三十分钟ToolStripMenuItem_Click);
             // 
             // help
             // 
@@ -392,6 +339,119 @@
             this.pw.TabIndex = 2;
             this.pw.Text = "密码";
             // 
+            // autorefresh
+            // 
+            this.autorefresh.Enabled = true;
+            this.autorefresh.Interval = 60000;
+            this.autorefresh.Tick += new System.EventHandler(this.autorefresh_Tick);
+            // 
+            // notifyIcon1
+            // 
+            this.notifyIcon1.BalloonTipIcon = System.Windows.Forms.ToolTipIcon.Info;
+            this.notifyIcon1.BalloonTipText = "您有新的文件需要打印";
+            this.notifyIcon1.BalloonTipTitle = "温馨提示";
+            this.notifyIcon1.Icon = ((System.Drawing.Icon)(resources.GetObject("notifyIcon1.Icon")));
+            this.notifyIcon1.Text = "云印南天";
+            this.notifyIcon1.Visible = true;
+            // 
+            // id
+            // 
+            dataGridViewCellStyle2.BackColor = System.Drawing.Color.PowderBlue;
+            dataGridViewCellStyle2.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.id.DefaultCellStyle = dataGridViewCellStyle2;
+            this.id.HeaderText = "序号";
+            this.id.Name = "id";
+            this.id.ReadOnly = true;
+            this.id.Width = 70;
+            // 
+            // use_id
+            // 
+            dataGridViewCellStyle3.BackColor = System.Drawing.Color.PowderBlue;
+            dataGridViewCellStyle3.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.use_id.DefaultCellStyle = dataGridViewCellStyle3;
+            this.use_id.HeaderText = "用户名";
+            this.use_id.Name = "use_id";
+            this.use_id.ReadOnly = true;
+            // 
+            // filename
+            // 
+            dataGridViewCellStyle4.BackColor = System.Drawing.Color.PowderBlue;
+            dataGridViewCellStyle4.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.filename.DefaultCellStyle = dataGridViewCellStyle4;
+            this.filename.HeaderText = "文件名";
+            this.filename.Name = "filename";
+            this.filename.ReadOnly = true;
+            this.filename.Width = 150;
+            // 
+            // copies
+            // 
+            dataGridViewCellStyle5.BackColor = System.Drawing.Color.PowderBlue;
+            dataGridViewCellStyle5.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.copies.DefaultCellStyle = dataGridViewCellStyle5;
+            this.copies.HeaderText = "份数";
+            this.copies.Name = "copies";
+            this.copies.ReadOnly = true;
+            this.copies.Width = 70;
+            // 
+            // single_double
+            // 
+            dataGridViewCellStyle6.BackColor = System.Drawing.Color.PowderBlue;
+            dataGridViewCellStyle6.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.single_double.DefaultCellStyle = dataGridViewCellStyle6;
+            this.single_double.HeaderText = "单双";
+            this.single_double.Name = "single_double";
+            this.single_double.ReadOnly = true;
+            this.single_double.Width = 70;
+            // 
+            // color
+            // 
+            dataGridViewCellStyle7.BackColor = System.Drawing.Color.PowderBlue;
+            dataGridViewCellStyle7.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.color.DefaultCellStyle = dataGridViewCellStyle7;
+            this.color.HeaderText = "是否彩印";
+            this.color.Name = "color";
+            this.color.ReadOnly = true;
+            this.color.Width = 120;
+            // 
+            // ppt
+            // 
+            dataGridViewCellStyle8.BackColor = System.Drawing.Color.PowderBlue;
+            dataGridViewCellStyle8.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.ppt.DefaultCellStyle = dataGridViewCellStyle8;
+            this.ppt.HeaderText = "ppt版式";
+            this.ppt.Name = "ppt";
+            this.ppt.ReadOnly = true;
+            this.ppt.Width = 150;
+            // 
+            // time
+            // 
+            dataGridViewCellStyle9.BackColor = System.Drawing.Color.PowderBlue;
+            dataGridViewCellStyle9.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.time.DefaultCellStyle = dataGridViewCellStyle9;
+            this.time.HeaderText = "上传时间";
+            this.time.Name = "time";
+            this.time.ReadOnly = true;
+            this.time.Width = 150;
+            // 
+            // status
+            // 
+            dataGridViewCellStyle10.BackColor = System.Drawing.Color.PowderBlue;
+            dataGridViewCellStyle10.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.status.DefaultCellStyle = dataGridViewCellStyle10;
+            this.status.HeaderText = "状态";
+            this.status.Name = "status";
+            this.status.ReadOnly = true;
+            // 
+            // operation
+            // 
+            dataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle11.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
+            dataGridViewCellStyle11.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.operation.DefaultCellStyle = dataGridViewCellStyle11;
+            this.operation.HeaderText = "操作";
+            this.operation.Name = "operation";
+            this.operation.ReadOnly = true;
+            // 
             // login_download
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -430,6 +490,17 @@
         private System.Windows.Forms.Panel download;
         private System.Windows.Forms.DataGridView mydata;
         private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.MenuStrip menuStrip1;
+        private System.Windows.Forms.ToolStripMenuItem tool;
+        private System.Windows.Forms.ToolStripMenuItem refreshtime;
+        private System.Windows.Forms.ToolStripMenuItem help;
+        private System.Windows.Forms.ToolStripMenuItem 版本信息ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem refresh;
+        private System.Windows.Forms.Timer autorefresh;
+        private System.Windows.Forms.ToolStripMenuItem 一分钟ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 十分钟ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem 三十分钟ToolStripMenuItem;
+        private System.Windows.Forms.NotifyIcon notifyIcon1;
         private System.Windows.Forms.DataGridViewTextBoxColumn id;
         private System.Windows.Forms.DataGridViewTextBoxColumn use_id;
         private System.Windows.Forms.DataGridViewTextBoxColumn filename;
@@ -440,12 +511,6 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn time;
         private System.Windows.Forms.DataGridViewTextBoxColumn status;
         private System.Windows.Forms.DataGridViewButtonColumn operation;
-        private System.Windows.Forms.MenuStrip menuStrip1;
-        private System.Windows.Forms.ToolStripMenuItem tool;
-        private System.Windows.Forms.ToolStripMenuItem 刷新ToolStripMenuItem1;
-        private System.Windows.Forms.ToolStripMenuItem help;
-        private System.Windows.Forms.ToolStripMenuItem 版本信息ToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem refresh;
     }
 }
 

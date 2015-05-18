@@ -255,6 +255,7 @@ namespace Printer
             //即不添加，维护jsonList
             for (i = 0; i < ja.Count; i++)//遍历ja数组
             {
+                bool flag2 = true;
                 flag = true;
                 foreach (var item in jsonlist)      //此处应当存在一个问题，即循环中jsonlist列表会发生改变，能否使用foreach
                 {
@@ -269,8 +270,17 @@ namespace Printer
                 {
                     flag = false;
                 }
+                if (ja[i]["status"].ToString() == "未下载")
+                {
+                    flag2 = false;
+                }
                 if (flag == true)
                 {
+                    //if (flag2 == false)
+                    //{
+                    //    this.notifyIcon1.Visible = true;
+                    //    this.notifyIcon1.ShowBalloonTip(10000);
+                    //}
                     ToJsonMy myJs = new ToJsonMy();
                     myJs.id = ja[i]["id"].ToString();
                     myJs.name = ja[i]["name"].ToString();
@@ -285,6 +295,7 @@ namespace Printer
                     myJs.double_side = ja[i]["double_side"].ToString();
                     myJs.student_number = ja[i]["student_number"].ToString();
                     myJs.color = ja[i]["color"].ToString();
+                    myJs.ppt_layout = ja[i]["ppt_layout"].ToString();
                     
                     jsonlist.Add(myJs);
                 }
@@ -340,6 +351,9 @@ namespace Printer
                 }
             }
         }
+        /// <summary>
+        /// 开始进入下载界面时执行第一次下载
+        /// </summary>
         private void downloadfirst()
         {
             foreach (var item in jsonlist)
@@ -375,18 +389,27 @@ namespace Printer
         {
             string userName1 = json.student_number + json.use_name;
             string buttontext = "";
-            switch (json.status)
+            
+            if (json.copies == "现场打印")
             {
-                case "已下载":
-                    buttontext = "通知已打印";
-                    break;
-                case "已打印":
-                    buttontext = "确认付款";
-                    break;
+                buttontext = "确认付款";
+                this.mydata.Rows.Add(json.id, userName1, json.name, json.copies, "-", "-", "-", json.time, json.status, buttontext);
             }
-            this.mydata.Rows.Add(json.id, userName1, json.name, json.copies, json.double_side, json.strcolor,json.ppt,json.time,json.status,buttontext);
+            else
+            {
+                switch (json.status)
+                {
+                    case "已下载":
+                        buttontext = "通知已打印";
+                        break;
+                    case "已打印":
+                        buttontext = "确认付款";
+                        break;
+                }
 
-        
+                this.mydata.Rows.Add(json.id, userName1, json.name, json.copies, json.double_side, json.strcolor, json.ppt, json.time, json.status, buttontext);
+
+            }
         }
 
         /// <summary>
@@ -469,6 +492,8 @@ namespace Printer
                         item.status = "download";
                         display(item);
                         changeStatusById(id, "download");
+                        this.notifyIcon1.Visible = true;
+                        this.notifyIcon1.ShowBalloonTip(10000);
                         
                     }
                     else
@@ -512,14 +537,14 @@ namespace Printer
                 if (e.ColumnIndex == mydata.Columns["operation"].Index)
                 {
                     string id = mydata.Rows[e.RowIndex].Cells["id"].Value.ToString();
-                    switch (mydata.Rows[e.RowIndex].Cells["status"].Value.ToString())
+                    switch (mydata.Rows[e.RowIndex].Cells["operation"].Value.ToString())
                     {
-                        case "已下载":
+                        case "通知已打印":
                             changeStatusById(id, "printed");
                             mydata.Rows[e.RowIndex].Cells["status"].Value = "已打印";
                             mydata.Rows[e.RowIndex].Cells["operation"].Value = "确认付款";
                             break;
-                        case "已打印":
+                        case "确认付款":
                             changeStatusById(id, "5");
                             mydata.Rows.Remove(mydata.Rows[e.RowIndex]);
                             break;
@@ -597,6 +622,40 @@ namespace Printer
              }
 
         }
+
+        /// <summary>
+        /// 设置自动刷新
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void autorefresh_Tick(object sender, EventArgs e)
+        {
+            myRefresh();
+            foreach (var item in jsonlist)
+            {
+                if (item.status == "未下载")
+                {
+                    Download(item.id);
+                }
+            }
+        }
+
+        private void 一分钟ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            autorefresh.Interval = 60 * 1000;
+        }
+
+        private void 十分钟ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            autorefresh.Interval = 60 * 1000 * 10;
+        }
+
+        private void 三十分钟ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            autorefresh.Interval = 60 * 1000 * 30;
+        }
+
+       
 
         
 
