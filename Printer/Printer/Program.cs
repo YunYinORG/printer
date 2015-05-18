@@ -7,6 +7,7 @@ namespace Printer
 {
     static class Program
     {
+        static public string serverUrl = @"http://yunyin.org/api.php";
         /// <summary>
         /// 应用程序的主入口点。
         /// </summary>
@@ -15,7 +16,7 @@ namespace Printer
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1());
+            Application.Run(new login_download());
         }
     }
 }

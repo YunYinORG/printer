@@ -3,7 +3,7 @@ using System.Text;
 using System.Windows.Forms;
 using System.Net;
 using System.IO;
-namespace NKprint2
+namespace Printer
 {
     class API
     {

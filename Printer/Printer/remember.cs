@@ -5,7 +5,7 @@ using System.Text;
 using System.Management;
 using System.IO;
 using Newtonsoft.Json;
-namespace NKprint2
+namespace Printer
 {
     class remember
     {

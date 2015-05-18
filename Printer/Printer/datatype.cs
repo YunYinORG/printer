@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 //using System.Threading.Tasks;
 
-namespace NKprint2
+namespace Printer
 {
    
         //我们定义的JSON数据结构 
