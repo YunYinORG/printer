@@ -88,11 +88,16 @@ namespace Printer
         /// <returns></returns>
         public static List<string> ReadTextFileToList(string fileName)
         {
+            FileStream fs;
             if (!File.Exists(fileName))
             {
-                File.Create(fileName);
+                 fs = File.Create(fileName);
+                
             }
-            FileStream fs = new FileStream(fileName, FileMode.Open, FileAccess.Read);
+            else
+            {
+                fs = new FileStream(fileName, FileMode.Open, FileAccess.Read);
+            }
             List<string> list = new List<string>();
             StreamReader sr = new StreamReader(fs);
             //使用StreamReader类来读取文件 
