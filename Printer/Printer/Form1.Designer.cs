@@ -65,10 +65,10 @@
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
             this.login = new System.Windows.Forms.Panel();
             this.exitbutton = new System.Windows.Forms.Button();
-            this.password = new System.Windows.Forms.TextBox();
+            this.printerAcount = new System.Windows.Forms.TextBox();
             this.checkbox = new System.Windows.Forms.CheckBox();
             this.label1 = new System.Windows.Forms.Label();
-            this.username = new System.Windows.Forms.TextBox();
+            this.password = new System.Windows.Forms.TextBox();
             this.error = new System.Windows.Forms.Label();
             this.loginbutton = new System.Windows.Forms.Button();
             this.un = new System.Windows.Forms.Label();
@@ -88,7 +88,6 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.download.BackColor = System.Drawing.Color.Transparent;
-            this.download.BackgroundImage = global::Printer.Properties.Resources._20130319010100681;
             this.download.Controls.Add(this.mydata);
             this.download.Controls.Add(this.menuStrip1);
             this.download.Controls.Add(this.pictureBox1);
@@ -140,7 +139,6 @@
             this.mydata.TabIndex = 12;
             this.mydata.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.mydata_CellContentClick);
             this.mydata.CellContentDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.mydata_CellContentDoubleClick);
-           
             // 
             // id
             // 
@@ -245,7 +243,7 @@
             this.menuStrip1.AutoSize = false;
             this.menuStrip1.BackColor = System.Drawing.Color.Transparent;
             this.menuStrip1.Dock = System.Windows.Forms.DockStyle.None;
-            this.menuStrip1.Font = new System.Drawing.Font("Microsoft YaHei UI", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.menuStrip1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.menuStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.tool,
             this.help,
@@ -338,13 +336,12 @@
             this.login.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.login.BackColor = System.Drawing.Color.Transparent;
-            this.login.BackgroundImage = global::Printer.Properties.Resources._20130319010100681;
+            this.login.BackColor = System.Drawing.Color.SteelBlue;
             this.login.Controls.Add(this.exitbutton);
-            this.login.Controls.Add(this.password);
+            this.login.Controls.Add(this.printerAcount);
             this.login.Controls.Add(this.checkbox);
             this.login.Controls.Add(this.label1);
-            this.login.Controls.Add(this.username);
+            this.login.Controls.Add(this.password);
             this.login.Controls.Add(this.error);
             this.login.Controls.Add(this.loginbutton);
             this.login.Controls.Add(this.un);
@@ -366,12 +363,12 @@
             this.exitbutton.UseVisualStyleBackColor = false;
             this.exitbutton.Click += new System.EventHandler(this.exitbutton_Click);
             // 
-            // password
+            // printerAcount
             // 
-            this.password.Location = new System.Drawing.Point(125, 81);
-            this.password.Name = "password";
-            this.password.Size = new System.Drawing.Size(129, 21);
-            this.password.TabIndex = 4;
+            this.printerAcount.Location = new System.Drawing.Point(125, 81);
+            this.printerAcount.Name = "printerAcount";
+            this.printerAcount.Size = new System.Drawing.Size(129, 21);
+            this.printerAcount.TabIndex = 4;
             // 
             // checkbox
             // 
@@ -390,19 +387,20 @@
             this.label1.AutoSize = true;
             this.label1.BackColor = System.Drawing.Color.Transparent;
             this.label1.Font = new System.Drawing.Font("微软雅黑", 21.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label1.ForeColor = System.Drawing.Color.Snow;
             this.label1.Location = new System.Drawing.Point(74, 22);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(133, 38);
             this.label1.TabIndex = 0;
             this.label1.Text = "云印南天";
             // 
-            // username
+            // password
             // 
-            this.username.Location = new System.Drawing.Point(125, 126);
-            this.username.Name = "username";
-            this.username.PasswordChar = '*';
-            this.username.Size = new System.Drawing.Size(129, 21);
-            this.username.TabIndex = 3;
+            this.password.Location = new System.Drawing.Point(125, 126);
+            this.password.Name = "password";
+            this.password.PasswordChar = '*';
+            this.password.Size = new System.Drawing.Size(129, 21);
+            this.password.TabIndex = 3;
             // 
             // error
             // 
@@ -433,9 +431,9 @@
             this.un.Font = new System.Drawing.Font("微软雅黑", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.un.Location = new System.Drawing.Point(23, 80);
             this.un.Name = "un";
-            this.un.Size = new System.Drawing.Size(72, 27);
+            this.un.Size = new System.Drawing.Size(52, 27);
             this.un.TabIndex = 1;
-            this.un.Text = "用户名";
+            this.un.Text = "账户";
             // 
             // pw
             // 
@@ -467,7 +465,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackgroundImage = global::Printer.Properties.Resources._20130319010100681;
+            this.BackColor = System.Drawing.Color.SteelBlue;
             this.ClientSize = new System.Drawing.Size(1284, 361);
             this.Controls.Add(this.download);
             this.Controls.Add(this.login);
@@ -491,10 +489,10 @@
 
         private System.Windows.Forms.Panel login;
         private System.Windows.Forms.Button exitbutton;
-        private System.Windows.Forms.TextBox password;
+        private System.Windows.Forms.TextBox printerAcount;
         private System.Windows.Forms.CheckBox checkbox;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.TextBox username;
+        private System.Windows.Forms.TextBox password;
         private System.Windows.Forms.Label error;
         private System.Windows.Forms.Button loginbutton;
         private System.Windows.Forms.Label un;

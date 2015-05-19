@@ -85,9 +85,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="Resources\20130319010100681.jpg" />
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Resources\未标题-1.png" />
   </ItemGroup>
   <ItemGroup>

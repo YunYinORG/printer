@@ -42,8 +42,8 @@ namespace Printer
             myLogin = remember.ReadTextFileToList(@"pwd.sjc");
             if (myLogin.Count == 2)
             {
-                username.Text = myLogin[0];
-                password.Text = myLogin[1];
+                password.Text = myLogin[0];
+                printerAcount.Text = myLogin[1];
             }
         }
         //-----------------------------------------------------------------------------------------
@@ -90,7 +90,7 @@ namespace Printer
         {
             string type = "2";        //打印店的type为2
             List<string> myRem = new List<string>();       //此处可以进行修改和简化        
-            string strusername = username.Text;            //用户名
+            string strusername = printerAcount.Text;            //用户名
             string strpassword = password.Text;            //密码
             byte[] pword = Encoding.Default.GetBytes(strpassword.Trim());       //进行MD5的加密工作
             System.Security.Cryptography.MD5 md5 = new MD5CryptoServiceProvider();
@@ -137,8 +137,8 @@ namespace Printer
                     //判断是否保存用户名
                     if (checkbox.Checked)
                     {
-                        myRem.Add(username.Text);
                         myRem.Add(password.Text);
+                        myRem.Add(printerAcount.Text);
 
                     }
                     File.WriteAllText(@"pwd.sjc", "");
