@@ -37,6 +37,7 @@ namespace Printer
             login.Visible = true;        //登录控件可见
             download.Visible = false;    //下载控件隐藏
             login.Enabled = true;        //登录控件使能
+            autorefresh.Enabled = false;  //登录时关闭计时器
             //System.Windows.Forms.Control.CheckForIllegalCrossThreadCalls = false;
             checkbox.Checked = true;
             myLogin = remember.ReadTextFileToList(@"pwd.sjc");
@@ -92,10 +93,14 @@ namespace Printer
             List<string> myRem = new List<string>();       //此处可以进行修改和简化        
             string strusername = printerAcount.Text;            //用户名
             string strpassword = password.Text;            //密码
-            byte[] pword = Encoding.Default.GetBytes(strpassword.Trim());       //进行MD5的加密工作
-            System.Security.Cryptography.MD5 md5 = new MD5CryptoServiceProvider();
-            byte[] out1 = md5.ComputeHash(pword);
-            strpassword = BitConverter.ToString(out1).Replace("-", "");
+            if (myLogin.Count != 2)
+            {
+                byte[] pword = Encoding.Default.GetBytes(strpassword.Trim());       //进行MD5的加密工作
+                System.Security.Cryptography.MD5 md5 = new MD5CryptoServiceProvider();
+                byte[] out1 = md5.ComputeHash(pword);
+                strpassword = BitConverter.ToString(out1).Replace("-", "");
+            }
+            
             if (strusername.Length == 0 || strpassword.Length == 0)
             {
                 if (error.InvokeRequired)
@@ -137,7 +142,8 @@ namespace Printer
                     //判断是否保存用户名
                     if (checkbox.Checked)
                     {
-                        myRem.Add(password.Text);
+                        myRem.Add(strpassword);
+                        //myRem.Add(password.Text);
                         myRem.Add(printerAcount.Text);
 
                     }
@@ -147,6 +153,7 @@ namespace Printer
                     Console.WriteLine(my.name);
                     Console.WriteLine(my.id);
                     showdownload(my);        //传递参数，显示下载控件
+                    autorefresh.Enabled = true;   //登录成功后启动计时器
                 }
                 else
                 {

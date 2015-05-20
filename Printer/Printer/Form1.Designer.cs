@@ -29,17 +29,17 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle23 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle24 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle25 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle26 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle27 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle28 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle29 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle30 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle31 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle32 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle33 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(login_download));
             this.download = new System.Windows.Forms.Panel();
             this.mydata = new System.Windows.Forms.DataGridView();
@@ -87,7 +87,8 @@
             this.download.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.download.BackColor = System.Drawing.Color.Transparent;
+            this.download.BackColor = System.Drawing.Color.SkyBlue;
+            this.download.BackgroundImage = global::Printer.Properties.Resources.backphoto;
             this.download.Controls.Add(this.mydata);
             this.download.Controls.Add(this.menuStrip1);
             this.download.Controls.Add(this.pictureBox1);
@@ -107,13 +108,13 @@
             this.mydata.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.mydata.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleHorizontal;
             this.mydata.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = System.Drawing.Color.PowderBlue;
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("微软雅黑", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.Color.PowderBlue;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            this.mydata.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle23.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle23.BackColor = System.Drawing.Color.PowderBlue;
+            dataGridViewCellStyle23.Font = new System.Drawing.Font("微软雅黑", 18F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            dataGridViewCellStyle23.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle23.SelectionBackColor = System.Drawing.Color.PowderBlue;
+            dataGridViewCellStyle23.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            this.mydata.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle23;
             this.mydata.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.mydata.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.id,
@@ -142,9 +143,9 @@
             // 
             // id
             // 
-            dataGridViewCellStyle2.BackColor = System.Drawing.Color.PowderBlue;
-            dataGridViewCellStyle2.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.id.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle24.BackColor = System.Drawing.Color.PowderBlue;
+            dataGridViewCellStyle24.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.id.DefaultCellStyle = dataGridViewCellStyle24;
             this.id.HeaderText = "序号";
             this.id.Name = "id";
             this.id.ReadOnly = true;
@@ -152,18 +153,18 @@
             // 
             // use_id
             // 
-            dataGridViewCellStyle3.BackColor = System.Drawing.Color.PowderBlue;
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.use_id.DefaultCellStyle = dataGridViewCellStyle3;
+            dataGridViewCellStyle25.BackColor = System.Drawing.Color.PowderBlue;
+            dataGridViewCellStyle25.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.use_id.DefaultCellStyle = dataGridViewCellStyle25;
             this.use_id.HeaderText = "用户名";
             this.use_id.Name = "use_id";
             this.use_id.ReadOnly = true;
             // 
             // filename
             // 
-            dataGridViewCellStyle4.BackColor = System.Drawing.Color.PowderBlue;
-            dataGridViewCellStyle4.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.filename.DefaultCellStyle = dataGridViewCellStyle4;
+            dataGridViewCellStyle26.BackColor = System.Drawing.Color.PowderBlue;
+            dataGridViewCellStyle26.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.filename.DefaultCellStyle = dataGridViewCellStyle26;
             this.filename.HeaderText = "文件名";
             this.filename.Name = "filename";
             this.filename.ReadOnly = true;
@@ -171,9 +172,9 @@
             // 
             // copies
             // 
-            dataGridViewCellStyle5.BackColor = System.Drawing.Color.PowderBlue;
-            dataGridViewCellStyle5.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.copies.DefaultCellStyle = dataGridViewCellStyle5;
+            dataGridViewCellStyle27.BackColor = System.Drawing.Color.PowderBlue;
+            dataGridViewCellStyle27.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.copies.DefaultCellStyle = dataGridViewCellStyle27;
             this.copies.HeaderText = "份数";
             this.copies.Name = "copies";
             this.copies.ReadOnly = true;
@@ -181,9 +182,9 @@
             // 
             // single_double
             // 
-            dataGridViewCellStyle6.BackColor = System.Drawing.Color.PowderBlue;
-            dataGridViewCellStyle6.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.single_double.DefaultCellStyle = dataGridViewCellStyle6;
+            dataGridViewCellStyle28.BackColor = System.Drawing.Color.PowderBlue;
+            dataGridViewCellStyle28.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.single_double.DefaultCellStyle = dataGridViewCellStyle28;
             this.single_double.HeaderText = "单双";
             this.single_double.Name = "single_double";
             this.single_double.ReadOnly = true;
@@ -191,9 +192,9 @@
             // 
             // color
             // 
-            dataGridViewCellStyle7.BackColor = System.Drawing.Color.PowderBlue;
-            dataGridViewCellStyle7.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.color.DefaultCellStyle = dataGridViewCellStyle7;
+            dataGridViewCellStyle29.BackColor = System.Drawing.Color.PowderBlue;
+            dataGridViewCellStyle29.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.color.DefaultCellStyle = dataGridViewCellStyle29;
             this.color.HeaderText = "是否彩印";
             this.color.Name = "color";
             this.color.ReadOnly = true;
@@ -201,9 +202,9 @@
             // 
             // ppt
             // 
-            dataGridViewCellStyle8.BackColor = System.Drawing.Color.PowderBlue;
-            dataGridViewCellStyle8.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.ppt.DefaultCellStyle = dataGridViewCellStyle8;
+            dataGridViewCellStyle30.BackColor = System.Drawing.Color.PowderBlue;
+            dataGridViewCellStyle30.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.ppt.DefaultCellStyle = dataGridViewCellStyle30;
             this.ppt.HeaderText = "ppt版式";
             this.ppt.Name = "ppt";
             this.ppt.ReadOnly = true;
@@ -211,9 +212,9 @@
             // 
             // time
             // 
-            dataGridViewCellStyle9.BackColor = System.Drawing.Color.PowderBlue;
-            dataGridViewCellStyle9.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.time.DefaultCellStyle = dataGridViewCellStyle9;
+            dataGridViewCellStyle31.BackColor = System.Drawing.Color.PowderBlue;
+            dataGridViewCellStyle31.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.time.DefaultCellStyle = dataGridViewCellStyle31;
             this.time.HeaderText = "上传时间";
             this.time.Name = "time";
             this.time.ReadOnly = true;
@@ -221,19 +222,19 @@
             // 
             // status
             // 
-            dataGridViewCellStyle10.BackColor = System.Drawing.Color.PowderBlue;
-            dataGridViewCellStyle10.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.status.DefaultCellStyle = dataGridViewCellStyle10;
+            dataGridViewCellStyle32.BackColor = System.Drawing.Color.PowderBlue;
+            dataGridViewCellStyle32.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.status.DefaultCellStyle = dataGridViewCellStyle32;
             this.status.HeaderText = "状态";
             this.status.Name = "status";
             this.status.ReadOnly = true;
             // 
             // operation
             // 
-            dataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle11.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
-            dataGridViewCellStyle11.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.operation.DefaultCellStyle = dataGridViewCellStyle11;
+            dataGridViewCellStyle33.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle33.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
+            dataGridViewCellStyle33.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.operation.DefaultCellStyle = dataGridViewCellStyle33;
             this.operation.HeaderText = "操作";
             this.operation.Name = "operation";
             this.operation.ReadOnly = true;
@@ -322,6 +323,7 @@
             // 
             // pictureBox1
             // 
+            this.pictureBox1.BackColor = System.Drawing.Color.Transparent;
             this.pictureBox1.Image = global::Printer.Properties.Resources.未标题_1;
             this.pictureBox1.InitialImage = null;
             this.pictureBox1.Location = new System.Drawing.Point(3, 38);
@@ -337,6 +339,7 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.login.BackColor = System.Drawing.Color.SteelBlue;
+            this.login.BackgroundImage = global::Printer.Properties.Resources.backphoto;
             this.login.Controls.Add(this.exitbutton);
             this.login.Controls.Add(this.printerAcount);
             this.login.Controls.Add(this.checkbox);

@@ -30,11 +30,17 @@
     <DefineConstants>TRACE</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
+    <UseVSHostingProcess>true</UseVSHostingProcess>
+    <DebugSymbols>true</DebugSymbols>
   </PropertyGroup>
   <PropertyGroup>
     <ApplicationIcon>favicon.ico</ApplicationIcon>
   </PropertyGroup>
   <PropertyGroup />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'output|AnyCPU'">
+    <OutputPath>bin\output\</OutputPath>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="Newtonsoft.Json.Net35">
       <HintPath>..\..\..\..\..\..\..\云印\json.NET\Bin\Net35\Newtonsoft.Json.Net35.dll</HintPath>
