@@ -93,14 +93,23 @@ namespace Printer
             List<string> myRem = new List<string>();       //此处可以进行修改和简化        
             string strusername = printerAcount.Text;            //用户名
             string strpassword = password.Text;            //密码
-            if (myLogin.Count != 2)
+            if (myLogin.Count == 2)
+            {
+                if (myLogin[0].Length != strpassword.Length)
+                {
+                    byte[] pword = Encoding.Default.GetBytes(strpassword.Trim());       //进行MD5的加密工作
+                    System.Security.Cryptography.MD5 md5 = new MD5CryptoServiceProvider();
+                    byte[] out1 = md5.ComputeHash(pword);
+                    strpassword = BitConverter.ToString(out1).Replace("-", "");
+                }
+            }
+            else
             {
                 byte[] pword = Encoding.Default.GetBytes(strpassword.Trim());       //进行MD5的加密工作
                 System.Security.Cryptography.MD5 md5 = new MD5CryptoServiceProvider();
                 byte[] out1 = md5.ComputeHash(pword);
                 strpassword = BitConverter.ToString(out1).Replace("-", "");
             }
-            
             if (strusername.Length == 0 || strpassword.Length == 0)
             {
                 if (error.InvokeRequired)
@@ -307,7 +316,7 @@ namespace Printer
                     myJs.student_number = ja[i]["student_number"].ToString();
                     myJs.color = ja[i]["color"].ToString();
                     myJs.ppt_layout = ja[i]["ppt_layout"].ToString();
-                    
+                    myJs.requirements = ja[i]["requirements"].ToString();
                     jsonlist.Add(myJs);
                 }
             }
@@ -728,8 +737,99 @@ namespace Printer
         //        }
         //    }
         //}
+       
+        /// <summary>
+        /// 增加最小化到托盘
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void login_download_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            //注意判断关闭事件Reason来源于窗体按钮，否则用菜单退出时无法退出!
+            if (e.CloseReason == CloseReason.UserClosing)
+            {
+                e.Cancel = true;
+                this.WindowState = FormWindowState.Minimized;    //使关闭时窗口向右下角缩小的效果
+                notifyIcon1.Visible = true;
+                this.ShowInTaskbar = false;
+                
+            }
+        }
 
-        
+        /// <summary>
+        /// 双击托盘打开窗口
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void notifyIcon1_MouseDoubleClick(object sender, MouseEventArgs e)
+        {
+            if (this.WindowState == FormWindowState.Minimized)
+            {
+                this.WindowState = FormWindowState.Normal;
+                
+                this.Focus();
+                this.ShowInTaskbar = true;
+            }
+        }
+
+        /// <summary>
+        /// 托盘右键关闭退出程序
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void 关闭ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            this.Close();
+            Application.Exit();
+        }
+
+        /// <summary>
+        /// 如果有备注信息则显示
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void requirements_Click(object sender, EventArgs e)
+        {
+            string current_id = mydata.Rows[mydata.CurrentRow.Index].Cells["id"].Value.ToString();
+            foreach (var item in jsonlist)
+            {
+                if (current_id == item.id)
+                {
+                    if (item.requirements != null)
+                    {
+                        MessageBox.Show(item.requirements,"备注信息");
+                    }
+                }
+            }
+            
+        }
+
+        /// <summary>
+        /// 单击后判断该文件是否有备注信息
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
+        private void mydata_CellClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if ((e.ColumnIndex > -1)&&(e.RowIndex>-1))
+            {
+                string current_id = mydata.Rows[e.RowIndex].Cells["id"].Value.ToString();
+                foreach (var item in jsonlist)
+                {
+                    if (current_id == item.id)
+                    {
+                        if (item.requirements == "")
+                        {
+                            requirements.Visible = false;
+                        }
+                        else
+                        {
+                            requirements.Visible = true;
+                        }
+                    }
+                }
+            }
+        }
 
         
 
