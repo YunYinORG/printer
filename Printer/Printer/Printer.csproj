@@ -38,7 +38,7 @@
   </PropertyGroup>
   <PropertyGroup />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'output|AnyCPU'">
-    <OutputPath>bin\output\</OutputPath>
+    <OutputPath>..\output\</OutputPath>
     <UseVSHostingProcess>false</UseVSHostingProcess>
   </PropertyGroup>
   <ItemGroup>
