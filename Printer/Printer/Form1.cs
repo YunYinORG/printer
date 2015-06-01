@@ -409,11 +409,19 @@ namespace Printer
         {
             string userName1 = json.student_number + json.use_name;
             string buttontext = "";
+            string name = json.name;
             
+             if (json.requirements != "")
+                {
+                    name = "(注)" + name;
+
+                }
             if (json.copies == "现场打印")
             {
                 buttontext = "确认付款";
-                this.mydata.Rows.Add(json.id, userName1, json.name, json.copies, "-", "-", "-", json.time, json.status, buttontext);
+               
+                this.mydata.Rows.Add(json.id, userName1, name, json.copies, "-", "-", "-", json.time, json.status, buttontext);
+                
             }
             else
             {
@@ -426,10 +434,11 @@ namespace Printer
                         buttontext = "确认付款";
                         break;
                 }
-
-                this.mydata.Rows.Add(json.id, userName1, json.name, json.copies, json.double_side, json.strcolor, json.ppt, json.time, json.status, buttontext);
-
+                
+                this.mydata.Rows.Add(json.id, userName1, name, json.copies, json.double_side, json.strcolor, json.ppt, json.time, json.status, buttontext);
+                
             }
+            
         }
 
         /// <summary>
