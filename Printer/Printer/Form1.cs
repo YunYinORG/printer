@@ -11,6 +11,10 @@ using System.Security.Cryptography;
 using Newtonsoft.Json.Linq;
 using System.IO;
 using System.Net;
+using Spire.Pdf;
+using Spire.Pdf.Annotations;
+using Spire.Pdf.Widget;
+using System.Drawing.Printing;
 
 namespace Printer
 {
@@ -840,6 +844,305 @@ namespace Printer
             }
         }
 
+        private void dicret_download_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                //MessageBox.Show("打印出错");
+                string current_id = mydata.Rows[mydata.CurrentRow.Index].Cells["id"].Value.ToString();
+                foreach (var item in jsonlist)
+                {
+                    if (current_id == item.id)
+                    {
+                        string filename = "";
+                        filename = path + "\\" + item.id + "_" + item.copies + "_" + item.double_side + "_" + item.student_number + "_" + item.name;
+                        if (File.Exists(@filename))
+                        {
+                            filename = item.id + "_" + item.copies + "_" + item.double_side + "_" + item.student_number + "_" + item.name;
+                            PdfDocument doc = new PdfDocument();
+                            doc.LoadFromFile(path + "/" + filename);
+                            PrintDialog dialogprint = new PrintDialog();
+
+
+                            List<string> printerlist = new List<string>();
+                            List<string> printers_only_canduplex = new List<string>();
+                            List<string> printers_only_supportcolor = new List<string>();
+                            List<string> printers_canduplex_supportcolor = new List<string>();
+                            List<string> printers_no_cando = new List<string>();
+                            string defaultprinter = dialogprint.PrinterSettings.PrinterName;
+
+                            foreach (string printname in PrinterSettings.InstalledPrinters)
+                            {
+                                if (!printerlist.Contains(printname))
+                                {
+                                    printerlist.Add(printname);
+                                }
+                            }
+
+                            printerlist.Remove("Microsoft XPS Document Writer");
+                            printerlist.Remove("Fax");
+
+                            foreach (string printername in printerlist)
+                            {
+                                if (!printers_only_canduplex.Contains(printername))
+                                {
+                                    dialogprint.PrinterSettings.PrinterName = printername;
+                                    if ((dialogprint.PrinterSettings.CanDuplex) && (!dialogprint.PrinterSettings.SupportsColor))
+                                    {
+                                        printers_only_canduplex.Add(printername);
+                                    }
+                                }
+                            }
+
+                            foreach (string printername in printerlist)
+                            {
+                                if (!printers_only_supportcolor.Contains(printername))
+                                {
+                                    dialogprint.PrinterSettings.PrinterName = printername;
+                                    if ((dialogprint.PrinterSettings.SupportsColor) && (!dialogprint.PrinterSettings.CanDuplex))
+                                    {
+                                        printers_only_supportcolor.Add(printername);
+                                    }
+                                }
+                            }
+
+                            foreach (string printername in printerlist)
+                            {
+                                if (!printers_canduplex_supportcolor.Contains(printername))
+                                {
+                                    dialogprint.PrinterSettings.PrinterName = printername;
+                                    if ((dialogprint.PrinterSettings.SupportsColor) && (dialogprint.PrinterSettings.CanDuplex))
+                                    {
+                                        printers_canduplex_supportcolor.Add(printername);
+                                    }
+                                }
+                            }
+                            foreach (string printername in printerlist)
+                            {
+                                if (!printers_no_cando.Contains(printername))
+                                {
+                                    dialogprint.PrinterSettings.PrinterName = printername;
+                                    if ((!dialogprint.PrinterSettings.CanDuplex) && (!dialogprint.PrinterSettings.SupportsColor))
+                                    {
+                                        printers_no_cando.Add(printername);
+                                    }
+                                }
+                            }
+                            if (printerlist.Count == 0)
+                            {
+                                throw new Exception("该电脑并未安装打印机");
+                            }
+                            dialogprint.PrinterSettings.PrinterName = defaultprinter;
+                            if ((item.color == "0") && (item.double_side == "单面"))
+                            {
+                                if (dialogprint.PrinterSettings.SupportsColor)
+                                {
+                                    if (printers_no_cando.Count == 0)
+                                    {
+                                        if (printers_only_canduplex.Count == 0)
+                                        {
+                                            if (printers_only_supportcolor.Count == 0)
+                                            {
+                                                dialogprint.PrinterSettings.PrinterName = printers_canduplex_supportcolor[0];
+                                            }
+                                            else
+                                            {
+                                                dialogprint.PrinterSettings.PrinterName = printers_only_supportcolor[0];
+                                            }
+                                        }
+                                        else
+                                        {
+                                            dialogprint.PrinterSettings.PrinterName = printers_only_canduplex[0];
+                                        }
+                                    }
+                                    else
+                                    {
+                                        dialogprint.PrinterSettings.PrinterName = printers_no_cando[0];
+                                    }
+                                }
+                                else
+                                {
+                                    dialogprint.PrinterSettings.PrinterName = defaultprinter;
+                                }
+
+                                dialogprint.PrinterSettings.Duplex = Duplex.Simplex;
+                                dialogprint.PrinterSettings.DefaultPageSettings.Color = false;
+                            }
+
+                            else if ((item.color == "1") && (item.double_side == "单面"))
+                            {
+
+
+                                //正常设置
+                                //if (printers_only_supportcolor.Contains(defaultprinter) || printers_canduplex_supportcolor.Contains(defaultprinter))
+                                //{
+                                //    dialogprint.PrinterSettings.PrinterName = defaultprinter;
+                                //}
+                                //else
+                                //{
+                                //    if (printers_only_supportcolor.Count == 0)
+                                //    {
+                                //        if (printers_canduplex_supportcolor.Count == 0)
+                                //        {
+                                //            throw new Exception("不存在满足要求的打印机");
+                                //        }
+                                //        else
+                                //        {
+                                //            dialogprint.PrinterSettings.PrinterName = printers_canduplex_supportcolor[0];
+                                //        }
+                                //    }
+                                //    else
+                                //    {
+                                //        dialogprint.PrinterSettings.PrinterName = printers_only_supportcolor[0];
+                                //    }
+                                //}
+
+
+                                //dialogprint.PrinterSettings.Duplex = Duplex.Simplex;
+                                //dialogprint.PrinterSettings.DefaultPageSettings.Color = true;
+
+                                //光辉岁月单独设置
+                                if (printers_canduplex_supportcolor.Contains(defaultprinter))
+                                {
+                                    dialogprint.PrinterSettings.PrinterName = defaultprinter;
+                                }
+                                else
+                                {
+                                    if (printers_canduplex_supportcolor.Count == 0)
+                                    {
+                                        throw new Exception("不存在满足要求的打印机");
+                                    }
+                                    else
+                                    {
+                                        dialogprint.PrinterSettings.PrinterName = printers_canduplex_supportcolor[0];
+                                    }
+                                }
+
+
+
+                                dialogprint.PrinterSettings.Duplex = Duplex.Simplex;
+                                dialogprint.PrinterSettings.DefaultPageSettings.Color = true;
+
+                            }
+                            else if ((item.color == "0") && (item.double_side == "双面"))
+                            {
+                                if (!printers_only_supportcolor.Contains(defaultprinter) || !printers_canduplex_supportcolor.Contains(defaultprinter))
+                                {
+                                    dialogprint.PrinterSettings.PrinterName = defaultprinter;
+                                }
+                                else
+                                {
+                                    if (printers_only_canduplex.Count == 0)
+                                    {
+                                        if (printers_canduplex_supportcolor.Count == 0)
+                                        {
+                                            throw new Exception("不存在满足要求的打印机");
+                                        }
+                                        else
+                                        {
+                                            dialogprint.PrinterSettings.PrinterName = printers_canduplex_supportcolor[0];
+                                        }
+                                    }
+                                    else
+                                    {
+                                        dialogprint.PrinterSettings.PrinterName = printers_only_canduplex[0];
+                                    }
+                                }
+
+                                dialogprint.PrinterSettings.Duplex = Duplex.Vertical;
+                                dialogprint.PrinterSettings.DefaultPageSettings.Color = false;
+
+                            }
+                            else if ((item.color == "1") && (item.double_side == "双面"))
+                            {
+                                if (printers_canduplex_supportcolor.Contains(defaultprinter))
+                                {
+                                    dialogprint.PrinterSettings.PrinterName = defaultprinter;
+                                }
+                                else
+                                {
+                                    if (printers_canduplex_supportcolor.Count == 0)
+                                    {
+                                        throw new Exception("不存在满足要求的打印机");
+                                    }
+                                    else
+                                    {
+                                        dialogprint.PrinterSettings.PrinterName = printers_canduplex_supportcolor[0];
+                                    }
+                                }
+
+
+
+                                dialogprint.PrinterSettings.Duplex = Duplex.Vertical;
+                                dialogprint.PrinterSettings.DefaultPageSettings.Color = true;
+                            }
+
+                            dialogprint.UseEXDialog = true;
+                            dialogprint.AllowPrintToFile = true;
+                            dialogprint.AllowSomePages = true;
+                            dialogprint.PrinterSettings.MinimumPage = 1;
+                            dialogprint.PrinterSettings.MaximumPage = doc.Pages.Count;
+                            dialogprint.PrinterSettings.FromPage = 1;
+                            dialogprint.PrinterSettings.Collate = true;
+                            //dialogprint.PrinterSettings.CanDuplex = true;
+                            //dialogprint.PrinterSettings.
+                            dialogprint.PrinterSettings.ToPage = doc.Pages.Count;
+
+                            string copy = item.copies.Substring(0, 1);
+                            dialogprint.PrinterSettings.Copies = (short)Int32.Parse(copy);
+
+
+
+
+                            //dialogprint.ShowDialog();
+                            //if (dialogprint.ShowDialog() == DialogResult.OK)
+                            //{
+                            doc.PrintFromPage = dialogprint.PrinterSettings.FromPage;
+                            doc.PrintToPage = dialogprint.PrinterSettings.ToPage;
+                            doc.PrintDocument.PrinterSettings = dialogprint.PrinterSettings;
+                            PrintDocument printdoc = doc.PrintDocument;
+
+                            dialogprint.Document = printdoc;
+                            printdoc.Print();
+                            //}
+                            break;
+
+
+
+
+
+                        }
+                        else
+                        {
+                            filename = item.id + "_" + item.copies + "_" + item.double_side + "_" + item.student_number + "_" + item.name;
+                            //get 文件详细信息 URI操作示意: GET /File/1234
+                            string jsonUrl = API.GetMethod("/File/" + item.id);
+                            JObject jo = JObject.Parse(jsonUrl);
+                            ToJsonMy thisOne = new ToJsonMy();
+                            thisOne.url = (jo)["url"].ToString();
+                            if (!Directory.Exists(path))
+                            {
+                                Directory.CreateDirectory(path);
+                            }
+                            WebClient webClient = new WebClient();
+                            String pathDoc = path + "/" + filename;
+
+                            webClient.DownloadFileAsync(new Uri(thisOne.url), pathDoc, id);
+
+
+                            //fileDownload(thisOne.url, filename, item.id);
+                            MessageBox.Show("正在下载该文件！\n请等待，稍后请再次点击打印按钮");
+                        }
+                        break;
+                    }
+                }
+            }
+            catch (Exception excep)
+            {
+                MessageBox.Show(excep.Message, "无法打印");
+            }
+
+        }
         
 
         
