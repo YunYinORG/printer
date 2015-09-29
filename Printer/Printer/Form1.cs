@@ -15,6 +15,7 @@ using Spire.Pdf;
 using Spire.Pdf.Annotations;
 using Spire.Pdf.Widget;
 using System.Drawing.Printing;
+using System.Runtime.InteropServices;
 
 namespace Printer
 {
@@ -226,6 +227,7 @@ namespace Printer
             this.Size = new Size(1300, 400);
             this.Location = new Point(50, 200);
             this.FormBorderStyle = FormBorderStyle.Sizable;
+            set_default_printer.Hide();
             download.Show();
 
             downloadToken = my.token;
@@ -1126,7 +1128,7 @@ namespace Printer
                             }
                             WebClient webClient = new WebClient();
                             String pathDoc = path + "/" + filename;
-
+                            webClient.DownloadFileCompleted += new AsyncCompletedEventHandler(OnDownloadFileCompleted);
                             webClient.DownloadFileAsync(new Uri(thisOne.url), pathDoc, id);
 
 
@@ -1143,10 +1145,146 @@ namespace Printer
             }
 
         }
-        
 
-        
-       
+        private void 设置默认打印机ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            foreach (string printname in PrinterSettings.InstalledPrinters)
+            {
+
+                if (!printer_comboBox.Items.Contains(printname))
+                {
+                    printer_comboBox.Items.Add(printname);
+
+                }
+            }
+
+            set_default_printer.Show();
+        }
+
+        private void ensure_printer_Click(object sender, EventArgs e)
+        {
+            if (printer_comboBox.SelectedItem != null)
+            {
+                if (Externs.SetDefaultPrinter(printer_comboBox.SelectedItem.ToString()))
+                {
+                    set_default_printer.Hide();
+                    MessageBox.Show(printer_comboBox.SelectedItem.ToString() + "设置为默认打印机成功！");
+
+                }
+                else
+                {
+                    MessageBox.Show(printer_comboBox.SelectedItem.ToString() + "设置为默认打印机失败！");
+                }
+            }
+        }
+
+        private void close_printer_Click(object sender, EventArgs e)
+        {
+            set_default_printer.Hide();
+        }
+
+        class Externs
+        {
+            [DllImport("winspool.drv")]
+            public static extern bool SetDefaultPrinter(String Name);
+        }
+
+        private void OnDownloadFileCompleted(object sender, EventArgs e)
+        {
+            MessageBox.Show("已下载完成\n请再次点击打印按钮");
+
+        }
+
+        private void set_before_print_Click(object sender, EventArgs e)
+        {
+
+
+            try
+            {
+                //MessageBox.Show("打印出错");
+                string current_id = mydata.Rows[mydata.CurrentRow.Index].Cells["id"].Value.ToString();
+                foreach (var item in jsonlist)
+                {
+                    if (current_id == item.id)
+                    {
+                        string filename = "";
+                        filename = path + "\\" + item.id + "_" + item.copies + "_" + item.double_side + "_" + item.student_number + "_" + item.name;
+                        if (File.Exists(@filename))
+                        {
+                            filename = item.id + "_" + item.copies + "_" + item.double_side + "_" + item.student_number + "_" + item.name;
+                            PdfDocument doc = new PdfDocument();
+                            doc.LoadFromFile(path + "/" + filename);
+                            PrintDialog dialogprint = new PrintDialog();
+
+
+
+
+                            dialogprint.UseEXDialog = true;
+                            dialogprint.AllowPrintToFile = true;
+                            dialogprint.AllowSomePages = true;
+                            dialogprint.PrinterSettings.MinimumPage = 1;
+                            dialogprint.PrinterSettings.MaximumPage = doc.Pages.Count;
+                            dialogprint.PrinterSettings.FromPage = 1;
+                            dialogprint.PrinterSettings.Collate = true;
+                            //dialogprint.PrinterSettings.CanDuplex = true;
+                            //dialogprint.PrinterSettings.
+                            dialogprint.PrinterSettings.ToPage = doc.Pages.Count;
+
+                            string copy = item.copies.Substring(0, 1);
+                            dialogprint.PrinterSettings.Copies = (short)Int32.Parse(copy);
+
+
+
+
+                            //dialogprint.ShowDialog();
+                            if (dialogprint.ShowDialog() == DialogResult.OK)
+                            {
+                            doc.PrintFromPage = dialogprint.PrinterSettings.FromPage;
+                            doc.PrintToPage = dialogprint.PrinterSettings.ToPage;
+                            doc.PrintDocument.PrinterSettings = dialogprint.PrinterSettings;
+                            PrintDocument printdoc = doc.PrintDocument;
+
+                            dialogprint.Document = printdoc;
+                            printdoc.Print();
+                            }
+                            break;
+
+
+
+
+
+                        }
+                        else
+                        {
+                            filename = item.id + "_" + item.copies + "_" + item.double_side + "_" + item.student_number + "_" + item.name;
+                            //get 文件详细信息 URI操作示意: GET /File/1234
+                            string jsonUrl = API.GetMethod("/File/" + item.id);
+                            JObject jo = JObject.Parse(jsonUrl);
+                            ToJsonMy thisOne = new ToJsonMy();
+                            thisOne.url = (jo)["url"].ToString();
+                            if (!Directory.Exists(path))
+                            {
+                                Directory.CreateDirectory(path);
+                            }
+                            WebClient webClient = new WebClient();
+                            String pathDoc = path + "/" + filename;
+                            webClient.DownloadFileCompleted += new AsyncCompletedEventHandler(OnDownloadFileCompleted);
+                            webClient.DownloadFileAsync(new Uri(thisOne.url), pathDoc, id);
+
+
+                            //fileDownload(thisOne.url, filename, item.id);
+                            MessageBox.Show("正在下载该文件！\n请等待，稍后请再次点击打印按钮");
+                        }
+                        break;
+                    }
+                }
+            }
+            catch (Exception excep)
+            {
+                MessageBox.Show(excep.Message, "无法打印");
+            }
+
+        }
 
 
 
