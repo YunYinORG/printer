@@ -238,7 +238,12 @@ namespace Printer
 
             String Date = (DateTime.Now.ToLongDateString());
             path = @"D:\云印南开\" + Date;
+            path_ibook = @"D:\云印南开_本店电子书\";
             //path = string.Empty;
+            if (!Directory.Exists(@"D:\云印南开_本店电子书"))
+            {
+                Directory.CreateDirectory(@"D:\云印南开_本店电子书");
+            }            
             if (!File.Exists("json.sjc"))
             {
                 File.Create("json.sjc");
@@ -265,6 +270,7 @@ namespace Printer
         public float version;
 
         public string path;   //存储文件路径
+        public string path_ibook;
 
         public List<ToJsonMy>jsonlist = new List<ToJsonMy>();     //用于保存文件列表
 
@@ -323,6 +329,22 @@ namespace Printer
                     myJs.color = ja[i]["color"].ToString();
                     myJs.ppt_layout = ja[i]["ppt_layout"].ToString();
                     myJs.requirements = ja[i]["requirements"].ToString();
+
+                    string file_url = "";
+                    string file_more = "";
+                    file_more = API.GetMethod("/file/" + myJs.id);
+                    file_url = JObject.Parse(file_more)["url"].ToString();
+                    if (!file_url.Contains("book"))
+                    {
+                        myJs.is_ibook = false;
+
+                    }
+                    else
+                    {
+                        myJs.is_ibook = true;
+
+                    }                    
+                    
                     jsonlist.Add(myJs);
                 }
             }
@@ -338,7 +360,7 @@ namespace Printer
             //每次都从文件列表的第一页开始访问
             API.myPage = 1;
             API.token = downloadToken;
-            string myJsFile = API.GetMethod("/File/?page=" + API.myPage);
+            string myJsFile = API.GetMethod("/file/?page=" + API.myPage);
             API.myPage += 1;
 #if DEBUG
             Console.WriteLine(myJsFile);    //这是为了调试么
@@ -358,7 +380,7 @@ namespace Printer
                 while (myAdd)                    
                 {
                     API.token = downloadToken;
-                    myJsFile = API.GetMethod("/File/?page=" + API.myPage);
+                    myJsFile = API.GetMethod("/file/?page=" + API.myPage);
                     API.myPage += 1;
                     jo = JObject.Parse(myJsFile);
                     ja = jo["files"] as JArray;
@@ -386,7 +408,24 @@ namespace Printer
             {
                 if (item.status == "未下载")
                 {
-                    Download(item.id);
+                    string file_url = "";
+                    string file_more = "";
+                    file_more = API.GetMethod("/file/" + item.id);
+                    file_url = JObject.Parse(file_more)["url"].ToString();
+                    if (!file_url.Contains("book"))
+                    {
+                        item.is_ibook = false;
+                        Download(item.id);
+                    }
+                    else
+                    {
+                        item.is_ibook = true;
+                        item.status = "2";
+                        changeStatusById(item.id, "download");
+                        this.notifyIcon1.Visible = true;
+                        this.notifyIcon1.ShowBalloonTip(10000);
+                        display(item);
+                    }
                 }
             }
 
@@ -464,7 +503,7 @@ namespace Printer
                     Thread piThread1 = new Thread(delegate()
                     {
 
-                        s = API.GetMethod("/File/" + item.id);
+                        s = API.GetMethod("/file/" + item.id);
                         JObject os = JObject.Parse(s);
                         ToJsonMy my = new ToJsonMy();
                         my.url = os["url"].ToString();
@@ -600,7 +639,24 @@ namespace Printer
             {
                 if (item.status == "未下载")
                 {
-                    Download(item.id);
+                    string file_url = "";
+                    string file_more = "";
+                    file_more = API.GetMethod("/file/" + item.id);
+                    file_url = JObject.Parse(file_more)["url"].ToString();
+                    if (!file_url.Contains("book"))
+                    {
+                        item.is_ibook = false;
+                        Download(item.id);
+                    }
+                    else
+                    {
+                        item.is_ibook = true;
+                        item.status = "2";
+                        changeStatusById(item.id, "download");
+                        this.notifyIcon1.Visible = true;
+                        this.notifyIcon1.ShowBalloonTip(10000);
+                        display(item);
+                    }
                 }
             }
 
@@ -632,64 +688,83 @@ namespace Printer
                 }
             }
 
-            else
+            else if ((e.ColumnIndex >= 2) && (e.ColumnIndex < 3))
             {
                 string id = mydata.Rows[e.RowIndex].Cells["id"].Value.ToString();
                 foreach (var item in jsonlist)
                 {
                     if (id == item.id)
                     {
-                        string filename = "";
-                        filename = path + "\\" + item.id + "_" + item.copies + "_" + item.double_side + "_" + item.student_number + "_" + item.name;
-                        if (File.Exists(@filename))
+                        if (!item.is_ibook)
                         {
-                            //filename = path + filename;
-                            System.Diagnostics.Process.Start(filename);
+                            string filename = "";
+                            filename = path + "\\" + item.id + "_" + item.copies + "_" + item.double_side + "_" + item.student_number + "_" + item.name;
+                            if (File.Exists(@filename))
+                            {
+                                //filename = path + filename;
+                                System.Diagnostics.Process.Start(filename);
+                                break;
+                            }
+                            else
+                            {
+                                filename = item.id + "_" + item.copies + "_" + item.double_side + "_" + item.student_number + "_" + item.name;
+                                //get 文件详细信息 URI操作示意: GET /File/1234
+                                string jsonUrl = API.GetMethod("/File/" + item.id);
+                                JObject jo = JObject.Parse(jsonUrl);
+                                ToJsonMy thisOne = new ToJsonMy();
+                                thisOne.url = (jo)["url"].ToString();
+                                if (!Directory.Exists(path))
+                                {
+                                    Directory.CreateDirectory(path);
+                                }
+                                WebClient webClient = new WebClient();
+                                String pathDoc = path + "/" + filename;
+
+                                webClient.DownloadFileAsync(new Uri(thisOne.url), pathDoc, id);
+
+
+                                //fileDownload(thisOne.url, filename, item.id);
+                                MessageBox.Show("正在下载该文件！\n等待会儿再打开");
+                            }
                             break;
                         }
                         else
                         {
-                            filename = item.id + "_" + item.copies + "_" + item.double_side + "_" + item.student_number + "_" + item.name;
-                            //get 文件详细信息 URI操作示意: GET /File/1234
-                            string jsonUrl = API.GetMethod("/File/" + item.id);
-                            JObject jo = JObject.Parse(jsonUrl);
-                            ToJsonMy thisOne = new ToJsonMy();
-                            thisOne.url = (jo)["url"].ToString();
-                            if (!Directory.Exists(path))
+                            string filename = "";
+                            filename = path_ibook + item.name.Substring(0, item.name.Length - "【店内书】".Length);
+                            if (File.Exists(@filename))
                             {
-                                Directory.CreateDirectory(path);
+                                //filename = path + filename;
+                                System.Diagnostics.Process.Start(filename);
+                                break;
                             }
-                            WebClient webClient = new WebClient();
-                            String pathDoc = path + "/" + filename;
+                            else
+                            {
+                                MessageBox.Show("本店电子书路径有误，请改正");
+                            }
 
-                            webClient.DownloadFileAsync(new Uri(thisOne.url), pathDoc, id);
-
-
-                            //fileDownload(thisOne.url, filename, item.id);
-                            MessageBox.Show("正在下载该文件！\n等待会儿再打开");
                         }
-                        break;
                     }
                 }
             }
         }
 
-        /// <summary>
-        /// 设置自动刷新
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void autorefresh_Tick(object sender, EventArgs e)
-        {
-            myRefresh();
-            foreach (var item in jsonlist)
-            {
-                if (item.status == "未下载")
-                {
-                    Download(item.id);
-                }
-            }
-        }
+        ///// <summary>
+        ///// 设置自动刷新
+        ///// </summary>
+        ///// <param name="sender"></param>
+        ///// <param name="e"></param>
+        //private void autorefresh_Tick(object sender, EventArgs e)
+        //{
+        //    myRefresh();
+        //    foreach (var item in jsonlist)
+        //    {
+        //        if (item.status == "未下载")
+        //        {
+        //            Download(item.id);
+        //        }
+        //    }
+        //}
 
         private void 一分钟ToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -856,185 +931,161 @@ namespace Printer
                 {
                     if (current_id == item.id)
                     {
-                        string filename = "";
-                        filename = path + "\\" + item.id + "_" + item.copies + "_" + item.double_side + "_" + item.student_number + "_" + item.name;
-                        if (File.Exists(@filename))
+                        if (!item.is_ibook)
                         {
-                            filename = item.id + "_" + item.copies + "_" + item.double_side + "_" + item.student_number + "_" + item.name;
-                            PdfDocument doc = new PdfDocument();
-                            doc.LoadFromFile(path + "/" + filename);
-                            PrintDialog dialogprint = new PrintDialog();
-
-
-                            List<string> printerlist = new List<string>();
-                            List<string> printers_only_canduplex = new List<string>();
-                            List<string> printers_only_supportcolor = new List<string>();
-                            List<string> printers_canduplex_supportcolor = new List<string>();
-                            List<string> printers_no_cando = new List<string>();
-                            string defaultprinter = dialogprint.PrinterSettings.PrinterName;
-
-                            foreach (string printname in PrinterSettings.InstalledPrinters)
+                            string filename = "";
+                            filename = path + "\\" + item.id + "_" + item.copies + "_" + item.double_side + "_" + item.student_number + "_" + item.name;
+                            if (File.Exists(@filename))
                             {
-                                if (!printerlist.Contains(printname))
-                                {
-                                    printerlist.Add(printname);
-                                }
-                            }
+                                filename = item.id + "_" + item.copies + "_" + item.double_side + "_" + item.student_number + "_" + item.name;
+                                PdfDocument doc = new PdfDocument();
+                                doc.LoadFromFile(path + "/" + filename);
+                                PrintDialog dialogprint = new PrintDialog();
 
-                            printerlist.Remove("Microsoft XPS Document Writer");
-                            printerlist.Remove("Fax");
 
-                            foreach (string printername in printerlist)
-                            {
-                                if (!printers_only_canduplex.Contains(printername))
+                                List<string> printerlist = new List<string>();
+                                List<string> printers_only_canduplex = new List<string>();
+                                List<string> printers_only_supportcolor = new List<string>();
+                                List<string> printers_canduplex_supportcolor = new List<string>();
+                                List<string> printers_no_cando = new List<string>();
+                                string defaultprinter = dialogprint.PrinterSettings.PrinterName;
+
+                                foreach (string printname in PrinterSettings.InstalledPrinters)
                                 {
-                                    dialogprint.PrinterSettings.PrinterName = printername;
-                                    if ((dialogprint.PrinterSettings.CanDuplex) && (!dialogprint.PrinterSettings.SupportsColor))
+                                    if (!printerlist.Contains(printname))
                                     {
-                                        printers_only_canduplex.Add(printername);
+                                        printerlist.Add(printname);
                                     }
                                 }
-                            }
 
-                            foreach (string printername in printerlist)
-                            {
-                                if (!printers_only_supportcolor.Contains(printername))
-                                {
-                                    dialogprint.PrinterSettings.PrinterName = printername;
-                                    if ((dialogprint.PrinterSettings.SupportsColor) && (!dialogprint.PrinterSettings.CanDuplex))
-                                    {
-                                        printers_only_supportcolor.Add(printername);
-                                    }
-                                }
-                            }
+                                printerlist.Remove("Microsoft XPS Document Writer");
+                                printerlist.Remove("Fax");
 
-                            foreach (string printername in printerlist)
-                            {
-                                if (!printers_canduplex_supportcolor.Contains(printername))
+                                foreach (string printername in printerlist)
                                 {
-                                    dialogprint.PrinterSettings.PrinterName = printername;
-                                    if ((dialogprint.PrinterSettings.SupportsColor) && (dialogprint.PrinterSettings.CanDuplex))
+                                    if (!printers_only_canduplex.Contains(printername))
                                     {
-                                        printers_canduplex_supportcolor.Add(printername);
-                                    }
-                                }
-                            }
-                            foreach (string printername in printerlist)
-                            {
-                                if (!printers_no_cando.Contains(printername))
-                                {
-                                    dialogprint.PrinterSettings.PrinterName = printername;
-                                    if ((!dialogprint.PrinterSettings.CanDuplex) && (!dialogprint.PrinterSettings.SupportsColor))
-                                    {
-                                        printers_no_cando.Add(printername);
-                                    }
-                                }
-                            }
-                            if (printerlist.Count == 0)
-                            {
-                                throw new Exception("该电脑并未安装打印机");
-                            }
-                            dialogprint.PrinterSettings.PrinterName = defaultprinter;
-                            if ((item.color == "0") && (item.double_side == "单面"))
-                            {
-                                if (dialogprint.PrinterSettings.SupportsColor)
-                                {
-                                    if (printers_no_cando.Count == 0)
-                                    {
-                                        if (printers_only_canduplex.Count == 0)
+                                        dialogprint.PrinterSettings.PrinterName = printername;
+                                        if ((dialogprint.PrinterSettings.CanDuplex) && (!dialogprint.PrinterSettings.SupportsColor))
                                         {
-                                            if (printers_only_supportcolor.Count == 0)
+                                            printers_only_canduplex.Add(printername);
+                                        }
+                                    }
+                                }
+
+                                foreach (string printername in printerlist)
+                                {
+                                    if (!printers_only_supportcolor.Contains(printername))
+                                    {
+                                        dialogprint.PrinterSettings.PrinterName = printername;
+                                        if ((dialogprint.PrinterSettings.SupportsColor) && (!dialogprint.PrinterSettings.CanDuplex))
+                                        {
+                                            printers_only_supportcolor.Add(printername);
+                                        }
+                                    }
+                                }
+
+                                foreach (string printername in printerlist)
+                                {
+                                    if (!printers_canduplex_supportcolor.Contains(printername))
+                                    {
+                                        dialogprint.PrinterSettings.PrinterName = printername;
+                                        if ((dialogprint.PrinterSettings.SupportsColor) && (dialogprint.PrinterSettings.CanDuplex))
+                                        {
+                                            printers_canduplex_supportcolor.Add(printername);
+                                        }
+                                    }
+                                }
+                                foreach (string printername in printerlist)
+                                {
+                                    if (!printers_no_cando.Contains(printername))
+                                    {
+                                        dialogprint.PrinterSettings.PrinterName = printername;
+                                        if ((!dialogprint.PrinterSettings.CanDuplex) && (!dialogprint.PrinterSettings.SupportsColor))
+                                        {
+                                            printers_no_cando.Add(printername);
+                                        }
+                                    }
+                                }
+                                if (printerlist.Count == 0)
+                                {
+                                    throw new Exception("该电脑并未安装打印机");
+                                }
+                                dialogprint.PrinterSettings.PrinterName = defaultprinter;
+                                if ((item.color == "0") && (item.double_side == "单面"))
+                                {
+                                    if (dialogprint.PrinterSettings.SupportsColor)
+                                    {
+                                        if (printers_no_cando.Count == 0)
+                                        {
+                                            if (printers_only_canduplex.Count == 0)
                                             {
-                                                dialogprint.PrinterSettings.PrinterName = printers_canduplex_supportcolor[0];
+                                                if (printers_only_supportcolor.Count == 0)
+                                                {
+                                                    dialogprint.PrinterSettings.PrinterName = printers_canduplex_supportcolor[0];
+                                                }
+                                                else
+                                                {
+                                                    dialogprint.PrinterSettings.PrinterName = printers_only_supportcolor[0];
+                                                }
                                             }
                                             else
                                             {
-                                                dialogprint.PrinterSettings.PrinterName = printers_only_supportcolor[0];
+                                                dialogprint.PrinterSettings.PrinterName = printers_only_canduplex[0];
                                             }
                                         }
                                         else
                                         {
-                                            dialogprint.PrinterSettings.PrinterName = printers_only_canduplex[0];
+                                            dialogprint.PrinterSettings.PrinterName = printers_no_cando[0];
                                         }
                                     }
                                     else
                                     {
-                                        dialogprint.PrinterSettings.PrinterName = printers_no_cando[0];
+                                        dialogprint.PrinterSettings.PrinterName = defaultprinter;
                                     }
+
+                                    dialogprint.PrinterSettings.Duplex = Duplex.Simplex;
+                                    dialogprint.PrinterSettings.DefaultPageSettings.Color = false;
                                 }
-                                else
+
+                                else if ((item.color == "1") && (item.double_side == "单面"))
                                 {
-                                    dialogprint.PrinterSettings.PrinterName = defaultprinter;
-                                }
-
-                                dialogprint.PrinterSettings.Duplex = Duplex.Simplex;
-                                dialogprint.PrinterSettings.DefaultPageSettings.Color = false;
-                            }
-
-                            else if ((item.color == "1") && (item.double_side == "单面"))
-                            {
 
 
-                                //正常设置
-                                //if (printers_only_supportcolor.Contains(defaultprinter) || printers_canduplex_supportcolor.Contains(defaultprinter))
-                                //{
-                                //    dialogprint.PrinterSettings.PrinterName = defaultprinter;
-                                //}
-                                //else
-                                //{
-                                //    if (printers_only_supportcolor.Count == 0)
-                                //    {
-                                //        if (printers_canduplex_supportcolor.Count == 0)
-                                //        {
-                                //            throw new Exception("不存在满足要求的打印机");
-                                //        }
-                                //        else
-                                //        {
-                                //            dialogprint.PrinterSettings.PrinterName = printers_canduplex_supportcolor[0];
-                                //        }
-                                //    }
-                                //    else
-                                //    {
-                                //        dialogprint.PrinterSettings.PrinterName = printers_only_supportcolor[0];
-                                //    }
-                                //}
+                                    //正常设置
+                                    //if (printers_only_supportcolor.Contains(defaultprinter) || printers_canduplex_supportcolor.Contains(defaultprinter))
+                                    //{
+                                    //    dialogprint.PrinterSettings.PrinterName = defaultprinter;
+                                    //}
+                                    //else
+                                    //{
+                                    //    if (printers_only_supportcolor.Count == 0)
+                                    //    {
+                                    //        if (printers_canduplex_supportcolor.Count == 0)
+                                    //        {
+                                    //            throw new Exception("不存在满足要求的打印机");
+                                    //        }
+                                    //        else
+                                    //        {
+                                    //            dialogprint.PrinterSettings.PrinterName = printers_canduplex_supportcolor[0];
+                                    //        }
+                                    //    }
+                                    //    else
+                                    //    {
+                                    //        dialogprint.PrinterSettings.PrinterName = printers_only_supportcolor[0];
+                                    //    }
+                                    //}
 
 
-                                //dialogprint.PrinterSettings.Duplex = Duplex.Simplex;
-                                //dialogprint.PrinterSettings.DefaultPageSettings.Color = true;
+                                    //dialogprint.PrinterSettings.Duplex = Duplex.Simplex;
+                                    //dialogprint.PrinterSettings.DefaultPageSettings.Color = true;
 
-                                //光辉岁月单独设置
-                                if (printers_canduplex_supportcolor.Contains(defaultprinter))
-                                {
-                                    dialogprint.PrinterSettings.PrinterName = defaultprinter;
-                                }
-                                else
-                                {
-                                    if (printers_canduplex_supportcolor.Count == 0)
+                                    //光辉岁月单独设置
+                                    if (printers_canduplex_supportcolor.Contains(defaultprinter))
                                     {
-                                        throw new Exception("不存在满足要求的打印机");
+                                        dialogprint.PrinterSettings.PrinterName = defaultprinter;
                                     }
                                     else
-                                    {
-                                        dialogprint.PrinterSettings.PrinterName = printers_canduplex_supportcolor[0];
-                                    }
-                                }
-
-
-
-                                dialogprint.PrinterSettings.Duplex = Duplex.Simplex;
-                                dialogprint.PrinterSettings.DefaultPageSettings.Color = true;
-
-                            }
-                            else if ((item.color == "0") && (item.double_side == "双面"))
-                            {
-                                if (!printers_only_supportcolor.Contains(defaultprinter) || !printers_canduplex_supportcolor.Contains(defaultprinter))
-                                {
-                                    dialogprint.PrinterSettings.PrinterName = defaultprinter;
-                                }
-                                else
-                                {
-                                    if (printers_only_canduplex.Count == 0)
                                     {
                                         if (printers_canduplex_supportcolor.Count == 0)
                                         {
@@ -1045,6 +1096,182 @@ namespace Printer
                                             dialogprint.PrinterSettings.PrinterName = printers_canduplex_supportcolor[0];
                                         }
                                     }
+
+
+
+                                    dialogprint.PrinterSettings.Duplex = Duplex.Simplex;
+                                    dialogprint.PrinterSettings.DefaultPageSettings.Color = true;
+
+                                }
+                                else if ((item.color == "0") && (item.double_side == "双面"))
+                                {
+                                    if (!printers_only_supportcolor.Contains(defaultprinter) || !printers_canduplex_supportcolor.Contains(defaultprinter))
+                                    {
+                                        dialogprint.PrinterSettings.PrinterName = defaultprinter;
+                                    }
+                                    else
+                                    {
+                                        if (printers_only_canduplex.Count == 0)
+                                        {
+                                            if (printers_canduplex_supportcolor.Count == 0)
+                                            {
+                                                throw new Exception("不存在满足要求的打印机");
+                                            }
+                                            else
+                                            {
+                                                dialogprint.PrinterSettings.PrinterName = printers_canduplex_supportcolor[0];
+                                            }
+                                        }
+                                        else
+                                        {
+                                            dialogprint.PrinterSettings.PrinterName = printers_only_canduplex[0];
+                                        }
+                                    }
+
+                                    dialogprint.PrinterSettings.Duplex = Duplex.Vertical;
+                                    dialogprint.PrinterSettings.DefaultPageSettings.Color = false;
+
+                                }
+                                else if ((item.color == "1") && (item.double_side == "双面"))
+                                {
+                                    if (printers_canduplex_supportcolor.Contains(defaultprinter))
+                                    {
+                                        dialogprint.PrinterSettings.PrinterName = defaultprinter;
+                                    }
+                                    else
+                                    {
+                                        if (printers_canduplex_supportcolor.Count == 0)
+                                        {
+                                            throw new Exception("不存在满足要求的打印机");
+                                        }
+                                        else
+                                        {
+                                            dialogprint.PrinterSettings.PrinterName = printers_canduplex_supportcolor[0];
+                                        }
+                                    }
+
+
+
+                                    dialogprint.PrinterSettings.Duplex = Duplex.Vertical;
+                                    dialogprint.PrinterSettings.DefaultPageSettings.Color = true;
+                                }
+
+                                dialogprint.UseEXDialog = true;
+                                dialogprint.AllowPrintToFile = true;
+                                dialogprint.AllowSomePages = true;
+                                dialogprint.PrinterSettings.MinimumPage = 1;
+                                dialogprint.PrinterSettings.MaximumPage = doc.Pages.Count;
+                                dialogprint.PrinterSettings.FromPage = 1;
+                                dialogprint.PrinterSettings.Collate = true;
+                                //dialogprint.PrinterSettings.CanDuplex = true;
+                                //dialogprint.PrinterSettings.
+                                dialogprint.PrinterSettings.ToPage = doc.Pages.Count;
+
+                                string copy = item.copies.Substring(0, 1);
+                                dialogprint.PrinterSettings.Copies = (short)Int32.Parse(copy);
+
+
+
+
+                                //dialogprint.ShowDialog();
+                                //if (dialogprint.ShowDialog() == DialogResult.OK)
+                                //{
+                                doc.PrintFromPage = dialogprint.PrinterSettings.FromPage;
+                                doc.PrintToPage = dialogprint.PrinterSettings.ToPage;
+                                doc.PrintDocument.PrinterSettings = dialogprint.PrinterSettings;
+                                PrintDocument printdoc = doc.PrintDocument;
+
+                                dialogprint.Document = printdoc;
+                                printdoc.Print();
+                                //}
+                                break;
+
+
+
+
+
+                            }
+                            else
+                            {
+                                filename = item.id + "_" + item.copies + "_" + item.double_side + "_" + item.student_number + "_" + item.name;
+                                //get 文件详细信息 URI操作示意: GET /File/1234
+                                string jsonUrl = API.GetMethod("/File/" + item.id);
+                                JObject jo = JObject.Parse(jsonUrl);
+                                ToJsonMy thisOne = new ToJsonMy();
+                                thisOne.url = (jo)["url"].ToString();
+                                if (!Directory.Exists(path))
+                                {
+                                    Directory.CreateDirectory(path);
+                                }
+                                WebClient webClient = new WebClient();
+                                String pathDoc = path + "/" + filename;
+                                webClient.DownloadFileCompleted += new AsyncCompletedEventHandler(OnDownloadFileCompleted);
+                                webClient.DownloadFileAsync(new Uri(thisOne.url), pathDoc, id);
+
+
+                                //fileDownload(thisOne.url, filename, item.id);
+                                MessageBox.Show("正在下载该文件！\n请等待，稍后请再次点击打印按钮");
+                            }
+                            break;
+                        }
+                        else
+                        {
+                            string filename = "";
+                            filename = path_ibook + item.name.Substring(0, item.name.Length - "【店内书】".Length);
+                            if (File.Exists(@filename))
+                            {
+
+                                PdfDocument doc = new PdfDocument();
+                                doc.LoadFromFile(filename);
+                                PrintDialog dialogprint = new PrintDialog();
+
+
+                                List<string> printerlist = new List<string>();
+                                List<string> printers_only_canduplex = new List<string>();
+
+
+                                string defaultprinter = dialogprint.PrinterSettings.PrinterName;
+
+                                foreach (string printname in PrinterSettings.InstalledPrinters)
+                                {
+                                    if (!printerlist.Contains(printname))
+                                    {
+                                        printerlist.Add(printname);
+                                    }
+                                }
+
+                                printerlist.Remove("Microsoft XPS Document Writer");
+                                printerlist.Remove("Fax");
+
+                                foreach (string printername in printerlist)
+                                {
+                                    if (!printers_only_canduplex.Contains(printername))
+                                    {
+                                        dialogprint.PrinterSettings.PrinterName = printername;
+                                        if ((dialogprint.PrinterSettings.CanDuplex) && (!dialogprint.PrinterSettings.SupportsColor))
+                                        {
+                                            printers_only_canduplex.Add(printername);
+                                        }
+                                    }
+                                }
+
+                                if (printerlist.Count == 0)
+                                {
+                                    throw new Exception("该电脑并未安装打印机");
+                                }
+
+                                if (printers_only_canduplex.Contains(defaultprinter))
+                                {
+                                    dialogprint.PrinterSettings.PrinterName = defaultprinter;
+                                }
+                                else
+                                {
+                                    if (printers_only_canduplex.Count == 0)
+                                    {
+
+                                        throw new Exception("不存在满足要求的打印机");
+
+                                    }
                                     else
                                     {
                                         dialogprint.PrinterSettings.PrinterName = printers_only_canduplex[0];
@@ -1054,88 +1281,43 @@ namespace Printer
                                 dialogprint.PrinterSettings.Duplex = Duplex.Vertical;
                                 dialogprint.PrinterSettings.DefaultPageSettings.Color = false;
 
+                                dialogprint.UseEXDialog = true;
+                                dialogprint.AllowPrintToFile = true;
+                                dialogprint.AllowSomePages = true;
+                                dialogprint.PrinterSettings.MinimumPage = 1;
+                                dialogprint.PrinterSettings.MaximumPage = doc.Pages.Count;
+                                dialogprint.PrinterSettings.FromPage = 1;
+                                dialogprint.PrinterSettings.Collate = true;
+                                //dialogprint.PrinterSettings.CanDuplex = true;
+                                //dialogprint.PrinterSettings.
+                                dialogprint.PrinterSettings.ToPage = doc.Pages.Count;
+
+                                string copy = item.copies.Substring(0, 1);
+                                dialogprint.PrinterSettings.Copies = (short)Int32.Parse(copy);
+
+
+
+
+                                //dialogprint.ShowDialog();
+                                //if (dialogprint.ShowDialog() == DialogResult.OK)
+                                //{
+                                doc.PrintFromPage = dialogprint.PrinterSettings.FromPage;
+                                doc.PrintToPage = dialogprint.PrinterSettings.ToPage;
+                                doc.PrintDocument.PrinterSettings = dialogprint.PrinterSettings;
+                                PrintDocument printdoc = doc.PrintDocument;
+
+                                dialogprint.Document = printdoc;
+                                printdoc.Print();
+                                //}
+
                             }
-                            else if ((item.color == "1") && (item.double_side == "双面"))
+                            else
                             {
-                                if (printers_canduplex_supportcolor.Contains(defaultprinter))
-                                {
-                                    dialogprint.PrinterSettings.PrinterName = defaultprinter;
-                                }
-                                else
-                                {
-                                    if (printers_canduplex_supportcolor.Count == 0)
-                                    {
-                                        throw new Exception("不存在满足要求的打印机");
-                                    }
-                                    else
-                                    {
-                                        dialogprint.PrinterSettings.PrinterName = printers_canduplex_supportcolor[0];
-                                    }
-                                }
-
-
-
-                                dialogprint.PrinterSettings.Duplex = Duplex.Vertical;
-                                dialogprint.PrinterSettings.DefaultPageSettings.Color = true;
+                                MessageBox.Show("本店电子书路径有误，请改正");
                             }
-
-                            dialogprint.UseEXDialog = true;
-                            dialogprint.AllowPrintToFile = true;
-                            dialogprint.AllowSomePages = true;
-                            dialogprint.PrinterSettings.MinimumPage = 1;
-                            dialogprint.PrinterSettings.MaximumPage = doc.Pages.Count;
-                            dialogprint.PrinterSettings.FromPage = 1;
-                            dialogprint.PrinterSettings.Collate = true;
-                            //dialogprint.PrinterSettings.CanDuplex = true;
-                            //dialogprint.PrinterSettings.
-                            dialogprint.PrinterSettings.ToPage = doc.Pages.Count;
-
-                            string copy = item.copies.Substring(0, 1);
-                            dialogprint.PrinterSettings.Copies = (short)Int32.Parse(copy);
-
-
-
-
-                            //dialogprint.ShowDialog();
-                            //if (dialogprint.ShowDialog() == DialogResult.OK)
-                            //{
-                            doc.PrintFromPage = dialogprint.PrinterSettings.FromPage;
-                            doc.PrintToPage = dialogprint.PrinterSettings.ToPage;
-                            doc.PrintDocument.PrinterSettings = dialogprint.PrinterSettings;
-                            PrintDocument printdoc = doc.PrintDocument;
-
-                            dialogprint.Document = printdoc;
-                            printdoc.Print();
-                            //}
                             break;
 
-
-
-
-
                         }
-                        else
-                        {
-                            filename = item.id + "_" + item.copies + "_" + item.double_side + "_" + item.student_number + "_" + item.name;
-                            //get 文件详细信息 URI操作示意: GET /File/1234
-                            string jsonUrl = API.GetMethod("/File/" + item.id);
-                            JObject jo = JObject.Parse(jsonUrl);
-                            ToJsonMy thisOne = new ToJsonMy();
-                            thisOne.url = (jo)["url"].ToString();
-                            if (!Directory.Exists(path))
-                            {
-                                Directory.CreateDirectory(path);
-                            }
-                            WebClient webClient = new WebClient();
-                            String pathDoc = path + "/" + filename;
-                            webClient.DownloadFileCompleted += new AsyncCompletedEventHandler(OnDownloadFileCompleted);
-                            webClient.DownloadFileAsync(new Uri(thisOne.url), pathDoc, id);
-
-
-                            //fileDownload(thisOne.url, filename, item.id);
-                            MessageBox.Show("正在下载该文件！\n请等待，稍后请再次点击打印按钮");
-                        }
-                        break;
                     }
                 }
             }
@@ -1207,75 +1389,129 @@ namespace Printer
                 {
                     if (current_id == item.id)
                     {
-                        string filename = "";
-                        filename = path + "\\" + item.id + "_" + item.copies + "_" + item.double_side + "_" + item.student_number + "_" + item.name;
-                        if (File.Exists(@filename))
+                        if (!item.is_ibook)
                         {
-                            filename = item.id + "_" + item.copies + "_" + item.double_side + "_" + item.student_number + "_" + item.name;
-                            PdfDocument doc = new PdfDocument();
-                            doc.LoadFromFile(path + "/" + filename);
-                            PrintDialog dialogprint = new PrintDialog();
-
-
-
-
-                            dialogprint.UseEXDialog = true;
-                            dialogprint.AllowPrintToFile = true;
-                            dialogprint.AllowSomePages = true;
-                            dialogprint.PrinterSettings.MinimumPage = 1;
-                            dialogprint.PrinterSettings.MaximumPage = doc.Pages.Count;
-                            dialogprint.PrinterSettings.FromPage = 1;
-                            dialogprint.PrinterSettings.Collate = true;
-                            //dialogprint.PrinterSettings.CanDuplex = true;
-                            //dialogprint.PrinterSettings.
-                            dialogprint.PrinterSettings.ToPage = doc.Pages.Count;
-
-                            string copy = item.copies.Substring(0, 1);
-                            dialogprint.PrinterSettings.Copies = (short)Int32.Parse(copy);
-
-
-
-
-                            //dialogprint.ShowDialog();
-                            if (dialogprint.ShowDialog() == DialogResult.OK)
+                            string filename = "";
+                            filename = path + "\\" + item.id + "_" + item.copies + "_" + item.double_side + "_" + item.student_number + "_" + item.name;
+                            if (File.Exists(@filename))
                             {
-                            doc.PrintFromPage = dialogprint.PrinterSettings.FromPage;
-                            doc.PrintToPage = dialogprint.PrinterSettings.ToPage;
-                            doc.PrintDocument.PrinterSettings = dialogprint.PrinterSettings;
-                            PrintDocument printdoc = doc.PrintDocument;
+                                filename = item.id + "_" + item.copies + "_" + item.double_side + "_" + item.student_number + "_" + item.name;
+                                PdfDocument doc = new PdfDocument();
+                                doc.LoadFromFile(path + "/" + filename);
+                                PrintDialog dialogprint = new PrintDialog();
 
-                            dialogprint.Document = printdoc;
-                            printdoc.Print();
+
+
+
+                                dialogprint.UseEXDialog = true;
+                                dialogprint.AllowPrintToFile = true;
+                                dialogprint.AllowSomePages = true;
+                                dialogprint.PrinterSettings.MinimumPage = 1;
+                                dialogprint.PrinterSettings.MaximumPage = doc.Pages.Count;
+                                dialogprint.PrinterSettings.FromPage = 1;
+                                dialogprint.PrinterSettings.Collate = true;
+                                //dialogprint.PrinterSettings.CanDuplex = true;
+                                //dialogprint.PrinterSettings.
+                                dialogprint.PrinterSettings.ToPage = doc.Pages.Count;
+
+                                string copy = item.copies.Substring(0, 1);
+                                dialogprint.PrinterSettings.Copies = (short)Int32.Parse(copy);
+
+
+
+
+                                //dialogprint.ShowDialog();
+                                if (dialogprint.ShowDialog() == DialogResult.OK)
+                                {
+                                    doc.PrintFromPage = dialogprint.PrinterSettings.FromPage;
+                                    doc.PrintToPage = dialogprint.PrinterSettings.ToPage;
+                                    doc.PrintDocument.PrinterSettings = dialogprint.PrinterSettings;
+                                    PrintDocument printdoc = doc.PrintDocument;
+
+                                    dialogprint.Document = printdoc;
+                                    printdoc.Print();
+                                }
+                                break;
+
+
+
+
+
+                            }
+                            else
+                            {
+                                filename = item.id + "_" + item.copies + "_" + item.double_side + "_" + item.student_number + "_" + item.name;
+                                //get 文件详细信息 URI操作示意: GET /File/1234
+                                string jsonUrl = API.GetMethod("/File/" + item.id);
+                                JObject jo = JObject.Parse(jsonUrl);
+                                ToJsonMy thisOne = new ToJsonMy();
+                                thisOne.url = (jo)["url"].ToString();
+                                if (!Directory.Exists(path))
+                                {
+                                    Directory.CreateDirectory(path);
+                                }
+                                WebClient webClient = new WebClient();
+                                String pathDoc = path + "/" + filename;
+                                webClient.DownloadFileCompleted += new AsyncCompletedEventHandler(OnDownloadFileCompleted);
+                                webClient.DownloadFileAsync(new Uri(thisOne.url), pathDoc, id);
+
+
+                                //fileDownload(thisOne.url, filename, item.id);
+                                MessageBox.Show("正在下载该文件！\n请等待，稍后请再次点击打印按钮");
                             }
                             break;
-
-
-
-
-
                         }
                         else
                         {
-                            filename = item.id + "_" + item.copies + "_" + item.double_side + "_" + item.student_number + "_" + item.name;
-                            //get 文件详细信息 URI操作示意: GET /File/1234
-                            string jsonUrl = API.GetMethod("/File/" + item.id);
-                            JObject jo = JObject.Parse(jsonUrl);
-                            ToJsonMy thisOne = new ToJsonMy();
-                            thisOne.url = (jo)["url"].ToString();
-                            if (!Directory.Exists(path))
+                            string filename = "";
+
+                            filename = path_ibook + item.name.Substring(0, item.name.Length - "【店内书】".Length);
+                            if (File.Exists(@filename))
                             {
-                                Directory.CreateDirectory(path);
+
+                                PdfDocument doc = new PdfDocument();
+                                doc.LoadFromFile(filename);
+                                PrintDialog dialogprint = new PrintDialog();
+
+
+
+
+                                dialogprint.UseEXDialog = true;
+                                dialogprint.AllowPrintToFile = true;
+                                dialogprint.AllowSomePages = true;
+                                dialogprint.PrinterSettings.MinimumPage = 1;
+                                dialogprint.PrinterSettings.MaximumPage = doc.Pages.Count;
+                                dialogprint.PrinterSettings.FromPage = 1;
+                                dialogprint.PrinterSettings.Collate = true;
+                                //dialogprint.PrinterSettings.CanDuplex = true;
+                                //dialogprint.PrinterSettings.
+                                dialogprint.PrinterSettings.ToPage = doc.Pages.Count;
+
+                                string copy = item.copies.Substring(0, 1);
+                                dialogprint.PrinterSettings.Copies = (short)Int32.Parse(copy);
+
+
+
+
+                                //dialogprint.ShowDialog();
+                                if (dialogprint.ShowDialog() == DialogResult.OK)
+                                {
+                                    doc.PrintFromPage = dialogprint.PrinterSettings.FromPage;
+                                    doc.PrintToPage = dialogprint.PrinterSettings.ToPage;
+                                    doc.PrintDocument.PrinterSettings = dialogprint.PrinterSettings;
+                                    PrintDocument printdoc = doc.PrintDocument;
+
+                                    dialogprint.Document = printdoc;
+                                    printdoc.Print();
+                                }
+                                break;
                             }
-                            WebClient webClient = new WebClient();
-                            String pathDoc = path + "/" + filename;
-                            webClient.DownloadFileCompleted += new AsyncCompletedEventHandler(OnDownloadFileCompleted);
-                            webClient.DownloadFileAsync(new Uri(thisOne.url), pathDoc, id);
-
-
-                            //fileDownload(thisOne.url, filename, item.id);
-                            MessageBox.Show("正在下载该文件！\n请等待，稍后请再次点击打印按钮");
+                            else
+                            {
+                                MessageBox.Show("本店电子书路径有误，请改正");
+                            }
+                            break;
                         }
-                        break;
                     }
                 }
             }
@@ -1303,7 +1539,24 @@ namespace Printer
             {
                 if (item.status == "未下载")
                 {
-                    Download(item.id);
+                    string file_url = "";
+                    string file_more = "";
+                    file_more = API.GetMethod("/file/" + item.id);
+                    file_url = JObject.Parse(file_more)["url"].ToString();
+                    if (!file_url.Contains("book"))
+                    {
+                        item.is_ibook = false;
+                        Download(item.id);
+                    }
+                    else
+                    {
+                        item.is_ibook = true;
+                        item.status = "2";
+                        changeStatusById(item.id, "download");
+                        this.notifyIcon1.Visible = true;
+                        this.notifyIcon1.ShowBalloonTip(10000);
+                        display(item);
+                    }
                 }
             }
         }

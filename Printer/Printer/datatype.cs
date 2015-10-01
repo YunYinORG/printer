@@ -24,6 +24,7 @@ namespace Printer
             public string url { get; set; }
             public string time { get; set; }
             public string lujing { get; set; }
+            public bool is_ibook;
 
             public string copies
             {
@@ -48,8 +49,14 @@ namespace Printer
                     {
                         return "单面";
                     }
-                    else
+                    else if (m_double_side == "1")
+                    {
                         return "双面";
+                    }
+                    else
+                    {
+                        return "-";
+                    }
                 }
                 set { m_double_side = value; }
             }
@@ -90,9 +97,17 @@ namespace Printer
                 get
                 {
                     if (color == "0")
+                    {
                         return "黑白";
-                    else
+                    }
+                    else if (color == "1")
+                    {
                         return "彩印";
+                    }
+                    else
+                    {
+                        return "-";
+                    }
                 }
                 set
                 {
@@ -120,7 +135,7 @@ namespace Printer
 
                             return "3X3";
                     }
-                    return "0";
+                    return "-";
                 }
                 set
                 {
