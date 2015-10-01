@@ -42,6 +42,12 @@
             System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(login_download));
             this.download = new System.Windows.Forms.Panel();
+            this.set_before_print = new System.Windows.Forms.Button();
+            this.set_default_printer = new System.Windows.Forms.Panel();
+            this.label2 = new System.Windows.Forms.Label();
+            this.close_printer = new System.Windows.Forms.Button();
+            this.ensure_printer = new System.Windows.Forms.Button();
+            this.printer_comboBox = new System.Windows.Forms.ComboBox();
             this.dicret_download = new System.Windows.Forms.Button();
             this.requirements = new System.Windows.Forms.Button();
             this.mydata = new System.Windows.Forms.DataGridView();
@@ -61,6 +67,7 @@
             this.一分钟ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.十分钟ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.三十分钟ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.设置默认打印机ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.help = new System.Windows.Forms.ToolStripMenuItem();
             this.版本信息ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.refresh = new System.Windows.Forms.ToolStripMenuItem();
@@ -75,24 +82,16 @@
             this.loginbutton = new System.Windows.Forms.Button();
             this.un = new System.Windows.Forms.Label();
             this.pw = new System.Windows.Forms.Label();
-            this.autorefresh = new System.Windows.Forms.Timer(this.components);
             this.notifyIcon1 = new System.Windows.Forms.NotifyIcon(this.components);
             this.notifyIconmenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.关闭ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.设置默认打印机ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.set_default_printer = new System.Windows.Forms.Panel();
-            this.printer_comboBox = new System.Windows.Forms.ComboBox();
-            this.ensure_printer = new System.Windows.Forms.Button();
-            this.close_printer = new System.Windows.Forms.Button();
-            this.label2 = new System.Windows.Forms.Label();
-            this.set_before_print = new System.Windows.Forms.Button();
             this.download.SuspendLayout();
+            this.set_default_printer.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.mydata)).BeginInit();
             this.menuStrip1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             this.login.SuspendLayout();
             this.notifyIconmenu.SuspendLayout();
-            this.set_default_printer.SuspendLayout();
             this.SuspendLayout();
             // 
             // download
@@ -113,6 +112,68 @@
             this.download.Name = "download";
             this.download.Size = new System.Drawing.Size(1284, 361);
             this.download.TabIndex = 12;
+            // 
+            // set_before_print
+            // 
+            this.set_before_print.BackColor = System.Drawing.SystemColors.ButtonHighlight;
+            this.set_before_print.Font = new System.Drawing.Font("微软雅黑", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.set_before_print.Location = new System.Drawing.Point(849, 6);
+            this.set_before_print.Name = "set_before_print";
+            this.set_before_print.Size = new System.Drawing.Size(132, 30);
+            this.set_before_print.TabIndex = 17;
+            this.set_before_print.Text = "详细设置并打印";
+            this.set_before_print.UseVisualStyleBackColor = false;
+            this.set_before_print.Click += new System.EventHandler(this.set_before_print_Click);
+            // 
+            // set_default_printer
+            // 
+            this.set_default_printer.BackColor = System.Drawing.Color.WhiteSmoke;
+            this.set_default_printer.Controls.Add(this.label2);
+            this.set_default_printer.Controls.Add(this.close_printer);
+            this.set_default_printer.Controls.Add(this.ensure_printer);
+            this.set_default_printer.Controls.Add(this.printer_comboBox);
+            this.set_default_printer.Location = new System.Drawing.Point(567, 126);
+            this.set_default_printer.Name = "set_default_printer";
+            this.set_default_printer.Size = new System.Drawing.Size(178, 138);
+            this.set_default_printer.TabIndex = 16;
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label2.Location = new System.Drawing.Point(28, 28);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(133, 14);
+            this.label2.TabIndex = 3;
+            this.label2.Text = "请选择合适的打印机";
+            // 
+            // close_printer
+            // 
+            this.close_printer.Location = new System.Drawing.Point(91, 95);
+            this.close_printer.Name = "close_printer";
+            this.close_printer.Size = new System.Drawing.Size(60, 28);
+            this.close_printer.TabIndex = 2;
+            this.close_printer.Text = "关闭";
+            this.close_printer.UseVisualStyleBackColor = true;
+            this.close_printer.Click += new System.EventHandler(this.close_printer_Click);
+            // 
+            // ensure_printer
+            // 
+            this.ensure_printer.Location = new System.Drawing.Point(30, 95);
+            this.ensure_printer.Name = "ensure_printer";
+            this.ensure_printer.Size = new System.Drawing.Size(55, 28);
+            this.ensure_printer.TabIndex = 1;
+            this.ensure_printer.Text = "确认";
+            this.ensure_printer.UseVisualStyleBackColor = true;
+            this.ensure_printer.Click += new System.EventHandler(this.ensure_printer_Click);
+            // 
+            // printer_comboBox
+            // 
+            this.printer_comboBox.FormattingEnabled = true;
+            this.printer_comboBox.Location = new System.Drawing.Point(30, 53);
+            this.printer_comboBox.Name = "printer_comboBox";
+            this.printer_comboBox.Size = new System.Drawing.Size(121, 20);
+            this.printer_comboBox.TabIndex = 0;
             // 
             // dicret_download
             // 
@@ -340,6 +401,13 @@
             this.三十分钟ToolStripMenuItem.Text = "三十分钟";
             this.三十分钟ToolStripMenuItem.Click += new System.EventHandler(this.三十分钟ToolStripMenuItem_Click);
             // 
+            // 设置默认打印机ToolStripMenuItem
+            // 
+            this.设置默认打印机ToolStripMenuItem.Name = "设置默认打印机ToolStripMenuItem";
+            this.设置默认打印机ToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
+            this.设置默认打印机ToolStripMenuItem.Text = "设置默认打印机";
+            this.设置默认打印机ToolStripMenuItem.Click += new System.EventHandler(this.设置默认打印机ToolStripMenuItem_Click);
+            // 
             // help
             // 
             this.help.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -492,12 +560,6 @@
             this.pw.TabIndex = 2;
             this.pw.Text = "密码";
             // 
-            // autorefresh
-            // 
-            this.autorefresh.Enabled = true;
-            this.autorefresh.Interval = 60000;
-            this.autorefresh.Tick += new System.EventHandler(this.autorefresh_Tick);
-            // 
             // notifyIcon1
             // 
             this.notifyIcon1.BalloonTipIcon = System.Windows.Forms.ToolTipIcon.Info;
@@ -523,75 +585,6 @@
             this.关闭ToolStripMenuItem.Text = "关闭";
             this.关闭ToolStripMenuItem.Click += new System.EventHandler(this.关闭ToolStripMenuItem_Click);
             // 
-            // 设置默认打印机ToolStripMenuItem
-            // 
-            this.设置默认打印机ToolStripMenuItem.Name = "设置默认打印机ToolStripMenuItem";
-            this.设置默认打印机ToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
-            this.设置默认打印机ToolStripMenuItem.Text = "设置默认打印机";
-            this.设置默认打印机ToolStripMenuItem.Click += new System.EventHandler(this.设置默认打印机ToolStripMenuItem_Click);
-            // 
-            // set_default_printer
-            // 
-            this.set_default_printer.BackColor = System.Drawing.Color.WhiteSmoke;
-            this.set_default_printer.Controls.Add(this.label2);
-            this.set_default_printer.Controls.Add(this.close_printer);
-            this.set_default_printer.Controls.Add(this.ensure_printer);
-            this.set_default_printer.Controls.Add(this.printer_comboBox);
-            this.set_default_printer.Location = new System.Drawing.Point(567, 126);
-            this.set_default_printer.Name = "set_default_printer";
-            this.set_default_printer.Size = new System.Drawing.Size(178, 138);
-            this.set_default_printer.TabIndex = 16;
-            // 
-            // printer_comboBox
-            // 
-            this.printer_comboBox.FormattingEnabled = true;
-            this.printer_comboBox.Location = new System.Drawing.Point(30, 53);
-            this.printer_comboBox.Name = "printer_comboBox";
-            this.printer_comboBox.Size = new System.Drawing.Size(121, 20);
-            this.printer_comboBox.TabIndex = 0;
-            // 
-            // ensure_printer
-            // 
-            this.ensure_printer.Location = new System.Drawing.Point(30, 95);
-            this.ensure_printer.Name = "ensure_printer";
-            this.ensure_printer.Size = new System.Drawing.Size(55, 28);
-            this.ensure_printer.TabIndex = 1;
-            this.ensure_printer.Text = "确认";
-            this.ensure_printer.UseVisualStyleBackColor = true;
-            this.ensure_printer.Click += new System.EventHandler(this.ensure_printer_Click);
-            // 
-            // close_printer
-            // 
-            this.close_printer.Location = new System.Drawing.Point(91, 95);
-            this.close_printer.Name = "close_printer";
-            this.close_printer.Size = new System.Drawing.Size(60, 28);
-            this.close_printer.TabIndex = 2;
-            this.close_printer.Text = "关闭";
-            this.close_printer.UseVisualStyleBackColor = true;
-            this.close_printer.Click += new System.EventHandler(this.close_printer_Click);
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("宋体", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label2.Location = new System.Drawing.Point(28, 28);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(133, 14);
-            this.label2.TabIndex = 3;
-            this.label2.Text = "请选择合适的打印机";
-            // 
-            // set_before_print
-            // 
-            this.set_before_print.BackColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.set_before_print.Font = new System.Drawing.Font("微软雅黑", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.set_before_print.Location = new System.Drawing.Point(849, 6);
-            this.set_before_print.Name = "set_before_print";
-            this.set_before_print.Size = new System.Drawing.Size(132, 30);
-            this.set_before_print.TabIndex = 17;
-            this.set_before_print.Text = "详细设置并打印";
-            this.set_before_print.UseVisualStyleBackColor = false;
-            this.set_before_print.Click += new System.EventHandler(this.set_before_print_Click);
-            // 
             // login_download
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -607,6 +600,8 @@
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.login_download_FormClosing);
             this.Load += new System.EventHandler(this.login_download_Load);
             this.download.ResumeLayout(false);
+            this.set_default_printer.ResumeLayout(false);
+            this.set_default_printer.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.mydata)).EndInit();
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
@@ -614,8 +609,6 @@
             this.login.ResumeLayout(false);
             this.login.PerformLayout();
             this.notifyIconmenu.ResumeLayout(false);
-            this.set_default_printer.ResumeLayout(false);
-            this.set_default_printer.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -641,7 +634,6 @@
         private System.Windows.Forms.ToolStripMenuItem help;
         private System.Windows.Forms.ToolStripMenuItem 版本信息ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem refresh;
-        private System.Windows.Forms.Timer autorefresh;
         private System.Windows.Forms.ToolStripMenuItem 一分钟ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 十分钟ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 三十分钟ToolStripMenuItem;

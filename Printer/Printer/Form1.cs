@@ -42,7 +42,7 @@ namespace Printer
             login.Visible = true;        //登录控件可见
             download.Visible = false;    //下载控件隐藏
             login.Enabled = true;        //登录控件使能
-            autorefresh.Enabled = false;  //登录时关闭计时器
+            
             //System.Windows.Forms.Control.CheckForIllegalCrossThreadCalls = false;
             checkbox.Checked = true;
             myLogin = remember.ReadTextFileToList(@"pwd.sjc");
@@ -167,7 +167,7 @@ namespace Printer
                     Console.WriteLine(my.name);
                     Console.WriteLine(my.id);
                     showdownload(my);        //传递参数，显示下载控件
-                    autorefresh.Enabled = true;   //登录成功后启动计时器
+                    timer_init();
                 }
                 else
                 {
@@ -268,7 +268,7 @@ namespace Printer
 
         public List<ToJsonMy>jsonlist = new List<ToJsonMy>();     //用于保存文件列表
 
-        
+        private static System.Timers.Timer aTimer; 
         /// <summary>
         /// 用于向jsonlist添加数据
         /// </summary>
@@ -693,7 +693,7 @@ namespace Printer
 
         private void 一分钟ToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            autorefresh.Interval = 60 * 1000;
+            aTimer.Interval = 60 * 1000;
             一分钟ToolStripMenuItem.Checked = true;
             十分钟ToolStripMenuItem.Checked = false;
             三十分钟ToolStripMenuItem.Checked = false;
@@ -701,7 +701,7 @@ namespace Printer
 
         private void 十分钟ToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            autorefresh.Interval = 60 * 1000 * 10;
+            aTimer.Interval = 60 * 1000 * 10;
             一分钟ToolStripMenuItem.Checked = false;
             十分钟ToolStripMenuItem.Checked = true;
             三十分钟ToolStripMenuItem.Checked = false;
@@ -709,7 +709,7 @@ namespace Printer
 
         private void 三十分钟ToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            autorefresh.Interval = 60 * 1000 * 30;
+            aTimer.Interval = 60 * 1000 * 30;
             一分钟ToolStripMenuItem.Checked = false;
             十分钟ToolStripMenuItem.Checked = false;
             三十分钟ToolStripMenuItem.Checked = true;
@@ -1286,7 +1286,27 @@ namespace Printer
 
         }
 
+        public void timer_init()
+        {
+            aTimer = new System.Timers.Timer();
+            aTimer.Elapsed += new System.Timers.ElapsedEventHandler(theout);
+            aTimer.Interval = 60000;
+            aTimer.AutoReset = true;
+            aTimer.Enabled = true;
+        }
 
+        public void theout(object source, System.Timers.ElapsedEventArgs e)
+        {
+            
+            myRefresh();
+            foreach (var item in jsonlist)
+            {
+                if (item.status == "未下载")
+                {
+                    Download(item.id);
+                }
+            }
+        }
 
 
 
