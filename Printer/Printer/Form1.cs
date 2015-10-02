@@ -1105,7 +1105,7 @@ namespace Printer
                                 }
                                 else if ((item.color == "0") && (item.double_side == "双面"))
                                 {
-                                    if (!printers_only_supportcolor.Contains(defaultprinter) || !printers_canduplex_supportcolor.Contains(defaultprinter))
+                                    if (printers_only_canduplex.Contains(defaultprinter))
                                     {
                                         dialogprint.PrinterSettings.PrinterName = defaultprinter;
                                     }
