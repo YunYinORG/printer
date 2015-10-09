@@ -228,6 +228,7 @@ namespace Printer
             this.Location = new Point(50, 200);
             this.FormBorderStyle = FormBorderStyle.Sizable;
             set_default_printer.Hide();
+            printers_setting_dialog.Hide();
             download.Show();
 
             downloadToken = my.token;
@@ -938,112 +939,47 @@ namespace Printer
                             if (File.Exists(@filename))
                             {
                                 filename = item.id + "_" + item.copies + "_" + item.double_side + "_" + item.student_number + "_" + item.name;
+                                if (item.copies == "现场打印")
+                                {
+                                    throw new Exception("请选择详细设置后打印");
+                                }
+                                string doc_extension = Path.GetExtension(path + "/" + filename);
+                                if ((doc_extension == ".doc")||(doc_extension == ".docx"))
+                                {
+                                    throw new Exception("word文件请双击文件名，打开文件后打印");
+                                }
+                                if ((doc_extension == ".ppt")||(doc_extension == ".pptx"))
+                                {
+                                    throw new Exception("ppt文件请双击文件名，打开文件后打印");
+                                }                                    
+                                
+                                
+                                
                                 PdfDocument doc = new PdfDocument();
                                 doc.LoadFromFile(path + "/" + filename);
+                            
+                                
+                                
                                 PrintDialog dialogprint = new PrintDialog();
 
 
                                 List<string> printerlist = new List<string>();
-                                List<string> printers_only_canduplex = new List<string>();
-                                List<string> printers_only_supportcolor = new List<string>();
-                                List<string> printers_canduplex_supportcolor = new List<string>();
-                                List<string> printers_no_cando = new List<string>();
+
                                 string defaultprinter = dialogprint.PrinterSettings.PrinterName;
-
-                                foreach (string printname in PrinterSettings.InstalledPrinters)
+                                List<string> printer_use_list = new List<string>();
+                                printer_use_list = remember.ReadTextFileToList(@"printer_setting.sjc");
+                                if (printer_use_list.Count != 4)
                                 {
-                                    if (!printerlist.Contains(printname))
-                                    {
-                                        printerlist.Add(printname);
-                                    }
+                                    throw new Exception("请先设置需要使用的打印机");
                                 }
 
-                                printerlist.Remove("Microsoft XPS Document Writer");
-                                printerlist.Remove("Fax");
 
-                                foreach (string printername in printerlist)
-                                {
-                                    if (!printers_only_canduplex.Contains(printername))
-                                    {
-                                        dialogprint.PrinterSettings.PrinterName = printername;
-                                        if ((dialogprint.PrinterSettings.CanDuplex) && (!dialogprint.PrinterSettings.SupportsColor))
-                                        {
-                                            printers_only_canduplex.Add(printername);
-                                        }
-                                    }
-                                }
 
-                                foreach (string printername in printerlist)
-                                {
-                                    if (!printers_only_supportcolor.Contains(printername))
-                                    {
-                                        dialogprint.PrinterSettings.PrinterName = printername;
-                                        if ((dialogprint.PrinterSettings.SupportsColor) && (!dialogprint.PrinterSettings.CanDuplex))
-                                        {
-                                            printers_only_supportcolor.Add(printername);
-                                        }
-                                    }
-                                }
 
-                                foreach (string printername in printerlist)
-                                {
-                                    if (!printers_canduplex_supportcolor.Contains(printername))
-                                    {
-                                        dialogprint.PrinterSettings.PrinterName = printername;
-                                        if ((dialogprint.PrinterSettings.SupportsColor) && (dialogprint.PrinterSettings.CanDuplex))
-                                        {
-                                            printers_canduplex_supportcolor.Add(printername);
-                                        }
-                                    }
-                                }
-                                foreach (string printername in printerlist)
-                                {
-                                    if (!printers_no_cando.Contains(printername))
-                                    {
-                                        dialogprint.PrinterSettings.PrinterName = printername;
-                                        if ((!dialogprint.PrinterSettings.CanDuplex) && (!dialogprint.PrinterSettings.SupportsColor))
-                                        {
-                                            printers_no_cando.Add(printername);
-                                        }
-                                    }
-                                }
-                                if (printerlist.Count == 0)
-                                {
-                                    throw new Exception("该电脑并未安装打印机");
-                                }
-                                dialogprint.PrinterSettings.PrinterName = defaultprinter;
                                 if ((item.color == "0") && (item.double_side == "单面"))
                                 {
-                                    if (dialogprint.PrinterSettings.SupportsColor)
-                                    {
-                                        if (printers_no_cando.Count == 0)
-                                        {
-                                            if (printers_only_canduplex.Count == 0)
-                                            {
-                                                if (printers_only_supportcolor.Count == 0)
-                                                {
-                                                    dialogprint.PrinterSettings.PrinterName = printers_canduplex_supportcolor[0];
-                                                }
-                                                else
-                                                {
-                                                    dialogprint.PrinterSettings.PrinterName = printers_only_supportcolor[0];
-                                                }
-                                            }
-                                            else
-                                            {
-                                                dialogprint.PrinterSettings.PrinterName = printers_only_canduplex[0];
-                                            }
-                                        }
-                                        else
-                                        {
-                                            dialogprint.PrinterSettings.PrinterName = printers_no_cando[0];
-                                        }
-                                    }
-                                    else
-                                    {
-                                        dialogprint.PrinterSettings.PrinterName = defaultprinter;
-                                    }
 
+                                    dialogprint.PrinterSettings.PrinterName = printer_use_list[0];
                                     dialogprint.PrinterSettings.Duplex = Duplex.Simplex;
                                     dialogprint.PrinterSettings.DefaultPageSettings.Color = false;
                                 }
@@ -1052,50 +988,8 @@ namespace Printer
                                 {
 
 
-                                    //正常设置
-                                    //if (printers_only_supportcolor.Contains(defaultprinter) || printers_canduplex_supportcolor.Contains(defaultprinter))
-                                    //{
-                                    //    dialogprint.PrinterSettings.PrinterName = defaultprinter;
-                                    //}
-                                    //else
-                                    //{
-                                    //    if (printers_only_supportcolor.Count == 0)
-                                    //    {
-                                    //        if (printers_canduplex_supportcolor.Count == 0)
-                                    //        {
-                                    //            throw new Exception("不存在满足要求的打印机");
-                                    //        }
-                                    //        else
-                                    //        {
-                                    //            dialogprint.PrinterSettings.PrinterName = printers_canduplex_supportcolor[0];
-                                    //        }
-                                    //    }
-                                    //    else
-                                    //    {
-                                    //        dialogprint.PrinterSettings.PrinterName = printers_only_supportcolor[0];
-                                    //    }
-                                    //}
+                                    dialogprint.PrinterSettings.PrinterName = printer_use_list[2];
 
-
-                                    //dialogprint.PrinterSettings.Duplex = Duplex.Simplex;
-                                    //dialogprint.PrinterSettings.DefaultPageSettings.Color = true;
-
-                                    //光辉岁月单独设置
-                                    if (printers_canduplex_supportcolor.Contains(defaultprinter))
-                                    {
-                                        dialogprint.PrinterSettings.PrinterName = defaultprinter;
-                                    }
-                                    else
-                                    {
-                                        if (printers_canduplex_supportcolor.Count == 0)
-                                        {
-                                            throw new Exception("不存在满足要求的打印机");
-                                        }
-                                        else
-                                        {
-                                            dialogprint.PrinterSettings.PrinterName = printers_canduplex_supportcolor[0];
-                                        }
-                                    }
 
 
 
@@ -1105,28 +999,9 @@ namespace Printer
                                 }
                                 else if ((item.color == "0") && (item.double_side == "双面"))
                                 {
-                                    if (printers_only_canduplex.Contains(defaultprinter))
-                                    {
-                                        dialogprint.PrinterSettings.PrinterName = defaultprinter;
-                                    }
-                                    else
-                                    {
-                                        if (printers_only_canduplex.Count == 0)
-                                        {
-                                            if (printers_canduplex_supportcolor.Count == 0)
-                                            {
-                                                throw new Exception("不存在满足要求的打印机");
-                                            }
-                                            else
-                                            {
-                                                dialogprint.PrinterSettings.PrinterName = printers_canduplex_supportcolor[0];
-                                            }
-                                        }
-                                        else
-                                        {
-                                            dialogprint.PrinterSettings.PrinterName = printers_only_canduplex[0];
-                                        }
-                                    }
+
+                                    dialogprint.PrinterSettings.PrinterName = printer_use_list[1];
+
 
                                     dialogprint.PrinterSettings.Duplex = Duplex.Vertical;
                                     dialogprint.PrinterSettings.DefaultPageSettings.Color = false;
@@ -1134,21 +1009,9 @@ namespace Printer
                                 }
                                 else if ((item.color == "1") && (item.double_side == "双面"))
                                 {
-                                    if (printers_canduplex_supportcolor.Contains(defaultprinter))
-                                    {
-                                        dialogprint.PrinterSettings.PrinterName = defaultprinter;
-                                    }
-                                    else
-                                    {
-                                        if (printers_canduplex_supportcolor.Count == 0)
-                                        {
-                                            throw new Exception("不存在满足要求的打印机");
-                                        }
-                                        else
-                                        {
-                                            dialogprint.PrinterSettings.PrinterName = printers_canduplex_supportcolor[0];
-                                        }
-                                    }
+
+                                    dialogprint.PrinterSettings.PrinterName = printer_use_list[3];
+
 
 
 
@@ -1223,60 +1086,20 @@ namespace Printer
 
                                 PdfDocument doc = new PdfDocument();
                                 doc.LoadFromFile(filename);
+                                
+                                
+                                
                                 PrintDialog dialogprint = new PrintDialog();
 
 
-                                List<string> printerlist = new List<string>();
-                                List<string> printers_only_canduplex = new List<string>();
-
-
-                                string defaultprinter = dialogprint.PrinterSettings.PrinterName;
-
-                                foreach (string printname in PrinterSettings.InstalledPrinters)
+                                List<string> printer_use_list = new List<string>();
+                                printer_use_list = remember.ReadTextFileToList(@"printer_setting.sjc");
+                                if (printer_use_list.Count != 4)
                                 {
-                                    if (!printerlist.Contains(printname))
-                                    {
-                                        printerlist.Add(printname);
-                                    }
+                                    throw new Exception("请先设置需要使用的打印机");
                                 }
 
-                                printerlist.Remove("Microsoft XPS Document Writer");
-                                printerlist.Remove("Fax");
-
-                                foreach (string printername in printerlist)
-                                {
-                                    if (!printers_only_canduplex.Contains(printername))
-                                    {
-                                        dialogprint.PrinterSettings.PrinterName = printername;
-                                        if ((dialogprint.PrinterSettings.CanDuplex) && (!dialogprint.PrinterSettings.SupportsColor))
-                                        {
-                                            printers_only_canduplex.Add(printername);
-                                        }
-                                    }
-                                }
-
-                                if (printerlist.Count == 0)
-                                {
-                                    throw new Exception("该电脑并未安装打印机");
-                                }
-
-                                if (printers_only_canduplex.Contains(defaultprinter))
-                                {
-                                    dialogprint.PrinterSettings.PrinterName = defaultprinter;
-                                }
-                                else
-                                {
-                                    if (printers_only_canduplex.Count == 0)
-                                    {
-
-                                        throw new Exception("不存在满足要求的打印机");
-
-                                    }
-                                    else
-                                    {
-                                        dialogprint.PrinterSettings.PrinterName = printers_only_canduplex[0];
-                                    }
-                                }
+                                dialogprint.PrinterSettings.PrinterName = printer_use_list[1];
 
                                 dialogprint.PrinterSettings.Duplex = Duplex.Vertical;
                                 dialogprint.PrinterSettings.DefaultPageSettings.Color = false;
@@ -1396,8 +1219,24 @@ namespace Printer
                             if (File.Exists(@filename))
                             {
                                 filename = item.id + "_" + item.copies + "_" + item.double_side + "_" + item.student_number + "_" + item.name;
+                                string doc_extension = Path.GetExtension(path + "/" + filename);
+                                if ((doc_extension == ".doc") || (doc_extension == ".docx"))
+                                {
+                                    throw new Exception("word文件请双击文件名，打开文件后打印");
+                                }
+                                if ((doc_extension == ".ppt") || (doc_extension == ".pptx"))
+                                {
+                                    throw new Exception("ppt文件请双击文件名，打开文件后打印");
+                                }                                     
+                                
+                                
                                 PdfDocument doc = new PdfDocument();
                                 doc.LoadFromFile(path + "/" + filename);
+
+         
+                                
+                                
+                                
                                 PrintDialog dialogprint = new PrintDialog();
 
 
@@ -1413,12 +1252,13 @@ namespace Printer
                                 //dialogprint.PrinterSettings.CanDuplex = true;
                                 //dialogprint.PrinterSettings.
                                 dialogprint.PrinterSettings.ToPage = doc.Pages.Count;
+                                if (item.copies != "现场打印")
+                                {
+                                    string copy = item.copies.Substring(0, 1);
+                                    dialogprint.PrinterSettings.Copies = (short)Int32.Parse(copy);
 
-                                string copy = item.copies.Substring(0, 1);
-                                dialogprint.PrinterSettings.Copies = (short)Int32.Parse(copy);
 
-
-
+                                }
 
                                 //dialogprint.ShowDialog();
                                 if (dialogprint.ShowDialog() == DialogResult.OK)
@@ -1561,6 +1401,78 @@ namespace Printer
             }
         }
 
+        private void 打印机设置ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            printer_setting_dialog_show();
+        }
+
+        public void printer_setting_dialog_show()
+        {
+            foreach (string printname in PrinterSettings.InstalledPrinters)
+            {
+
+                if (!noduplex_nocolor_combox.Items.Contains(printname))
+                {
+                    noduplex_nocolor_combox.Items.Add(printname);
+
+                }
+            }
+            foreach (string printname in PrinterSettings.InstalledPrinters)
+            {
+
+                if (!duplex_nocolor_combox.Items.Contains(printname))
+                {
+                    duplex_nocolor_combox.Items.Add(printname);
+
+                }
+            }
+            foreach (string printname in PrinterSettings.InstalledPrinters)
+            {
+
+                if (!noduplex_color_combox.Items.Contains(printname))
+                {
+                    noduplex_color_combox.Items.Add(printname);
+
+                }
+            }
+            foreach (string printname in PrinterSettings.InstalledPrinters)
+            {
+
+                if (!duplex_color_combox.Items.Contains(printname))
+                {
+                    duplex_color_combox.Items.Add(printname);
+
+                }
+            }
+
+
+            printers_setting_dialog.Show();
+        }
+
+        private void setting_printers_ensure_Click(object sender, EventArgs e)
+        {
+            List<string> printer_setting_list = new List<string>();
+            if ((noduplex_nocolor_combox.SelectedItem != null) && (duplex_nocolor_combox.SelectedItem != null) && (noduplex_color_combox.SelectedItem != null) && (duplex_color_combox.SelectedItem != null))
+            {
+                printer_setting_list.Add(noduplex_nocolor_combox.SelectedItem.ToString());
+                printer_setting_list.Add(duplex_nocolor_combox.SelectedItem.ToString());
+                printer_setting_list.Add(noduplex_color_combox.SelectedItem.ToString());
+                printer_setting_list.Add(duplex_color_combox.SelectedItem.ToString());
+                File.WriteAllText(@"printer_setting.sjc", "");
+                remember.WriteListToTextFile(printer_setting_list, @"printer_setting.sjc");
+                printers_setting_dialog.Hide();
+                MessageBox.Show("打印机设置成功");
+            }
+            else
+            {
+                MessageBox.Show("打印机设置失败，请确认已全部设置");
+            }
+        }
+
+        private void setting_printer_exit_Click(object sender, EventArgs e)
+        {
+            printers_setting_dialog.Hide();
+        }
 
 
 
