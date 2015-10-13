@@ -330,7 +330,15 @@ namespace Printer
                     myJs.color = ja[i]["color"].ToString();
                     myJs.ppt_layout = ja[i]["ppt_layout"].ToString();
                     myJs.requirements = ja[i]["requirements"].ToString();
-
+                    
+                    if (ja[i].Contains("pro"))
+                    {
+                        myJs.isfirst = true;
+                    }
+                    else
+                    {
+                        myJs.isfirst = false;
+                    }
                     string file_url = "";
                     string file_more = "";
                     file_more = API.GetMethod("/file/" + myJs.id);
@@ -456,18 +464,24 @@ namespace Printer
             string userName1 = json.student_number + json.use_name;
             string buttontext = "";
             string name = json.name;
-            
-             if (json.requirements != "")
-                {
-                    name = "(注)" + name;
 
-                }
+
+            if (json.requirements != "")
+            {
+                name = "(注)" + name;
+
+            }
+            if (json.isfirst == true)
+            {
+                name = "(首单！)" + name;
+            }
+
             if (json.copies == "现场打印")
             {
                 buttontext = "确认付款";
-               
+
                 this.mydata.Rows.Add(json.id, userName1, name, json.copies, "-", "-", "-", json.time, json.status, buttontext);
-                
+
             }
             else
             {
@@ -480,11 +494,11 @@ namespace Printer
                         buttontext = "确认付款";
                         break;
                 }
-                
+
                 this.mydata.Rows.Add(json.id, userName1, name, json.copies, json.double_side, json.strcolor, json.ppt, json.time, json.status, buttontext);
-                
+
             }
-            
+
         }
 
         /// <summary>

@@ -25,6 +25,7 @@ namespace Printer
             public string time { get; set; }
             public string lujing { get; set; }
             public bool is_ibook;
+            public bool isfirst;
 
             public string copies
             {
