@@ -1477,22 +1477,27 @@ namespace Printer
 
         public void printer_setting_dialog_show()
         {
+            ///
+            /// 1：对4种情况分别添加计算机有的打印机:
+            /// 2：如果之前设置过打印机，显示设为默认初值
+            ///
+            List<string> printer_use_list = new List<string>();
+            printer_use_list = remember.ReadTextFileToList(@"printer_setting.sjc");
             foreach (string printname in PrinterSettings.InstalledPrinters)
             {
 
                 if (!noduplex_nocolor_combox.Items.Contains(printname))
                 {
                     noduplex_nocolor_combox.Items.Add(printname);
-
                 }
             }
+
             foreach (string printname in PrinterSettings.InstalledPrinters)
             {
 
                 if (!duplex_nocolor_combox.Items.Contains(printname))
                 {
                     duplex_nocolor_combox.Items.Add(printname);
-
                 }
             }
             foreach (string printname in PrinterSettings.InstalledPrinters)
@@ -1501,7 +1506,6 @@ namespace Printer
                 if (!noduplex_color_combox.Items.Contains(printname))
                 {
                     noduplex_color_combox.Items.Add(printname);
-
                 }
             }
             foreach (string printname in PrinterSettings.InstalledPrinters)
@@ -1510,11 +1514,48 @@ namespace Printer
                 if (!duplex_color_combox.Items.Contains(printname))
                 {
                     duplex_color_combox.Items.Add(printname);
-
                 }
             }
-
-
+            //若果已经存在了保存的打印机选择列表，显示在combox中
+            int i = 0;
+            if (printer_use_list.Count == 4)
+            {
+                ///
+                /// 已经有打印店选择的信息后printer_setting.sjc，直接显示在combox中
+                ///
+                for (i = 0; i < noduplex_nocolor_combox.Items.Count; i++)
+                {
+                    if (printer_use_list[0] == noduplex_nocolor_combox.Items[i].ToString())
+                    {
+                        noduplex_nocolor_combox.SelectedIndex = i;
+                        break;
+                    }
+                }
+                for (i = 0; i < duplex_nocolor_combox.Items.Count; i++)
+                {
+                    if (printer_use_list[1] == duplex_nocolor_combox.Items[i].ToString())
+                    {
+                        duplex_nocolor_combox.SelectedIndex = i;
+                        break;
+                    }
+                }
+                for (i = 0; i < noduplex_color_combox.Items.Count; i++)
+                {
+                    if (printer_use_list[2] == noduplex_color_combox.Items[i].ToString())
+                    {
+                        noduplex_color_combox.SelectedIndex = i;
+                        break;
+                    }
+                }
+                for (i = 0; i < duplex_color_combox.Items.Count; i++)
+                {
+                    if (printer_use_list[3] == duplex_color_combox.Items[i].ToString())
+                    {
+                        duplex_color_combox.SelectedIndex = i;
+                        break;
+                    }
+                }
+            }
             printers_setting_dialog.Show();
         }
 
