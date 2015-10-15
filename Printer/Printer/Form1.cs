@@ -1116,9 +1116,9 @@ namespace Printer
                                 }
                                 else
                                 {
-                                    filename = item.id + "_" + item.copies + "_" + item.double_side + "_" + item.student_number + "_" + item.name;
+                                    //filename = item.id + "_" + item.copies + "_" + item.double_side + "_" + item.student_number + "_" + item.name;
                                     //get 文件详细信息 URI操作示意: GET /File/1234
-                                    string jsonUrl = API.GetMethod("/File/" + item.id);
+                                    string jsonUrl = API.GetMethod("/file/" + item.id);
                                     JObject jo = JObject.Parse(jsonUrl);
                                     ToJsonMy thisOne = new ToJsonMy();
                                     thisOne.url = (jo)["url"].ToString();
@@ -1349,9 +1349,9 @@ namespace Printer
                             }
                             else
                             {
-                                filename = item.id + "_" + item.copies + "_" + item.double_side + "_" + item.student_number + "_" + item.name;
+                                //filename = item.id + "_" + item.copies + "_" + item.double_side + "_" + item.student_number + "_" + item.name;
                                 //get 文件详细信息 URI操作示意: GET /File/1234
-                                string jsonUrl = API.GetMethod("/File/" + item.id);
+                                string jsonUrl = API.GetMethod("/file/" + item.id);
                                 JObject jo = JObject.Parse(jsonUrl);
                                 ToJsonMy thisOne = new ToJsonMy();
                                 thisOne.url = (jo)["url"].ToString();
@@ -1360,7 +1360,7 @@ namespace Printer
                                     Directory.CreateDirectory(path);
                                 }
                                 WebClient webClient = new WebClient();
-                                String pathDoc =  filename;
+                                String pathDoc = filename;
                                 webClient.DownloadFileCompleted += new AsyncCompletedEventHandler(OnDownloadFileCompleted);
                                 webClient.DownloadFileAsync(new Uri(thisOne.url), pathDoc, id);
 
