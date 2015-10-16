@@ -966,9 +966,7 @@ namespace Printer
         private void dicret_download_Click(object sender, EventArgs e)
         {
 
-            DialogResult dr = MessageBox.Show("请确认是否一键打印？", "", MessageBoxButtons.YesNo);
-            if (dr == DialogResult.Yes)
-            {
+
 
 
 
@@ -1208,7 +1206,7 @@ namespace Printer
                 {
                     MessageBox.Show(excep.Message, "无法打印");
                 }
-            }
+            
 
 
 
