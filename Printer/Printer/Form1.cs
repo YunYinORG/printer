@@ -330,8 +330,8 @@ namespace Printer
                     myJs.color = ja[i]["color"].ToString();
                     myJs.ppt_layout = ja[i]["ppt_layout"].ToString();
                     myJs.requirements = ja[i]["requirements"].ToString();
-                    
-                    if (ja[i].Contains("pro"))
+
+                    if (ja[i]["pro"].ToString() == "1")
                     {
                         myJs.isfirst = true;
                     }
@@ -390,6 +390,9 @@ namespace Printer
                 {
                     API.token = downloadToken;
                     myJsFile = API.GetMethod("/file/?page=" + API.myPage);
+#if DEBUG
+                    Console.WriteLine(myJsFile);    //这是为了调试么
+#endif
                     API.myPage += 1;
                     jo = JObject.Parse(myJsFile);
                     ja = jo["files"] as JArray;
