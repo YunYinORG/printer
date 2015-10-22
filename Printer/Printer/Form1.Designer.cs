@@ -498,7 +498,7 @@
             this.printerAcount.Location = new System.Drawing.Point(125, 81);
             this.printerAcount.Name = "printerAcount";
             this.printerAcount.Size = new System.Drawing.Size(129, 21);
-            this.printerAcount.TabIndex = 4;
+            this.printerAcount.TabIndex = 1;//4
             // 
             // checkbox
             // 
@@ -530,7 +530,7 @@
             this.password.Name = "password";
             this.password.PasswordChar = '*';
             this.password.Size = new System.Drawing.Size(129, 21);
-            this.password.TabIndex = 3;
+            this.password.TabIndex = 2;//3
             // 
             // error
             // 
@@ -549,7 +549,7 @@
             this.loginbutton.Location = new System.Drawing.Point(26, 206);
             this.loginbutton.Name = "loginbutton";
             this.loginbutton.Size = new System.Drawing.Size(83, 35);
-            this.loginbutton.TabIndex = 6;
+            this.loginbutton.TabIndex = 3;//6
             this.loginbutton.Text = "登录";
             this.loginbutton.UseVisualStyleBackColor = false;
             this.loginbutton.Click += new System.EventHandler(this.loginbutton_Click_1);

@@ -148,5 +148,28 @@ namespace Printer
             fs.Close();
             return list;
         }
+
+        public static string ReadTextFileToString(string fileName)
+        {
+            FileStream fs;
+            if (!File.Exists(fileName))
+            {
+                fs = File.Create(fileName);
+
+            }
+            else
+            {
+                fs = new FileStream(fileName, FileMode.Open, FileAccess.Read);
+            }
+            StreamReader sr = new StreamReader(fs);
+            //使用StreamReader类来读取文件 
+            sr.BaseStream.Seek(0, SeekOrigin.Begin);
+            // 从数据流中读取每一行，直到文件的最后一行
+            string tmp = sr.ReadToEnd();
+            //关闭此StreamReader对象 
+            sr.Close();
+            fs.Close();
+            return tmp;
+        }
     }
 }

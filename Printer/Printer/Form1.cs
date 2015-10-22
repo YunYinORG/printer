@@ -165,6 +165,10 @@ namespace Printer
                     }
                     File.WriteAllText(@"pwd.sjc", "");
                     remember.WriteListToTextFile(myRem, @"pwd.sjc");
+                    if (remember.ReadTextFileToString(@"data_frompage.sjc") != "")
+                    {
+                        database.number_nouse_page = remember.ReadTextFileToString(@"data_frompage.sjc");
+                    }
                     showdownload();        //传递参数，显示下载控件
                     timer_init();
                 }
@@ -438,6 +442,7 @@ namespace Printer
         /// <param name="e"></param>
         private void 关闭ToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            database.write_data_frompage();
             this.Close();
             Application.Exit();
         }

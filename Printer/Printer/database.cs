@@ -4,18 +4,20 @@ using System.Linq;
 using System.Text;
 using Newtonsoft.Json.Linq;
 using System.Windows.Forms;
+using System.IO;
 
 namespace Printer
 {
     class database
     {
         static public List<ToJsonMy> jsonlist = new List<ToJsonMy>();
+        static public string number_nouse_page = "1";
 
 
-
-        static public void jsonlist_add(JArray ja)
+        static public bool jsonlist_add(JArray ja)
         {
             bool flag = true;
+            bool flag_allpaid = true;
             //用于遍历的
             //向jsonList中添加数据，如果json的id已经存在，则flag置为false
             //即不添加，维护jsonList
@@ -80,12 +82,17 @@ namespace Printer
 
                     jsonlist.Add(myJs);
                 }
+                if (ja[i]["status"].ToString() != "5")
+                {
+                    flag_allpaid = false;
+                }
             }
+            return flag_allpaid;
         }
 
         static public void jsonlist_refresh()
         {
-            API.myPage = 1;
+            API.myPage = Int32.Parse(number_nouse_page);
             API.token = location_settings.my.token;
             string myJsFile = API.GetMethod("/file/?page=" + API.myPage);
             API.myPage += 1;
@@ -101,7 +108,10 @@ namespace Printer
             }
             else
             {
-                jsonlist_add(ja);
+                if (jsonlist_add(ja) == true)
+                {
+                    number_nouse_page = API.myPage.ToString();
+                }
                 bool myAdd = (ja.Count == 10);  //主要用于判断是否有下一页
                 //这里的逻辑应当仔细考虑
                 while (myAdd)
@@ -120,7 +130,10 @@ namespace Printer
                     }
                     if (ja != null)
                     {
-                        jsonlist_add(ja);
+                        if (jsonlist_add(ja) == true)
+                        {
+                            number_nouse_page = API.myPage.ToString();
+                        }
                     }
                     if (ja.Count < 10)
                         myAdd = false;
@@ -142,6 +155,19 @@ namespace Printer
                 }
             }
             return result;
+        }
+        static public void create_data_frompage()
+        {
+            if (!File.Exists("data_frompage.sjc"))
+            {
+                File.Create("data_frompage.sjc");
+            }
+        }
+        static public void write_data_frompage()
+        {
+            create_data_frompage();
+            File.WriteAllText(@"data_frompage.sjc", "");
+            remember.WriteStringToTextFile(number_nouse_page, @"data_frompage.sjc");
         }
 
     }
