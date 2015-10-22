@@ -1,0 +1,148 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using Newtonsoft.Json.Linq;
+using System.Windows.Forms;
+
+namespace Printer
+{
+    class database
+    {
+        static public List<ToJsonMy> jsonlist = new List<ToJsonMy>();
+
+
+
+        static public void jsonlist_add(JArray ja)
+        {
+            bool flag = true;
+            //用于遍历的
+            //向jsonList中添加数据，如果json的id已经存在，则flag置为false
+            //即不添加，维护jsonList
+            for (int i = 0; i < ja.Count; i++)//遍历ja数组
+            {
+                //bool flag2 = true;
+                flag = true;
+                foreach (var item in jsonlist)      //此处应当存在一个问题，即循环中jsonlist列表会发生改变，能否使用foreach
+                {
+                    //已存在的或是已支付的都可不予以考虑
+                    if (item.id == ja[i]["id"].ToString())
+                    {
+                        flag = false;
+                        break;
+                    }
+                }
+                if (ja[i]["status"].ToString() == "5")
+                {
+                    flag = false;
+                }
+                if (flag == true)
+                {
+                    ToJsonMy myJs = new ToJsonMy();
+                    myJs.id = ja[i]["id"].ToString();
+                    myJs.name = ja[i]["name"].ToString();
+                    myJs.use_id = ja[i]["use_id"].ToString();
+                    //myJs.pri_id = ja[i]["pri_id"].ToString();
+                    //myJs.url = ja[i]["url"].ToString();
+                    myJs.time = ja[i]["time"].ToString();
+                    myJs.name = ja[i]["name"].ToString();
+                    myJs.status = ja[i]["status"].ToString();
+                    myJs.copies = ja[i]["copies"].ToString();
+                    myJs.use_name = ja[i]["use_name"].ToString();
+                    myJs.double_side = ja[i]["double_side"].ToString();
+                    myJs.student_number = ja[i]["student_number"].ToString();
+                    myJs.color = ja[i]["color"].ToString();
+                    myJs.ppt_layout = ja[i]["ppt_layout"].ToString();
+                    myJs.requirements = ja[i]["requirements"].ToString();
+
+                    if (ja[i]["pro"].ToString() == "1")
+                    {
+                        myJs.isfirst = true;
+                    }
+                    else
+                    {
+                        myJs.isfirst = false;
+                    }
+                    string file_url = "";
+                    string file_more = "";
+                    file_more = API.GetMethod("/file/" + myJs.id);
+                    file_url = JObject.Parse(file_more)["url"].ToString();
+                    if (!file_url.Contains("book"))
+                    {
+                        myJs.is_ibook = false;
+
+                    }
+                    else
+                    {
+                        myJs.is_ibook = true;
+
+                    }
+
+                    jsonlist.Add(myJs);
+                }
+            }
+        }
+
+        static public void jsonlist_refresh()
+        {
+            API.myPage = 1;
+            API.token = location_settings.my.token;
+            string myJsFile = API.GetMethod("/file/?page=" + API.myPage);
+            API.myPage += 1;
+#if DEBUG
+            Console.WriteLine(myJsFile);    //这是为了调试么
+#endif
+            JObject jo = JObject.Parse(myJsFile);
+            JArray ja = jo["files"] as JArray;
+            //将JArray类型的ja转化为ToMyJohn对象数组 
+            if (ja == null)
+            {
+                MessageBox.Show("当前没有要下载文件");
+            }
+            else
+            {
+                jsonlist_add(ja);
+                bool myAdd = (ja.Count == 10);  //主要用于判断是否有下一页
+                //这里的逻辑应当仔细考虑
+                while (myAdd)
+                {
+                    API.token = location_settings.my.token;
+                    myJsFile = API.GetMethod("/file/?page=" + API.myPage);
+#if DEBUG
+            Console.WriteLine(myJsFile);    //这是为了调试么
+#endif
+                    API.myPage += 1;
+                    jo = JObject.Parse(myJsFile);
+                    ja = jo["files"] as JArray;
+                    if (ja == null)
+                    {
+                        break;
+                    }
+                    if (ja != null)
+                    {
+                        jsonlist_add(ja);
+                    }
+                    if (ja.Count < 10)
+                        myAdd = false;
+                    else
+                        myAdd = true;
+                }
+            }
+        }
+
+        static public ToJsonMy find_myjson(string id)
+        {
+            ToJsonMy result = null;
+            foreach (var item in jsonlist)
+            {
+                if (item.id == id)
+                {
+                    result = item;
+                    break;
+                }
+            }
+            return result;
+        }
+
+    }
+}

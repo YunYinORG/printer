@@ -91,8 +91,8 @@ namespace Printer
             FileStream fs;
             if (!File.Exists(fileName))
             {
-                 fs = File.Create(fileName);
-                
+                fs = File.Create(fileName);
+
             }
             else
             {
@@ -139,7 +139,7 @@ namespace Printer
                 my = JsonConvert.DeserializeObject<ToJsonMy>(tmp);
                 //if(my.status!="5")
                 //{
-                    list.Add(my);
+                list.Add(my);
                 //}
                 tmp = sr.ReadLine();
             }

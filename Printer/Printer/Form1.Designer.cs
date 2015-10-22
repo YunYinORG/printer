@@ -768,7 +768,7 @@
         private System.Windows.Forms.Label un;
         private System.Windows.Forms.Label pw;
         private System.Windows.Forms.Panel download;
-        private System.Windows.Forms.DataGridView mydata;
+        public System.Windows.Forms.DataGridView mydata;
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.MenuStrip menuStrip1;
         private System.Windows.Forms.ToolStripMenuItem tool;
@@ -779,7 +779,7 @@
         private System.Windows.Forms.ToolStripMenuItem 一分钟ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 十分钟ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 三十分钟ToolStripMenuItem;
-        private System.Windows.Forms.NotifyIcon notifyIcon1;
+        public System.Windows.Forms.NotifyIcon notifyIcon1;
         private System.Windows.Forms.DataGridViewTextBoxColumn id;
         private System.Windows.Forms.DataGridViewTextBoxColumn use_id;
         private System.Windows.Forms.DataGridViewTextBoxColumn filename;

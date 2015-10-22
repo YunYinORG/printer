@@ -16,7 +16,7 @@ namespace Printer
 
         [DllImport("User32.dll")]
         private static extern bool SetForegroundWindow(IntPtr hWnd);
-        private const int WS_SHOWNORMAL = 1;          
+        private const int WS_SHOWNORMAL = 1;
         /// <summary>
         /// 应用程序的主入口点。
         /// </summary>
@@ -34,7 +34,7 @@ namespace Printer
             else
             {
                 HandleRunningInstance(instance);
-            }            
+            }
             //Application.Run(new login_download());
         }
 
