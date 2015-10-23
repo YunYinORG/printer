@@ -104,6 +104,10 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="favicon.ico" />
+    <None Include="Resources\refresh.png" />
+    <None Include="Resources\printer-setting.png" />
+    <None Include="Resources\git_message.png" />
+    <None Include="Resources\default-printer.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

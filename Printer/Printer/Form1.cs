@@ -39,6 +39,7 @@ namespace Printer
         {
             this.FormBorderStyle = FormBorderStyle.FixedSingle;
             Control.CheckForIllegalCrossThreadCalls = false;
+            this.MaximizeBox = false;
             login.Visible = true;        //登录控件可见
             download.Visible = false;    //下载控件隐藏
             login.Enabled = true;        //登录控件使能
