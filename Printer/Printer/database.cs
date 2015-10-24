@@ -102,11 +102,7 @@ namespace Printer
             JObject jo = JObject.Parse(myJsFile);
             JArray ja = jo["files"] as JArray;
             //将JArray类型的ja转化为ToMyJohn对象数组 
-            if (ja == null)
-            {
-                MessageBox.Show("当前没有要下载文件");
-            }
-            else
+            if (ja != null)
             {
                 if (jsonlist_add(ja) == true)
                 {

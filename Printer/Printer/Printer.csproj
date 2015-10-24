@@ -60,6 +60,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="API.cs" />
+    <Compile Include="backgroundworker_refresh.cs" />
     <Compile Include="database.cs" />
     <Compile Include="datatype.cs" />
     <Compile Include="display.cs" />
@@ -71,6 +72,7 @@
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
     <Compile Include="location_settings.cs" />
+    <Compile Include="login_class.cs" />
     <Compile Include="print_class.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

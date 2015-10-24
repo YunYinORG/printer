@@ -38,17 +38,16 @@ namespace Printer
         private void login_download_Load(object sender, EventArgs e)
         {
             this.FormBorderStyle = FormBorderStyle.FixedSingle;
-            Control.CheckForIllegalCrossThreadCalls = false;
             this.MaximizeBox = false;
             login.Visible = true;        //登录控件可见
             download.Visible = false;    //下载控件隐藏
             login.Enabled = true;        //登录控件使能
             checkbox.Checked = true;
-            myLogin = remember.ReadTextFileToList(@"pwd.sjc");
-            if (myLogin.Count == 2)
+            login_class.myLogin = remember.ReadTextFileToList(@"pwd.sjc");
+            if (login_class.myLogin.Count == 2)
             {
-                password.Text = myLogin[0];
-                printerAcount.Text = myLogin[1];
+                password.Text = login_class.myLogin[0];
+                printerAcount.Text = login_class.myLogin[1];
             }
         }
         //-----------------------------------------------------------------------------------------
@@ -76,8 +75,6 @@ namespace Printer
             ctrl.Text = str; ctrl.Visible = visuable; ctrl.Enabled = enable;
         }
 
-        List<string> myLogin = new List<string>();   //用于记住用户名和密码
-
 
         /// <summary>
         /// 执行登录线程
@@ -87,49 +84,18 @@ namespace Printer
         private void loginbutton_Click_1(object sender, EventArgs e)
         {
             loginbutton.Enabled = false;     //关闭登录按钮使能
-            Thread load_Thread = new Thread(new ThreadStart(load));     //新建线程
-            load_Thread.Start();      //开启登录线程
+            load();
         }
 
-        public string md5_encoding(string strpassword)
-        {
-            byte[] pword = Encoding.Default.GetBytes(strpassword.Trim());       //进行MD5的加密工作
-            System.Security.Cryptography.MD5 md5 = new MD5CryptoServiceProvider();
-            byte[] out1 = md5.ComputeHash(pword);
-            strpassword = BitConverter.ToString(out1).Replace("-", "");
-            return strpassword;
-        }
-
-        public string get_token(string type, string strusername, string strpassword)
-        {
-            string js = "type=" + type + "&account=" + strusername + "&pwd=" + strpassword;
-
-            //POST得到要数据//登陆得到token
-            string r = API.PostMethod("/Token", js, new UTF8Encoding());
-            return r;
-        }
 
         /// <summary>
         /// 执行登录函数
         /// </summary>
         private void load()
         {
-            string type = "2";        //打印店的type为2
+            login_class.type = "2";        //打印店的type为2
             List<string> myRem = new List<string>();       //此处可以进行修改和简化        
-            string strusername = printerAcount.Text;            //用户名
-            string strpassword = password.Text;            //密码
-            if (myLogin.Count == 2)
-            {
-                if (myLogin[0].Length != strpassword.Length)
-                {
-                    strpassword = md5_encoding(strpassword);
-                }
-            }
-            else
-            {
-                strpassword = md5_encoding(strpassword);
-            }
-            if (strusername.Length == 0 || strpassword.Length == 0)
+            if (printerAcount.Text.Length == 0 || password.Text.Length == 0)
             {
                 if (error.InvokeRequired)
                 {
@@ -147,52 +113,58 @@ namespace Printer
             }
             else
             {
-                //获取token
-                strpassword = strpassword.ToLower();
-                string r = get_token(type, strusername, strpassword);
-                JObject toke = JObject.Parse(r);
+                IAsyncResult result = login_class.login_del.BeginInvoke(printerAcount.Text, password.Text, null, null);
+                string r = login_class.login_del.EndInvoke(result);
+                login_to_show(r);
+            }
+        }
 
-                if (r.Contains("token"))
+        public void login_to_show(string r)
+        {
+            List<string> myRem = new List<string>();
+            if (r.Contains("token"))
+            {
+                JObject toke = JObject.Parse(r);
+                location_settings.my.token = (string)toke["token"];//也能够得到token
+                location_settings.my.name = (string)toke["name"];
+                location_settings.my.id = (string)toke["id"];
+                location_settings.my.version = (float)toke["version"];
+                //判断是否保存用户名
+                if (checkbox.Checked)
                 {
-                    location_settings.my.token = (string)toke["token"];//也能够得到token
-                    location_settings.my.name = (string)toke["name"];
-                    location_settings.my.id = (string)toke["id"];
-                    location_settings.my.version = (float)toke["version"];
-                    //判断是否保存用户名
-                    if (checkbox.Checked)
-                    {
-                        myRem.Add(strpassword);
-                        myRem.Add(printerAcount.Text);
-                    }
-                    File.WriteAllText(@"pwd.sjc", "");
-                    remember.WriteListToTextFile(myRem, @"pwd.sjc");
-                    if (remember.ReadTextFileToString(@"data_frompage.sjc") != "")
-                    {
-                        database.number_nouse_page = remember.ReadTextFileToString(@"data_frompage.sjc");
-                    }
-                    showdownload();        //传递参数，显示下载控件
-                    timer_init();
+                    myRem.Add(login_class.password_save);
+                    myRem.Add(printerAcount.Text);
+                }
+                File.WriteAllText(@"pwd.sjc", "");
+                remember.WriteListToTextFile(myRem, @"pwd.sjc");
+                if (remember.ReadTextFileToString(@"data_frompage.sjc") != "")
+                {
+                    database.number_nouse_page = remember.ReadTextFileToString(@"data_frompage.sjc");
+                }
+                showdownload();        //传递参数，显示下载控件
+                timer_init();
+            }
+            else
+            {
+                //登录失败
+
+                if (error.InvokeRequired)
+                {
+                    my1 = new boxDelegate(boxChange);
+                    error.Invoke(my1, new object[] { error, "登陆失败，请重新登录！", true, true });
+                    loginbutton.Invoke(my1, new object[] { loginbutton, "登录", true, true });
+                    Thread.Sleep(100);
                 }
                 else
                 {
-                    //登录失败
-
-                    if (error.InvokeRequired)
-                    {
-                        my1 = new boxDelegate(boxChange);
-                        error.Invoke(my1, new object[] { error, "登陆失败，请重新登录！", true, true });
-                        loginbutton.Invoke(my1, new object[] { loginbutton, "登录", true, true });
-                        Thread.Sleep(100);
-                    }
-                    else
-                    {
-                        error.Text = "登陆失败，请重新登录！";
-                        error.Visible = true;
-                        loginbutton.Enabled = true;
-                    }
+                    error.Text = "登陆失败，请重新登录！";
+                    error.Visible = true;
+                    loginbutton.Enabled = true;
                 }
             }
+
         }
+
 
         /// <summary>
         /// 退出程序
@@ -228,14 +200,10 @@ namespace Printer
             location_settings.ibook_path = @"D:\云印南开_本店电子书\";
             location_settings.creat_path();
 
+            backgroundworker_refresh br = new backgroundworker_refresh(this);
+            br.refresh_first();
 
-            database.jsonlist_refresh();   //获取文件列表
-
-            display.display_list(this, database.jsonlist);
-            download_list_class download_jsonlist = new download_list_class(this, database.jsonlist);
-            download_jsonlist.download();
         }
-
 
 
 
@@ -285,9 +253,8 @@ namespace Printer
         /// <param name="e"></param>
         private void refresh_Click(object sender, EventArgs e)
         {
-            database.jsonlist_refresh();
-            download_list_class download_list = new download_list_class(this, database.jsonlist);
-            download_list.download();
+            backgroundworker_refresh br = new backgroundworker_refresh(this);
+            br.refresh_other();
         }
 
         private void 版本信息ToolStripMenuItem_Click(object sender, EventArgs e)
@@ -657,10 +624,8 @@ namespace Printer
 
         public void theout(object source, System.Timers.ElapsedEventArgs e)
         {
-
-            database.jsonlist_refresh();
-            download_list_class download_list = new download_list_class(this, database.jsonlist);
-            download_list.download();
+            backgroundworker_refresh br = new backgroundworker_refresh(this);
+            br.refresh_other();
         }
 
         private void 打印机设置ToolStripMenuItem_Click(object sender, EventArgs e)
