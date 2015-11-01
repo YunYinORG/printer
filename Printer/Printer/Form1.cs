@@ -265,7 +265,7 @@ namespace Printer
 
         private void 版本信息ToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("云印南开打印店客户端：\n     made by NKsjc 2015.01.08。\n    欢迎交流，qq：2634329276");
+            MessageBox.Show("云印南天打印店客户端");
         }
 
         /// <summary>
