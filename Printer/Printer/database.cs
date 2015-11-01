@@ -96,8 +96,9 @@ namespace Printer
 
         static public void jsonlist_refresh()
         {
-            API.myPage = Int32.Parse(number_nouse_page);
+            //API.myPage = Int32.Parse(number_nouse_page);
             //API.token = location_settings.my.token;
+            API.myPage = 1;
             string myJsFile = API.GetMethod("/printer/task?page=" + API.myPage);
             API.myPage += 1;
 #if DEBUG
