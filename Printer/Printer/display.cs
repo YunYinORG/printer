@@ -35,7 +35,16 @@ namespace Printer
             data.mydata_id = file.id;
             data.mydata_time = file.time;
             data.mydata_copies = file.copies;
-            data.mydata_status = file.status;
+
+            if (database.err_list.Contains(file.id))
+            {
+                data.mydata_status = "下载失败";
+            }
+            else
+            {
+                data.mydata_status = file.status;
+            }
+
             data.mydata_doubleside = file.double_side;
             data.mydata_color = file.strcolor;
             data.mydata_ppt = file.ppt;
@@ -70,6 +79,12 @@ namespace Printer
                         break;
                     case "已打印":
                         data.mydata_buttontext = "确认付款";
+                        break;
+                    case "正打印":
+                        data.mydata_buttontext = "通知已打印";
+                        break;
+                    case "未下载":
+                        data.mydata_buttontext = "手动下载";
                         break;
                 }
 

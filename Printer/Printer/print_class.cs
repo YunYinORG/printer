@@ -13,7 +13,7 @@ namespace Printer
 {
     class print_class
     {
-        static public void direct_print_file(ToJsonMy file)
+        static public void direct_print_file(ToJsonMy file, login_download form)
         {
             string filename = "";
             filename = location_settings.file_path + "\\" + file.id + "_" + file.copies + "_" + file.double_side + "_" + file.student_number + "_" + file.name;
@@ -97,19 +97,12 @@ namespace Printer
             dialogprint.PrinterSettings.MaximumPage = doc.Pages.Count;
             dialogprint.PrinterSettings.FromPage = 1;
             dialogprint.PrinterSettings.Collate = true;
-            //dialogprint.PrinterSettings.CanDuplex = true;
-            //dialogprint.PrinterSettings.
             dialogprint.PrinterSettings.ToPage = doc.Pages.Count;
 
             string copy = file.copies.Substring(0, 1);
             dialogprint.PrinterSettings.Copies = (short)Int32.Parse(copy);
 
 
-
-
-            //dialogprint.ShowDialog();
-            //if (dialogprint.ShowDialog() == DialogResult.OK)
-            //{
             doc.PrintFromPage = dialogprint.PrinterSettings.FromPage;
             doc.PrintToPage = dialogprint.PrinterSettings.ToPage;
             doc.PrintDocument.PrinterSettings = dialogprint.PrinterSettings;
@@ -117,10 +110,14 @@ namespace Printer
 
             dialogprint.Document = printdoc;
             printdoc.Print();
-            //}
+            file.changeStatusById("4");
+            form.mydata.Rows[form.mydata.CurrentRow.Index].Cells["status"].Value = "已打印";
+            form.mydata.Rows[form.mydata.CurrentRow.Index].Cells["operation"].Value = "确认付款";
+
+
         }
 
-        static public void setbefore_print_file(ToJsonMy file)
+        static public void setbefore_print_file(ToJsonMy file, login_download form)
         {
             string filename = "";
             filename = location_settings.file_path + "\\" + file.id + "_" + file.copies + "_" + file.double_side + "_" + file.student_number + "_" + file.name;
@@ -128,12 +125,12 @@ namespace Printer
             if ((doc_extension == ".doc") || (doc_extension == ".docx"))
             {
                 filename += ".pdf";
-                //throw new Exception("word文件请双击文件名，打开文件后打印");
+
             }
             if ((doc_extension == ".ppt") || (doc_extension == ".pptx"))
             {
                 filename += ".pdf";
-                //throw new Exception("ppt文件请双击文件名，打开文件后打印");
+
             }
 
             PdfDocument doc = new PdfDocument();
@@ -148,8 +145,6 @@ namespace Printer
             dialogprint.PrinterSettings.MaximumPage = doc.Pages.Count;
             dialogprint.PrinterSettings.FromPage = 1;
             dialogprint.PrinterSettings.Collate = true;
-            //dialogprint.PrinterSettings.CanDuplex = true;
-            //dialogprint.PrinterSettings.
             dialogprint.PrinterSettings.ToPage = doc.Pages.Count;
             if (file.copies != "现场打印")
             {
@@ -158,8 +153,6 @@ namespace Printer
 
 
             }
-
-            //dialogprint.ShowDialog();
             if (dialogprint.ShowDialog() == DialogResult.OK)
             {
                 doc.PrintFromPage = dialogprint.PrinterSettings.FromPage;
@@ -169,10 +162,13 @@ namespace Printer
 
                 dialogprint.Document = printdoc;
                 printdoc.Print();
+                file.changeStatusById("4");
+                form.mydata.Rows[form.mydata.CurrentRow.Index].Cells["status"].Value = "已打印";
+                form.mydata.Rows[form.mydata.CurrentRow.Index].Cells["operation"].Value = "确认付款";
             }
         }
 
-        static public void direct_print_ibook(ToJsonMy file)
+        static public void direct_print_ibook(ToJsonMy file, login_download form)
         {
             string filename = "";
             filename = location_settings.ibook_path + file.name.Substring(0, file.name.Length - "【店内书】".Length);
@@ -206,19 +202,11 @@ namespace Printer
                 dialogprint.PrinterSettings.MaximumPage = doc.Pages.Count;
                 dialogprint.PrinterSettings.FromPage = 1;
                 dialogprint.PrinterSettings.Collate = true;
-                //dialogprint.PrinterSettings.CanDuplex = true;
-                //dialogprint.PrinterSettings.
                 dialogprint.PrinterSettings.ToPage = doc.Pages.Count;
 
                 string copy = file.copies.Substring(0, 1);
                 dialogprint.PrinterSettings.Copies = (short)Int32.Parse(copy);
 
-
-
-
-                //dialogprint.ShowDialog();
-                //if (dialogprint.ShowDialog() == DialogResult.OK)
-                //{
                 doc.PrintFromPage = dialogprint.PrinterSettings.FromPage;
                 doc.PrintToPage = dialogprint.PrinterSettings.ToPage;
                 doc.PrintDocument.PrinterSettings = dialogprint.PrinterSettings;
@@ -226,6 +214,9 @@ namespace Printer
 
                 dialogprint.Document = printdoc;
                 printdoc.Print();
+                file.changeStatusById("4");
+                form.mydata.Rows[form.mydata.CurrentRow.Index].Cells["status"].Value = "已打印";
+                form.mydata.Rows[form.mydata.CurrentRow.Index].Cells["operation"].Value = "确认付款";
             }
             else
             {
@@ -233,7 +224,7 @@ namespace Printer
             }
         }
 
-        static public void setbefore_print_ibook(ToJsonMy file)
+        static public void setbefore_print_ibook(ToJsonMy file, login_download form)
         {
             string filename = "";
 
@@ -251,13 +242,10 @@ namespace Printer
                 dialogprint.PrinterSettings.MaximumPage = doc.Pages.Count;
                 dialogprint.PrinterSettings.FromPage = 1;
                 dialogprint.PrinterSettings.Collate = true;
-                //dialogprint.PrinterSettings.CanDuplex = true;
-                //dialogprint.PrinterSettings.
                 dialogprint.PrinterSettings.ToPage = doc.Pages.Count;
 
                 string copy = file.copies.Substring(0, 1);
                 dialogprint.PrinterSettings.Copies = (short)Int32.Parse(copy);
-                //dialogprint.ShowDialog();
                 if (dialogprint.ShowDialog() == DialogResult.OK)
                 {
                     doc.PrintFromPage = dialogprint.PrinterSettings.FromPage;
@@ -267,6 +255,9 @@ namespace Printer
 
                     dialogprint.Document = printdoc;
                     printdoc.Print();
+                    file.changeStatusById("4");
+                    form.mydata.Rows[form.mydata.CurrentRow.Index].Cells["status"].Value = "已打印";
+                    form.mydata.Rows[form.mydata.CurrentRow.Index].Cells["operation"].Value = "确认付款";
                 }
 
             }

@@ -122,13 +122,14 @@ namespace Printer
         public void login_to_show(string r)
         {
             List<string> myRem = new List<string>();
-            if (r.Contains("token"))
+            if (r.Contains("sid"))
             {
                 JObject toke = JObject.Parse(r);
-                location_settings.my.token = (string)toke["token"];//也能够得到token
-                location_settings.my.name = (string)toke["name"];
-                location_settings.my.id = (string)toke["id"];
-                location_settings.my.version = (float)toke["version"];
+                location_settings.my.sid = (string)toke["info"]["sid"];//也能够得到token
+                location_settings.my.name = (string)toke["info"]["printer"]["name"];
+                location_settings.my.id = (string)toke["info"]["printer"]["id"];
+                location_settings.my.sch_id = (string)toke["info"]["printer"]["sch_id"];
+                API.sid = location_settings.my.sid;
                 //判断是否保存用户名
                 if (checkbox.Checked)
                 {
@@ -233,14 +234,23 @@ namespace Printer
                     switch (mydata.Rows[e.RowIndex].Cells["operation"].Value.ToString())
                     {
                         case "通知已打印":
-                            file.changeStatusById("printed");
+                            file.changeStatusById("4");
                             mydata.Rows[e.RowIndex].Cells["status"].Value = "已打印";
                             mydata.Rows[e.RowIndex].Cells["operation"].Value = "确认付款";
                             break;
                         case "确认付款":
-                            file.changeStatusById("5");
-                            mydata.Rows.Remove(mydata.Rows[e.RowIndex]);
+                            DialogResult dr = MessageBox.Show("确认付款？", "", MessageBoxButtons.YesNo);
+                            if (dr == DialogResult.Yes)
+                            {
+                                file.ensure_payed();
+                                mydata.Rows.Remove(mydata.Rows[e.RowIndex]);
+                            }
                             break;
+                        case "手动下载":
+                            download_errfile_class download_class = new download_errfile_class(this, file, e.RowIndex);
+                            download_class.download();
+                            break;
+
                     }
                 }
             }
@@ -276,7 +286,7 @@ namespace Printer
 
                 userInfo user = new userInfo();
                 user = usermessage(file.use_id);
-                MessageBox.Show("用户：" + user.name + "  手机号：" + user.phone);
+                MessageBox.Show("用户：" + user.name + "  学号：" + user.student_number + "  手机号：" + user.phone);
 
             }
 
@@ -360,12 +370,15 @@ namespace Printer
         /// <returns></returns>
         public userInfo usermessage(string use_id)
         {
-            string jsonUrl = API.GetMethod("/User/" + use_id);
+            string jsonUrl = API.GetMethod("/printer/user/" + use_id);
             JObject jo = JObject.Parse(jsonUrl);
             userInfo user = new userInfo();
-            user.name = jo["name"].ToString();
-            user.phone = jo["phone"].ToString();
-            user.email = jo["email"].ToString();
+            user.name = jo["info"]["name"].ToString();
+            user.sch_id = jo["info"]["sch_id"].ToString();
+            user.student_number = jo["info"]["number"].ToString();
+            jsonUrl = API.GetMethod("/printer/user/" + use_id + "/phone");
+            jo = JObject.Parse(jsonUrl);
+            user.phone = jo["info"].ToString();
             return user;
         }
 
@@ -489,7 +502,7 @@ namespace Printer
                         if (File.Exists(@filename))
                         {
 
-                            print_class.direct_print_file(file);
+                            print_class.direct_print_file(file, this);
                         }
                         else
                         {
@@ -500,7 +513,7 @@ namespace Printer
                     }
                     else
                     {
-                        print_class.direct_print_ibook(file);
+                        print_class.direct_print_ibook(file, this);
                     }
                 }
 
@@ -587,7 +600,7 @@ namespace Printer
 
                         if (File.Exists(@filename))
                         {
-                            print_class.setbefore_print_file(file);
+                            print_class.setbefore_print_file(file, this);
 
 
                         }
@@ -600,7 +613,7 @@ namespace Printer
                     }
                     else
                     {
-                        print_class.setbefore_print_ibook(file);
+                        print_class.setbefore_print_ibook(file, this);
 
                     }
                 }

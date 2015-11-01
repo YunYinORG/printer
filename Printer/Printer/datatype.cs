@@ -10,10 +10,11 @@ namespace Printer
     //定义获取api的token
     public struct ToMyToken
     {
-        public string token { get; set; }
+        public string sid { get; set; }
         public string name { get; set; }
         public string id { get; set; }
-        public float version { get; set; }
+        public string sch_id { get; set; }
+        //public float version { get; set; }
     }
 
 
@@ -36,6 +37,7 @@ namespace Printer
         public string phone { get; set; }
         public string email { get; set; }
         public string status { get; set; }
+        public string sch_id { get; set; }
     }
 
     public struct mydata_form

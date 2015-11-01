@@ -7,6 +7,7 @@ using Newtonsoft.Json.Linq;
 using System.Net;
 using System.IO;
 using System.ComponentModel;
+using System.Windows.Forms;
 
 namespace Printer
 {
@@ -159,15 +160,24 @@ namespace Printer
             //put到服务器状态;/api.php/File/1234?token=xxxxxxxxxxxx 
             //将下载完成的文件id添加到下载完成myDown （ArrayList）中
             //参数： status=>文件状态'uploud','download','printing','printed','payed', 返回操作结果
-            string putUrl = @"/File/" + id;
+            string putUrl = @"/printer/task/" + id;
             string putPara = "status=" + currentStatus;
             string resualt = API.PutMethod(putUrl, putPara, new UTF8Encoding());
-            //Console.WriteLine(out1);
-            //添加事件
-
+            if (JObject.Parse(resualt)["status"].ToString() != "1")
+            {
+                MessageBox.Show((string)JObject.Parse(resualt)["info"]);
+            }
 
         }
 
+        public void ensure_payed()
+        {
+            string r = API.PostMethod_noparam("/printer/task/" + id + "/pay", new UTF8Encoding());
+            if (JObject.Parse(r)["status"].ToString() != "1")
+            {
+                MessageBox.Show((string)JObject.Parse(r)["info"]);
+            }
+        }
 
 
     }
