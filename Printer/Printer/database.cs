@@ -13,7 +13,7 @@ namespace Printer
     class database
     {
         static public List<ToJsonMy> jsonlist = new List<ToJsonMy>();
-        static public string number_nouse_page = "1";
+        //static public string number_nouse_page = "1";
         static public List<string> err_list = new List<string>();
 
 
@@ -109,10 +109,7 @@ namespace Printer
             //将JArray类型的ja转化为ToMyJohn对象数组 
             if (ja != null)
             {
-                if (jsonlist_add(ja) == true)
-                {
-                    number_nouse_page = API.myPage.ToString();
-                }
+                jsonlist_add(ja);
                 bool myAdd = (ja.Count == 10);  //主要用于判断是否有下一页
                 //这里的逻辑应当仔细考虑
                 while (myAdd)
@@ -131,10 +128,7 @@ namespace Printer
                     }
                     if (ja != null)
                     {
-                        if (jsonlist_add(ja) == true)
-                        {
-                            number_nouse_page = API.myPage.ToString();
-                        }
+                        jsonlist_add(ja);
                     }
                     if (ja.Count < 10)
                         myAdd = false;
@@ -157,19 +151,7 @@ namespace Printer
             }
             return result;
         }
-        static public void create_data_frompage()
-        {
-            if (!File.Exists("data_frompage.sjc"))
-            {
-                File.Create("data_frompage.sjc");
-            }
-        }
-        static public void write_data_frompage()
-        {
-            create_data_frompage();
-            File.WriteAllText(@"data_frompage.sjc", "");
-            remember.WriteStringToTextFile(number_nouse_page, @"data_frompage.sjc");
-        }
+
 
 
     }
