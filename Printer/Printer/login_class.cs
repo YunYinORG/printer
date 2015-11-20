@@ -47,10 +47,10 @@ namespace Printer
 
         private static string get_token(string type, string strusername, string strpassword)
         {
-            string js = "type=" + type + "&account=" + strusername + "&pwd=" + strpassword;
-
+            //string js = "type=" + type + "&account=" + strusername + "&pwd=" + strpassword;
+            string js = "account=" + strusername + "&password=" + strpassword;
             //POST得到要数据//登陆得到token
-            string r = API.PostMethod("/Token", js, new UTF8Encoding());
+            string r = API.PostMethod("/printer/auth/", js, new UTF8Encoding());
             return r;
         }
 

@@ -61,6 +61,7 @@ namespace Printer
         //定义委托，执行控件的线程操作
         private delegate void boxDelegate(Control ctrl, string str, bool visuable, bool enable);
         boxDelegate my1;
+        public string display_mode = "mode_all";
 
 
         /// <summary>
@@ -122,13 +123,14 @@ namespace Printer
         public void login_to_show(string r)
         {
             List<string> myRem = new List<string>();
-            if (r.Contains("token"))
+            if (r.Contains("sid"))
             {
                 JObject toke = JObject.Parse(r);
-                location_settings.my.token = (string)toke["token"];//也能够得到token
-                location_settings.my.name = (string)toke["name"];
-                location_settings.my.id = (string)toke["id"];
-                location_settings.my.version = (float)toke["version"];
+                location_settings.my.sid = (string)toke["info"]["sid"];//也能够得到token
+                location_settings.my.name = (string)toke["info"]["printer"]["name"];
+                location_settings.my.id = (string)toke["info"]["printer"]["id"];
+                location_settings.my.sch_id = (string)toke["info"]["printer"]["sch_id"];
+                API.sid = location_settings.my.sid;
                 //判断是否保存用户名
                 if (checkbox.Checked)
                 {
@@ -196,7 +198,8 @@ namespace Printer
             download.Show();
 
             String Date = (DateTime.Now.ToLongDateString());
-            location_settings.file_path = @"D:\云印南开\" + Date;
+            //location_settings.file_path = @"D:\云印南开\" + Date;
+            location_settings.file_path = @"D:\云印南开\" ;
             location_settings.ibook_path = @"D:\云印南开_本店电子书\";
             location_settings.creat_path();
 
@@ -226,22 +229,54 @@ namespace Printer
         {
             if (e.RowIndex >= 0)
             {
-                if (e.ColumnIndex == mydata.Columns["operation"].Index)
+                //if (e.ColumnIndex == mydata.Columns["operation"].Index)
+                string id = mydata.Rows[e.RowIndex].Cells["id"].Value.ToString();
+                ToJsonMy file = database.find_myjson(id);
+                string buttonText = this.mydata.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString();
+                switch (buttonText)
                 {
-                    string id = mydata.Rows[e.RowIndex].Cells["id"].Value.ToString();
-                    ToJsonMy file = database.find_myjson(id);
-                    switch (mydata.Rows[e.RowIndex].Cells["operation"].Value.ToString())
-                    {
-                        case "通知已打印":
-                            file.changeStatusById("printed");
-                            mydata.Rows[e.RowIndex].Cells["status"].Value = "已打印";
-                            mydata.Rows[e.RowIndex].Cells["operation"].Value = "确认付款";
-                            break;
-                        case "确认付款":
-                            file.changeStatusById("5");
-                            mydata.Rows.Remove(mydata.Rows[e.RowIndex]);
-                            break;
-                    }
+                    case "确认付款":
+                        //DialogResult dr = MessageBox.Show("确认付款？", "", MessageBoxButtons.YesNo);
+                        //if (dr == DialogResult.Yes)
+                        //{
+                        //    file.ensure_payed();
+                        //    mydata.Rows.Remove(mydata.Rows[e.RowIndex]);
+                        //}
+                        operation_EnsurePayed_class operation6 = new operation_EnsurePayed_class(this, file, e.RowIndex);
+                        operation6.do_operation();
+                        break;
+                    case "生成二维码":
+                        break;
+                    case "通知打印完成":
+                        operation_TellPrinted_class tellprinted = new operation_TellPrinted_class(this, file, e.RowIndex);
+                        tellprinted.do_operation();
+                        break;
+                    case "手动下载":
+                        //download_errfile_class download_class = new download_errfile_class(this, file, e.RowIndex);
+                        //download_class.download();
+                        operation_ErrDownload_class operation1 = new operation_ErrDownload_class(this, file, e.RowIndex);
+                        operation1.do_operation();
+                        break;
+                    case "取消订单":
+                        operation_cancel_class operation5 = new operation_cancel_class(this, file, e.RowIndex);
+                        operation5.do_operation();
+                        break;
+                    case "打开源文件":
+                        operation_GetRowFile_class operation7 = new operation_GetRowFile_class(this, file, e.RowIndex);
+                        operation7.do_operation();
+                        break;
+                    case "一键打印":
+                        operation_PrintDirect_class operation2 = new operation_PrintDirect_class(this, file, e.RowIndex);
+                        operation2.do_operation();
+                        break;
+                    case "设置后打印":
+                        operation_PrintAfterSet_class operation3 = new operation_PrintAfterSet_class(this, file, e.RowIndex);
+                        operation3.do_operation();
+                        break;
+                    case "重新下载":
+                        operation_ReDownload_class operation4 = new operation_ReDownload_class(this, file, e.RowIndex);
+                        operation4.do_operation();
+                        break;
                 }
             }
         }
@@ -259,7 +294,7 @@ namespace Printer
 
         private void 版本信息ToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            MessageBox.Show("云印南开打印店客户端：\n     made by NKsjc 2015.01.08。\n    欢迎交流，qq：2634329276");
+            MessageBox.Show("云印南开打印店客户端");
         }
 
         /// <summary>
@@ -267,67 +302,67 @@ namespace Printer
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void mydata_CellContentDoubleClick(object sender, DataGridViewCellEventArgs e)
-        {
-            if ((e.ColumnIndex >= 1) && (e.ColumnIndex < 2))
-            {
-                string id = mydata.Rows[e.RowIndex].Cells["id"].Value.ToString();
-                ToJsonMy file = database.find_myjson(id);
+        //private void mydata_CellContentDoubleClick(object sender, DataGridViewCellEventArgs e)
+        //{
+        //    if ((e.ColumnIndex >= 1) && (e.ColumnIndex < 2))
+        //    {
+        //        string id = mydata.Rows[e.RowIndex].Cells["id"].Value.ToString();
+        //        ToJsonMy file = database.find_myjson(id);
 
-                userInfo user = new userInfo();
-                user = usermessage(file.use_id);
-                MessageBox.Show("用户：" + user.name + "  手机号：" + user.phone);
+        //        userInfo user = new userInfo();
+        //        user = usermessage(file.use_id);
+        //        MessageBox.Show("用户：" + user.name + "  学号：" + user.student_number + "  手机号：" + user.phone);
 
-            }
+        //    }
 
-            else if ((e.ColumnIndex >= 2) && (e.ColumnIndex < 3))
-            {
-                string id = mydata.Rows[e.RowIndex].Cells["id"].Value.ToString();
-                ToJsonMy file = database.find_myjson(id);
-                if (file != null)
-                {
-                    if (!file.is_ibook)
-                    {
-                        string filename = "";
-                        filename = location_settings.file_path + "\\" + file.id + "_" + file.copies + "_" + file.double_side + "_" + file.student_number + "_" + file.name;
+        //    else if ((e.ColumnIndex >= 2) && (e.ColumnIndex < 3))
+        //    {
+        //        string id = mydata.Rows[e.RowIndex].Cells["id"].Value.ToString();
+        //        ToJsonMy file = database.find_myjson(id);
+        //        if (file != null)
+        //        {
+        //            if (!file.is_ibook)
+        //            {
+        //                string filename = "";
+        //                filename = location_settings.file_path + "\\" + file.id + "_" + file.copies + "_" + file.double_side + "_" + file.student_number + "_" + file.name;
 
-                        string doc_extension = Path.GetExtension(location_settings.file_path + "/" + filename);
-                        if (doc_extension != ".pdf")
-                        {
-                            filename += ".pdf";
-                        }
+        //                string doc_extension = Path.GetExtension(location_settings.file_path + "/" + filename);
+        //                if (doc_extension != ".pdf")
+        //                {
+        //                    filename += ".pdf";
+        //                }
 
-                        if (File.Exists(@filename))
-                        {
-                            System.Diagnostics.Process.Start(filename);
+        //                if (File.Exists(@filename))
+        //                {
+        //                    System.Diagnostics.Process.Start(filename);
 
-                        }
-                        else
-                        {
-                            download_single_single_class file_download = new download_single_single_class(this, file);
-                            file_download.download();
-                        }
+        //                }
+        //                else
+        //                {
+        //                    download_single_single_class file_download = new download_single_single_class(this, file);
+        //                    file_download.download();
+        //                }
 
-                    }
-                    else
-                    {
-                        string filename = "";
-                        filename = location_settings.ibook_path + file.name.Substring(0, file.name.Length - "【店内书】".Length);
-                        if (File.Exists(@filename))
-                        {
-                            System.Diagnostics.Process.Start(filename);
+        //            }
+        //            else
+        //            {
+        //                string filename = "";
+        //                filename = location_settings.ibook_path + file.name.Substring(0, file.name.Length - "【店内书】".Length);
+        //                if (File.Exists(@filename))
+        //                {
+        //                    System.Diagnostics.Process.Start(filename);
 
-                        }
-                        else
-                        {
-                            MessageBox.Show("本店电子书路径有误，请改正");
-                        }
+        //                }
+        //                else
+        //                {
+        //                    MessageBox.Show("本店电子书路径有误，请改正");
+        //                }
 
-                    }
-                }
+        //            }
+        //        }
 
-            }
-        }
+        //    }
+        //}
 
         private void 一分钟ToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -360,12 +395,15 @@ namespace Printer
         /// <returns></returns>
         public userInfo usermessage(string use_id)
         {
-            string jsonUrl = API.GetMethod("/User/" + use_id);
+            string jsonUrl = API.GetMethod("/printer/user/" + use_id);
             JObject jo = JObject.Parse(jsonUrl);
             userInfo user = new userInfo();
-            user.name = jo["name"].ToString();
-            user.phone = jo["phone"].ToString();
-            user.email = jo["email"].ToString();
+            user.name = jo["info"]["name"].ToString();
+            user.sch_id = jo["info"]["sch_id"].ToString();
+            user.student_number = jo["info"]["number"].ToString();
+            jsonUrl = API.GetMethod("/printer/user/" + use_id + "/phone");
+            jo = JObject.Parse(jsonUrl);
+            user.phone = jo["info"].ToString();
             return user;
         }
 
@@ -410,7 +448,7 @@ namespace Printer
         /// <param name="e"></param>
         private void 关闭ToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            database.write_data_frompage();
+            //database.write_data_frompage();
             this.Close();
             Application.Exit();
         }
@@ -463,52 +501,52 @@ namespace Printer
 
         private void dicret_download_Click(object sender, EventArgs e)
         {
-            try
-            {
+            //try
+            //{
 
-                string current_id = mydata.Rows[mydata.CurrentRow.Index].Cells["id"].Value.ToString();
-                ToJsonMy file = database.find_myjson(current_id);
-                if (file != null)
-                {
-                    if (!file.is_ibook)
-                    {
-                        string filename = "";
-                        filename = location_settings.file_path + "\\" + file.id + "_" + file.copies + "_" + file.double_side + "_" + file.student_number + "_" + file.name;
+            //    string current_id = mydata.Rows[mydata.CurrentRow.Index].Cells["id"].Value.ToString();
+            //    ToJsonMy file = database.find_myjson(current_id);
+            //    if (file != null)
+            //    {
+            //        if (!file.is_ibook)
+            //        {
+            //            string filename = "";
+            //            filename = location_settings.file_path + "\\" + file.id + "_" + file.copies + "_" + file.double_side + "_" + file.student_number + "_" + file.name;
 
-                        string doc_extension = Path.GetExtension(location_settings.file_path + "/" + filename);
-                        if ((doc_extension == ".doc") || (doc_extension == ".docx"))
-                        {
-                            filename += ".pdf";
-                        }
-                        if ((doc_extension == ".ppt") || (doc_extension == ".pptx"))
-                        {
-                            filename += ".pdf";
-                            throw new Exception("ppt文件请设置文件后打印");
-                        }
+            //            string doc_extension = Path.GetExtension(location_settings.file_path + "/" + filename);
+            //            if ((doc_extension == ".doc") || (doc_extension == ".docx"))
+            //            {
+            //                filename += ".pdf";
+            //            }
+            //            if ((doc_extension == ".ppt") || (doc_extension == ".pptx"))
+            //            {
+            //                filename += ".pdf";
+            //                throw new Exception("ppt文件请设置文件后打印");
+            //            }
 
-                        if (File.Exists(@filename))
-                        {
+            //            if (File.Exists(@filename))
+            //            {
 
-                            print_class.direct_print_file(file);
-                        }
-                        else
-                        {
-                            download_single_single_class file_download = new download_single_single_class(this, file);
-                            file_download.download();
-                        }
+            //                print_class.direct_print_file(file,this);
+            //            }
+            //            else
+            //            {
+            //                download_single_single_class file_download = new download_single_single_class(this, file);
+            //                file_download.download();
+            //            }
 
-                    }
-                    else
-                    {
-                        print_class.direct_print_ibook(file);
-                    }
-                }
+            //        }
+            //        else
+            //        {
+            //            print_class.direct_print_ibook(file,this);
+            //        }
+            //    }
 
-            }
-            catch (Exception excep)
-            {
-                MessageBox.Show(excep.Message, "无法打印");
-            }
+            //}
+            //catch (Exception excep)
+            //{
+            //    MessageBox.Show(excep.Message, "无法打印");
+            //}
 
 
 
@@ -561,56 +599,46 @@ namespace Printer
 
         private void set_before_print_Click(object sender, EventArgs e)
         {
+            //try
+            //{
+            //    string current_id = mydata.Rows[mydata.CurrentRow.Index].Cells["id"].Value.ToString();
+            //    ToJsonMy file = database.find_myjson(current_id);
+            //    if (file != null)
+            //    {
+            //        if (!file.is_ibook)
+            //        {
+            //            string filename = "";
+            //            filename = location_settings.file_path + "\\" + file.id + "_" + file.copies + "_" + file.double_side + "_" + file.student_number + "_" + file.name;
+            //            string doc_extension = Path.GetExtension(location_settings.file_path + "/" + filename);
+            //            if ((doc_extension == ".doc") || (doc_extension == ".docx"))
+            //            {
+            //                filename += ".pdf";
 
-
-            try
-            {
-                string current_id = mydata.Rows[mydata.CurrentRow.Index].Cells["id"].Value.ToString();
-                ToJsonMy file = database.find_myjson(current_id);
-                if (file != null)
-                {
-                    if (!file.is_ibook)
-                    {
-                        string filename = "";
-                        filename = location_settings.file_path + "\\" + file.id + "_" + file.copies + "_" + file.double_side + "_" + file.student_number + "_" + file.name;
-                        string doc_extension = Path.GetExtension(location_settings.file_path + "/" + filename);
-                        if ((doc_extension == ".doc") || (doc_extension == ".docx"))
-                        {
-                            filename += ".pdf";
-
-                        }
-                        if ((doc_extension == ".ppt") || (doc_extension == ".pptx"))
-                        {
-                            filename += ".pdf";
-                        }
-
-
-                        if (File.Exists(@filename))
-                        {
-                            print_class.setbefore_print_file(file);
-
-
-                        }
-                        else
-                        {
-                            download_single_single_class file_download = new download_single_single_class(this, file);
-                            file_download.download();
-                        }
-
-                    }
-                    else
-                    {
-                        print_class.setbefore_print_ibook(file);
-
-                    }
-                }
-
-            }
-            catch (Exception excep)
-            {
-                MessageBox.Show(excep.Message, "无法打印");
-            }
-
+            //            }
+            //            if ((doc_extension == ".ppt") || (doc_extension == ".pptx"))
+            //            {
+            //                filename += ".pdf";
+            //            }
+            //            if (File.Exists(@filename))
+            //            {
+            //                print_class.setbefore_print_file(file, this);
+            //            }
+            //            else
+            //            {
+            //                download_single_single_class file_download = new download_single_single_class(this, file);
+            //                file_download.download();
+            //            }
+            //        }
+            //        else
+            //        {
+            //            print_class.setbefore_print_ibook(file, this);
+            //        }
+            //    }
+            //}
+            //catch (Exception excep)
+            //{
+            //    MessageBox.Show(excep.Message, "无法打印");
+            //}
         }
 
         public void timer_init()
@@ -736,6 +764,83 @@ namespace Printer
         {
             printers_setting_dialog.Hide();
         }
+
+        private void 自动刷新ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            手动刷新ToolStripMenuItem.Checked = false;
+            自动刷新ToolStripMenuItem.Checked = true;
+            aTimer.Enabled = true;
+        }
+
+        private void 手动刷新ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            手动刷新ToolStripMenuItem.Checked = true;
+            自动刷新ToolStripMenuItem.Checked = false;
+            aTimer.Enabled = false;
+                
+        }
+
+        private void 所有文件ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            所有文件ToolStripMenuItem.Checked = true;
+            未下载文件ToolStripMenuItem.Checked = false;
+            已下载文件ToolStripMenuItem.Checked = false;
+            打印完成文件ToolStripMenuItem.Checked = false;
+            已打印文件ToolStripMenuItem.Checked = false;
+            mydata.Rows.Clear();
+            display.display_list_norefresh(this, database.jsonlist);
+            display_mode = "mode_all";
+        }
+
+        private void 未下载文件ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            所有文件ToolStripMenuItem.Checked = false;
+            未下载文件ToolStripMenuItem.Checked = true;
+            已下载文件ToolStripMenuItem.Checked = false;
+            已打印文件ToolStripMenuItem.Checked = false;
+            打印完成文件ToolStripMenuItem.Checked = false;
+            mydata.Rows.Clear();
+            display.display_list_norefresh(this, database.jsonlist_err);
+            display_mode = "mode_downloading";
+        }
+
+        private void 已下载文件ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            所有文件ToolStripMenuItem.Checked = false;
+            未下载文件ToolStripMenuItem.Checked = false;
+            已下载文件ToolStripMenuItem.Checked = true;
+            已打印文件ToolStripMenuItem.Checked = false;
+            打印完成文件ToolStripMenuItem.Checked = false;
+            mydata.Rows.Clear();
+            display.display_list_norefresh(this, database.jsonlist_downloaded);
+            display_mode = "mode_downloaded";
+        }
+
+        private void 已打印文件ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            所有文件ToolStripMenuItem.Checked = false;
+            未下载文件ToolStripMenuItem.Checked = false;
+            已下载文件ToolStripMenuItem.Checked = false;
+            打印完成文件ToolStripMenuItem.Checked = false;
+            已打印文件ToolStripMenuItem.Checked = true;
+            mydata.Rows.Clear();
+            display.display_list_norefresh(this, database.jsonlist_printing);
+            display_mode = "mode_printing";
+        }
+
+        private void 打印完成文件ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            所有文件ToolStripMenuItem.Checked = false;
+            未下载文件ToolStripMenuItem.Checked = false;
+            已下载文件ToolStripMenuItem.Checked = false;
+            打印完成文件ToolStripMenuItem.Checked = true;
+            已打印文件ToolStripMenuItem.Checked = false;
+            mydata.Rows.Clear();
+            display.display_list_norefresh(this, database.jsonlist_printed);
+            display_mode = "mode_printed";
+        }
+
+
 
     }
 }

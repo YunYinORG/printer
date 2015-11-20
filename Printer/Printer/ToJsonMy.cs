@@ -7,6 +7,7 @@ using Newtonsoft.Json.Linq;
 using System.Net;
 using System.IO;
 using System.ComponentModel;
+using System.Windows.Forms;
 
 namespace Printer
 {
@@ -17,7 +18,7 @@ namespace Printer
         private string m_status;
 
 
-
+        //public string file_SavePath { get; set; }
         public string id { get; set; }//文件编号
         public string use_id { get; set; }//
         public string use_name { get; set; }//
@@ -29,6 +30,33 @@ namespace Printer
         public string lujing { get; set; }
         public bool is_ibook;
         public bool isfirst;
+
+        public string file_SavePath
+        {
+            get
+            {
+                string file_selfpath = time.Split(' ')[0];
+                //String pathDoc = "";
+                file_selfpath = location_settings.file_path + file_selfpath + "\\";
+                return file_selfpath;
+            }
+            set { }
+        }
+
+        public string filename
+        {
+            get
+            {
+                string fileName = id + "_" + copies + "_" + double_side + "_" + student_number + "_" + name;
+                string doc_extension = Path.GetExtension(fileName);
+                if (doc_extension != ".pdf")
+                {
+                    fileName = fileName + ".pdf";
+                }
+                return fileName;
+            }
+        }
+
 
         public string copies
         {
@@ -71,20 +99,22 @@ namespace Printer
             {
                 switch (m_status)
                 {
+                    case"0":
+                        return "用户取消";
                     case "1":
-                        return "未下载";
+                        return "已上传";
                     case "2":
-                    case "download":
                         return "已下载";
                     case "3":
-                    case "printing":
-                        return "正打印";
-                    case "4":
-                    case "printed":
                         return "已打印";
-                    case "5":
-                    case "payed":
-                        return "已付款";
+                    case "4":
+                        return "打印完成";
+                    case"-1":
+                        return "打印店取消";
+
+                    //case "5":
+                    //case "payed":
+                    //    return "已付款";
                 }
                 return "0";
             }
@@ -154,21 +184,133 @@ namespace Printer
         /// </summary>
         /// <param name="id"></param>
         /// <param name="currentStatus"></param>
-        public void changeStatusById(string currentStatus)
+        public bool changeStatusById(string currentStatus)
         {
             //put到服务器状态;/api.php/File/1234?token=xxxxxxxxxxxx 
             //将下载完成的文件id添加到下载完成myDown （ArrayList）中
             //参数： status=>文件状态'uploud','download','printing','printed','payed', 返回操作结果
-            string putUrl = @"/File/" + id;
+            string putUrl = @"/printer/task/" + id;
             string putPara = "status=" + currentStatus;
             string resualt = API.PutMethod(putUrl, putPara, new UTF8Encoding());
-            //Console.WriteLine(out1);
-            //添加事件
-
+            if (JObject.Parse(resualt)["status"].ToString() != "1")
+            {
+                MessageBox.Show((string)JObject.Parse(resualt)["info"]);
+                return false;
+            }
+            else
+            {
+                return true;
+            }
 
         }
 
+        public void ensure_payed()
+        {
+            string r = API.PostMethod_noparam("/printer/task/" + id + "/pay", new UTF8Encoding());
+            if (JObject.Parse(r)["status"].ToString() != "1")
+            {
+                MessageBox.Show((string)JObject.Parse(r)["info"]);
+            }
+            else
+            {
+                if (database.jsonlist.Contains(this))
+                {
+                    database.jsonlist.Remove(this);
+                }
+                if (database.jsonlist_downloaded.Contains(this))
+                {
+                    database.jsonlist_downloaded.Remove(this);
+                }
+                if (database.jsonlist_err.Contains(this))
+                {
+                    database.jsonlist_err.Remove(this);
+                }
+                if (database.jsonlist_printed.Contains(this))
+                {
+                    database.jsonlist_printed.Remove(this);
+                }
+                if (database.jsonlist_printing.Contains(this))
+                {
+                    database.jsonlist_printing.Remove(this);
+                }
+            }
+        }
 
+        public bool cancel()
+        {
+            //string r = API.PostMethod_noparam("/printer/task/" + id + "/pay", new UTF8Encoding());
+            //if (JObject.Parse(r)["status"].ToString() != "1")
+            //{
+            //    MessageBox.Show((string)JObject.Parse(r)["info"]);
+            //}
+            bool result = this.changeStatusById("-1");
+            if (result)
+            {
+                if (database.jsonlist.Contains(this))
+                {
+                    database.jsonlist.Remove(this);
+                }
+                if (database.jsonlist_downloaded.Contains(this))
+                {
+                    database.jsonlist_downloaded.Remove(this);
+                }
+                if (database.jsonlist_err.Contains(this))
+                {
+                    database.jsonlist_err.Remove(this);
+                }
+                if (database.jsonlist_printed.Contains(this))
+                {
+                    database.jsonlist_printed.Remove(this);
+                }
+                if (database.jsonlist_printing.Contains(this))
+                {
+                    database.jsonlist_printing.Remove(this);
+                }
+            }
+            return result;
+        }
 
+        public bool is_exsist
+        {
+            get
+            {
+                if (File.Exists(file_SavePath+filename))
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+        }
+
+        public void create_FilePath()
+        {
+            if(!Directory.Exists(this.file_SavePath))
+            {
+                Directory.CreateDirectory(this.file_SavePath);
+            }
+        }
+
+        public void MoveFromListToList(List<ToJsonMy> fromlist, List<ToJsonMy> tolist)
+        {
+            if (fromlist.Contains(this))
+            {
+                fromlist.Remove(this);
+                if (!tolist.Contains(this))
+                {
+                    tolist.Add(this);
+                }
+                else
+                {
+                    MessageBox.Show("列表中已包含该文件");
+                }
+            }
+            else
+            {
+                MessageBox.Show("列表中不存在该文件");
+            }
+        }
     }
 }

@@ -42,21 +42,22 @@
     <UseVSHostingProcess>false</UseVSHostingProcess>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Newtonsoft.Json.Net35">
-      <HintPath>..\..\..\..\..\..\..\云印\json.NET\Bin\Net35\Newtonsoft.Json.Net35.dll</HintPath>
+    <Reference Include="Newtonsoft.Json.Net35, Version=4.0.2.0, Culture=neutral, PublicKeyToken=30ad4fe6b2a6aeed, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>D:\云印\json.NET\Bin\Net35\Newtonsoft.Json.Net35.dll</HintPath>
     </Reference>
     <Reference Include="Spire.Pdf">
       <HintPath>..\..\..\..\..\..\..\Ｃ＃\BIN\NET3.5\Spire.Pdf.dll</HintPath>
     </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="System.Data" />
     <Reference Include="System.Deployment" />
     <Reference Include="System.Drawing" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
+    <Reference Include="System.Xml.Linq" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="API.cs" />
@@ -73,6 +74,7 @@
     </Compile>
     <Compile Include="location_settings.cs" />
     <Compile Include="login_class.cs" />
+    <Compile Include="operation_class.cs" />
     <Compile Include="print_class.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

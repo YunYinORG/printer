@@ -7,7 +7,7 @@ namespace Printer
 {
     class API
     {
-        public static string token = "";
+        public static string sid = "";
         public static int myPage=1;
         private static string server_url = Program.serverUrl;
         public static string PutMethod(string metodUrl, string para, Encoding dataEncode)
@@ -15,9 +15,9 @@ namespace Printer
             string down = server_url + metodUrl;
             //string down = @"http://yunyin.org/api.php/Index/put";
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(down);
-            if (token != "")
+            if (sid != "")
             {
-                request.Headers.Add("Token", token);
+                request.Headers.Add("Session-ID",sid );
             }
             request.Method = "PUT";
             string s = "1";
@@ -96,9 +96,9 @@ namespace Printer
         {
             string down = server_url  + metodUrl;
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(down);
-            if (token!="")
+            if (sid!="")
             {
-                request.Headers.Add("Token", token);//修改Headers,添加
+                request.Headers.Add("Session-ID", sid);//修改Headers,添加
             }
             request.Method = "get";
             request.Accept = "Accept: application/json";
@@ -128,9 +128,7 @@ namespace Printer
         /// <returns></returns>
         public static string doGetMethodToObj(string metodUrl)
         {
-            //get获取。/api.php/File/?page=2&token=....
             string down = server_url + metodUrl;
-            //string down = server_url + @"/File/?token=" + metodUrl;
             HttpWebRequest request = (HttpWebRequest)WebRequest.Create(down);
             request.Method = "get";
             request.Accept = "Accept:application/json";
@@ -175,7 +173,7 @@ namespace Printer
                 newStream.Write(byteArray, 0, byteArray.Length);//写入参数
                 newStream.Close();
                 HttpWebResponse response = (HttpWebResponse)webReq.GetResponse();
-                StreamReader sr = new StreamReader(response.GetResponseStream(), Encoding.Default);
+                StreamReader sr = new StreamReader(response.GetResponseStream(), Encoding.UTF8);
                 ret = sr.ReadToEnd();
                 sr.Close();
                 response.Close();
@@ -187,6 +185,40 @@ namespace Printer
             }
             return ret;
         }
+
+        public static string PostMethod_noparam(string postUrl,Encoding dataEncode)
+        {
+            postUrl = server_url + postUrl;
+            string ret = string.Empty;
+
+            try
+            {
+                //byte[] byteArray = dataEncode.GetBytes(paramData); //转化
+                HttpWebRequest webReq = (HttpWebRequest)WebRequest.Create(new Uri(postUrl));
+                webReq.Method = "POST";
+                webReq.ContentType = "application/x-www-form-urlencoded";
+                webReq.Accept = "Accept: application/json";
+                if (sid != "")
+                {
+                    webReq.Headers.Add("Session-ID", sid);//修改Headers,添加
+                }
+                HttpWebResponse response = (HttpWebResponse)webReq.GetResponse();
+                using (StreamReader sr = new StreamReader(response.GetResponseStream()))
+                {
+                    ret = sr.ReadLine();
+                    sr.Close();
+                }
+
+                response.Close();
+
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            return ret;
+        }
+
         private static string getResponseString(HttpWebResponse response)
         {
             string json = null;

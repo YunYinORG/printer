@@ -10,7 +10,7 @@ namespace Printer
 {
     static class Program
     {
-        static public string serverUrl = @"http://yunyin.org/api.php";
+        static public string serverUrl = @"http://api.yunyin.org";
         [DllImport("User32.dll")]
         private static extern bool ShowWindowAsync(IntPtr hWnd, int cmdShow);
 

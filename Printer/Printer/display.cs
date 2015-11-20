@@ -14,16 +14,24 @@ namespace Printer
         {
             foreach (var item in list)
             {
-                if (item.status != "未下载")
+                if (item.status != "已上传")
                 {
                     display_single(form, item);
                 }
             }
         }
 
+        static public void display_list_norefresh(login_download form, List<ToJsonMy> list)
+        {
+            foreach (var item in list)
+            {
+                display_single(form, item);
+            }
+        }
+
         static public void display_fun(login_download form, mydata_form data)
         {
-            form.mydata.Rows.Add(data.mydata_id, data.mydata_userName, data.mydata_name, data.mydata_copies, data.mydata_doubleside, data.mydata_color, data.mydata_ppt, data.mydata_time, data.mydata_status, data.mydata_buttontext);
+            form.mydata.Rows.Add(false, data.mydata_id, data.mydata_status, "确认付款", "生成二维码", data.mydata_name, data.mydata_setting, data.mydata_userName, data.mydata_time, "一键打印", "设置后打印",data.mydata_buttontext, "取消订单", "打开源文件" );
         }
         static public void display_single(login_download form, ToJsonMy file)
         {
@@ -34,11 +42,20 @@ namespace Printer
             data.mydata_name = file.name;
             data.mydata_id = file.id;
             data.mydata_time = file.time;
-            data.mydata_copies = file.copies;
-            data.mydata_status = file.status;
-            data.mydata_doubleside = file.double_side;
-            data.mydata_color = file.strcolor;
-            data.mydata_ppt = file.ppt;
+            //data.mydata_copies = file.copies;
+
+            if (database.jsonlist_err.Contains(file))
+            {
+                data.mydata_status = "下载失败";
+            }
+            else
+            {
+                data.mydata_status = file.status;
+            }
+
+            //data.mydata_doubleside = file.double_side;
+            //data.mydata_color = file.strcolor;
+            //data.mydata_ppt = file.ppt;
 
 
             if (file.requirements != "")
@@ -53,11 +70,12 @@ namespace Printer
 
             if (file.copies == "现场打印")
             {
-                data.mydata_buttontext = "确认付款";
+                data.mydata_buttontext = "通知打印完成";
 
-                data.mydata_doubleside = "-";
-                data.mydata_color = "-";
-                data.mydata_ppt = "-";
+                //data.mydata_doubleside = "-";
+                //data.mydata_color = "-";
+                //data.mydata_ppt = "-";
+                data.mydata_setting = "现场打印";
                 delegate_display = display_fun;
                 form.mydata.Invoke(delegate_display, new object[] { form, data });
             }
@@ -66,12 +84,23 @@ namespace Printer
                 switch (file.status)
                 {
                     case "已下载":
-                        data.mydata_buttontext = "通知已打印";
+                        data.mydata_buttontext = "通知打印完成";
                         break;
                     case "已打印":
-                        data.mydata_buttontext = "确认付款";
+                        data.mydata_buttontext = "通知打印完成";
+                        break;
+                    case "打印完成":
+                        data.mydata_buttontext = "通知打印完成";
+                        break;
+                    case "未下载":
+                        data.mydata_buttontext = "手动下载";
                         break;
                 }
+                if (!file.is_exsist)
+                {
+                    data.mydata_buttontext = "重新下载";
+                }
+                data.mydata_setting = file.copies + file.double_side + file.strcolor + file.ppt;
 
                 delegate_display = display_fun;
                 form.mydata.Invoke(delegate_display, new object[] { form, data });
