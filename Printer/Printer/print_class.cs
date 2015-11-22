@@ -378,7 +378,7 @@ namespace Printer
             {
                 throw new Exception("请选择详细设置后打印");
             }
-            if (!file.is_exsist)
+            if (!file.is_exsist_file)
             {
                 form.mydata.Rows[RowIndex].Cells["operation"].Value = "重新下载";
                 throw new Exception("当前文件不存在，请重新下载");
@@ -477,7 +477,7 @@ namespace Printer
         public override void is_print()
         {
             base.is_print();
-            if (!file.is_exsist)
+            if (!file.is_exsist_file)
             {
                 form.mydata.Rows[RowIndex].Cells["operation"].Value = "重新下载";
                 throw new Exception("当前文件不存在，请重新下载");

@@ -364,9 +364,9 @@ namespace Printer
 
     class download_errfile_all_class : download_errfile_class
     {
-        public ToJsonMy file;
-        public login_download form;
-        public int RowIndex;
+        //public ToJsonMy file;
+        //public login_download form;
+        //public int RowIndex;
 
         public download_errfile_all_class(login_download form, ToJsonMy file, int RowIndex)
         {
@@ -410,9 +410,9 @@ namespace Printer
 
     class download_errfile_downloading_class : download_errfile_class
     {
-        public ToJsonMy file;
-        public login_download form;
-        public int RowIndex;
+        //public ToJsonMy file;
+        //public login_download form;
+        //public int RowIndex;
 
         public download_errfile_downloading_class(login_download form, ToJsonMy file, int RowIndex)
         {

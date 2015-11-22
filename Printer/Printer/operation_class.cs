@@ -341,4 +341,107 @@ namespace Printer
 
         }
     }
+
+    class operation_OpenFile_class : operation_class
+    {
+        public operation_OpenFile_class(login_download form, ToJsonMy file, int RowIndex)
+        {
+            this.form = form;
+            this.file = file;
+            this.RowIndex = RowIndex;
+        }
+        public override void do_operation()
+        {
+            try
+            {
+                switch (form.display_mode)
+                {
+                    case "mode_all":
+                        if (file.status == "已上传")
+                        {
+                            MessageBox.Show("请先下载文件，再打开");
+                        }
+                        else
+                        {
+                            if (!file.OpenFile())
+                            {
+                                MessageBox.Show("该文件不存在，请重新下载！");
+                                form.mydata.Rows[RowIndex].Cells["operation"].Value = "重新下载";
+                            }
+                        }
+                        break;
+                    case "mode_downloading":
+                        MessageBox.Show("请先下载文件，再打开");
+                        break;
+                    case "mode_downloaded":
+                    case "mode_printing":
+                    case "mode_printed":
+                        if (!file.OpenFile())
+                        {
+                            MessageBox.Show("该文件不存在，请重新下载！");
+                            form.mydata.Rows[RowIndex].Cells["operation"].Value = "重新下载";
+                        }
+                        break;
+                }
+            }
+            catch (Exception excep)
+            {
+                MessageBox.Show(excep.Message, "无法打开文件");
+            }
+
+        }
+    }
+
+    class operation_GetUserinfo_class : operation_class
+    {
+        public operation_GetUserinfo_class(login_download form, ToJsonMy file, int RowIndex)
+        {
+            this.form = form;
+            this.file = file;
+            this.RowIndex = RowIndex;
+        }
+        public override void do_operation()
+        {
+            try
+            {
+                userInfo user = new userInfo();
+                user = file.UserMessage;
+                MessageBox.Show("用户：" + user.name + "  学号：" + user.student_number + "  手机号：" + user.phone);
+            }
+            catch (Exception excep)
+            {
+                MessageBox.Show(excep.Message, "无法显示用户信息");
+            }
+
+        }
+    }
+
+    class operation_GetRequirements_class : operation_class
+    {
+        public operation_GetRequirements_class(login_download form, ToJsonMy file, int RowIndex)
+        {
+            this.form = form;
+            this.file = file;
+            this.RowIndex = RowIndex;
+        }
+        public override void do_operation()
+        {
+            try
+            {
+                if (file.requirements != null)
+                {
+                    MessageBox.Show(file.requirements, "备注信息");
+                }
+                else
+                {
+                    MessageBox.Show("该文件无备注信息");
+                }
+            }
+            catch (Exception excep)
+            {
+                MessageBox.Show(excep.Message, "无法显示备注信息");
+            }
+
+        }
+    }
 }

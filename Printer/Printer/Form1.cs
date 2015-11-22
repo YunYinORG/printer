@@ -302,67 +302,93 @@ namespace Printer
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        //private void mydata_CellContentDoubleClick(object sender, DataGridViewCellEventArgs e)
-        //{
-        //    if ((e.ColumnIndex >= 1) && (e.ColumnIndex < 2))
-        //    {
-        //        string id = mydata.Rows[e.RowIndex].Cells["id"].Value.ToString();
-        //        ToJsonMy file = database.find_myjson(id);
+        private void mydata_CellContentDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (e.RowIndex >= 0)
+            {
+                //if (e.ColumnIndex == mydata.Columns["operation"].Index)
+                string id = mydata.Rows[e.RowIndex].Cells["id"].Value.ToString();
+                ToJsonMy file = database.find_myjson(id);
+                //string buttonText = this.mydata.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString();
+                //string buttonText1 = this.mydata.Rows[e.RowIndex].Cells[e.ColumnIndex].ToString();
 
-        //        userInfo user = new userInfo();
-        //        user = usermessage(file.use_id);
-        //        MessageBox.Show("用户：" + user.name + "  学号：" + user.student_number + "  手机号：" + user.phone);
+                switch (e.ColumnIndex)
+                {
+                    case 5:
+                        operation_OpenFile_class openfile_class = new operation_OpenFile_class(this, file, e.RowIndex);
+                        openfile_class.do_operation();
+                        break;
+                    case 6:
+                        operation_GetRequirements_class getrequirements_class = new operation_GetRequirements_class(this, file, e.RowIndex);
+                        getrequirements_class.do_operation();
+                        break;
+                    case 7:
+                        operation_GetUserinfo_class GetUserInfo_class = new operation_GetUserinfo_class(this, file, e.RowIndex);
+                        GetUserInfo_class.do_operation();
+                        break;
+                    default:
+                        break;
+                }
+                //    if ((e.ColumnIndex >= 1) && (e.ColumnIndex < 2))
+                //    {
+                //        string id = mydata.Rows[e.RowIndex].Cells["id"].Value.ToString();
+                //        ToJsonMy file = database.find_myjson(id);
 
-        //    }
+                //        userInfo user = new userInfo();
+                //        user = usermessage(file.use_id);
+                //        MessageBox.Show("用户：" + user.name + "  学号：" + user.student_number + "  手机号：" + user.phone);
 
-        //    else if ((e.ColumnIndex >= 2) && (e.ColumnIndex < 3))
-        //    {
-        //        string id = mydata.Rows[e.RowIndex].Cells["id"].Value.ToString();
-        //        ToJsonMy file = database.find_myjson(id);
-        //        if (file != null)
-        //        {
-        //            if (!file.is_ibook)
-        //            {
-        //                string filename = "";
-        //                filename = location_settings.file_path + "\\" + file.id + "_" + file.copies + "_" + file.double_side + "_" + file.student_number + "_" + file.name;
+                //    }
 
-        //                string doc_extension = Path.GetExtension(location_settings.file_path + "/" + filename);
-        //                if (doc_extension != ".pdf")
-        //                {
-        //                    filename += ".pdf";
-        //                }
+                //    else if ((e.ColumnIndex >= 2) && (e.ColumnIndex < 3))
+                //    {
+                //        string id = mydata.Rows[e.RowIndex].Cells["id"].Value.ToString();
+                //        ToJsonMy file = database.find_myjson(id);
+                //        if (file != null)
+                //        {
+                //            if (!file.is_ibook)
+                //            {
+                //                string filename = "";
+                //                filename = location_settings.file_path + "\\" + file.id + "_" + file.copies + "_" + file.double_side + "_" + file.student_number + "_" + file.name;
 
-        //                if (File.Exists(@filename))
-        //                {
-        //                    System.Diagnostics.Process.Start(filename);
+                //                string doc_extension = Path.GetExtension(location_settings.file_path + "/" + filename);
+                //                if (doc_extension != ".pdf")
+                //                {
+                //                    filename += ".pdf";
+                //                }
 
-        //                }
-        //                else
-        //                {
-        //                    download_single_single_class file_download = new download_single_single_class(this, file);
-        //                    file_download.download();
-        //                }
+                //                if (File.Exists(@filename))
+                //                {
+                //                    System.Diagnostics.Process.Start(filename);
 
-        //            }
-        //            else
-        //            {
-        //                string filename = "";
-        //                filename = location_settings.ibook_path + file.name.Substring(0, file.name.Length - "【店内书】".Length);
-        //                if (File.Exists(@filename))
-        //                {
-        //                    System.Diagnostics.Process.Start(filename);
+                //                }
+                //                else
+                //                {
+                //                    download_single_single_class file_download = new download_single_single_class(this, file);
+                //                    file_download.download();
+                //                }
 
-        //                }
-        //                else
-        //                {
-        //                    MessageBox.Show("本店电子书路径有误，请改正");
-        //                }
+                //            }
+                //            else
+                //            {
+                //                string filename = "";
+                //                filename = location_settings.ibook_path + file.name.Substring(0, file.name.Length - "【店内书】".Length);
+                //                if (File.Exists(@filename))
+                //                {
+                //                    System.Diagnostics.Process.Start(filename);
 
-        //            }
-        //        }
+                //                }
+                //                else
+                //                {
+                //                    MessageBox.Show("本店电子书路径有误，请改正");
+                //                }
 
-        //    }
-        //}
+                //            }
+                //        }
+
+                //    }
+            }
+        }
 
         private void 一分钟ToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -393,19 +419,19 @@ namespace Printer
         /// </summary>
         /// <param name="use_id"></param>
         /// <returns></returns>
-        public userInfo usermessage(string use_id)
-        {
-            string jsonUrl = API.GetMethod("/printer/user/" + use_id);
-            JObject jo = JObject.Parse(jsonUrl);
-            userInfo user = new userInfo();
-            user.name = jo["info"]["name"].ToString();
-            user.sch_id = jo["info"]["sch_id"].ToString();
-            user.student_number = jo["info"]["number"].ToString();
-            jsonUrl = API.GetMethod("/printer/user/" + use_id + "/phone");
-            jo = JObject.Parse(jsonUrl);
-            user.phone = jo["info"].ToString();
-            return user;
-        }
+        //public userInfo usermessage(string use_id)
+        //{
+        //    string jsonUrl = API.GetMethod("/printer/user/" + use_id);
+        //    JObject jo = JObject.Parse(jsonUrl);
+        //    userInfo user = new userInfo();
+        //    user.name = jo["info"]["name"].ToString();
+        //    user.sch_id = jo["info"]["sch_id"].ToString();
+        //    user.student_number = jo["info"]["number"].ToString();
+        //    jsonUrl = API.GetMethod("/printer/user/" + use_id + "/phone");
+        //    jo = JObject.Parse(jsonUrl);
+        //    user.phone = jo["info"].ToString();
+        //    return user;
+        //}
 
         /// <summary>
         /// 增加最小化到托盘
@@ -458,20 +484,20 @@ namespace Printer
         /// </summary>
         /// <param name="sender"></param>
         /// <param name="e"></param>
-        private void requirements_Click(object sender, EventArgs e)
-        {
-            string current_id = mydata.Rows[mydata.CurrentRow.Index].Cells["id"].Value.ToString();
-            ToJsonMy file = database.find_myjson(current_id);
-            if (file != null)
-            {
-                if (file.requirements != null)
-                {
-                    MessageBox.Show(file.requirements, "备注信息");
-                }
-            }
-            //}
+        //private void requirements_Click(object sender, EventArgs e)
+        //{
+        //    string current_id = mydata.Rows[mydata.CurrentRow.Index].Cells["id"].Value.ToString();
+        //    ToJsonMy file = database.find_myjson(current_id);
+        //    if (file != null)
+        //    {
+        //        if (file.requirements != null)
+        //        {
+        //            MessageBox.Show(file.requirements, "备注信息");
+        //        }
+        //    }
+        //    //}
 
-        }
+        //}
 
         /// <summary>
         /// 单击后判断该文件是否有备注信息
@@ -839,6 +865,11 @@ namespace Printer
             display.display_list_norefresh(this, database.jsonlist_printed);
             display_mode = "mode_printed";
         }
+
+        //private void mydata_CellContentDoubleClick(object sender, DataGridViewCellEventArgs e)
+        //{
+
+        //}
 
 
 

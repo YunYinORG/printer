@@ -38,6 +38,8 @@ namespace Printer
         public string email { get; set; }
         public string status { get; set; }
         public string sch_id { get; set; }
+
+
     }
 
     public struct mydata_form

@@ -50,6 +50,13 @@
             this.notifyIconmenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.关闭ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.download = new System.Windows.Forms.Panel();
+            this.all_operation_panel = new System.Windows.Forms.Panel();
+            this.all_cancel = new System.Windows.Forms.Button();
+            this.all_TellPrinted = new System.Windows.Forms.Button();
+            this.all_direct_print = new System.Windows.Forms.Button();
+            this.all_ensure_payed = new System.Windows.Forms.Button();
+            this.none_selected = new System.Windows.Forms.Button();
+            this.all_selected = new System.Windows.Forms.Button();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel1 = new System.Windows.Forms.ToolStripStatusLabel();
             this.printers_setting_dialog = new System.Windows.Forms.Panel();
@@ -100,6 +107,7 @@
             this.未下载文件ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.已下载文件ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.已打印文件ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.打印完成文件ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.transform = new System.Windows.Forms.ToolStripMenuItem();
             this.自动刷新ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.手动刷新ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -116,9 +124,9 @@
             this.loginbutton = new System.Windows.Forms.Button();
             this.un = new System.Windows.Forms.Label();
             this.pw = new System.Windows.Forms.Label();
-            this.打印完成文件ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.notifyIconmenu.SuspendLayout();
             this.download.SuspendLayout();
+            this.all_operation_panel.SuspendLayout();
             this.statusStrip1.SuspendLayout();
             this.printers_setting_dialog.SuspendLayout();
             this.set_default_printer.SuspendLayout();
@@ -158,6 +166,7 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.download.BackColor = System.Drawing.Color.SkyBlue;
+            this.download.Controls.Add(this.all_operation_panel);
             this.download.Controls.Add(this.statusStrip1);
             this.download.Controls.Add(this.printers_setting_dialog);
             this.download.Controls.Add(this.set_before_print);
@@ -171,17 +180,90 @@
             this.download.Size = new System.Drawing.Size(1284, 406);
             this.download.TabIndex = 12;
             // 
+            // all_operation_panel
+            // 
+            this.all_operation_panel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(185)))), ((int)(((byte)(220)))), ((int)(((byte)(237)))));
+            this.all_operation_panel.Controls.Add(this.all_cancel);
+            this.all_operation_panel.Controls.Add(this.all_TellPrinted);
+            this.all_operation_panel.Controls.Add(this.all_direct_print);
+            this.all_operation_panel.Controls.Add(this.all_ensure_payed);
+            this.all_operation_panel.Controls.Add(this.none_selected);
+            this.all_operation_panel.Controls.Add(this.all_selected);
+            this.all_operation_panel.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.all_operation_panel.Location = new System.Drawing.Point(0, 336);
+            this.all_operation_panel.Name = "all_operation_panel";
+            this.all_operation_panel.Size = new System.Drawing.Size(1284, 35);
+            this.all_operation_panel.TabIndex = 21;
+            // 
+            // all_cancel
+            // 
+            this.all_cancel.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.all_cancel.Location = new System.Drawing.Point(537, 3);
+            this.all_cancel.Name = "all_cancel";
+            this.all_cancel.Size = new System.Drawing.Size(150, 30);
+            this.all_cancel.TabIndex = 5;
+            this.all_cancel.Text = "取消选中订单";
+            this.all_cancel.UseVisualStyleBackColor = true;
+            // 
+            // all_TellPrinted
+            // 
+            this.all_TellPrinted.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.all_TellPrinted.Location = new System.Drawing.Point(380, 3);
+            this.all_TellPrinted.Name = "all_TellPrinted";
+            this.all_TellPrinted.Size = new System.Drawing.Size(150, 30);
+            this.all_TellPrinted.TabIndex = 4;
+            this.all_TellPrinted.Text = "通知打印完成";
+            this.all_TellPrinted.UseVisualStyleBackColor = true;
+            // 
+            // all_direct_print
+            // 
+            this.all_direct_print.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.all_direct_print.Location = new System.Drawing.Point(223, 3);
+            this.all_direct_print.Name = "all_direct_print";
+            this.all_direct_print.Size = new System.Drawing.Size(150, 30);
+            this.all_direct_print.TabIndex = 3;
+            this.all_direct_print.Text = "打印选中文件";
+            this.all_direct_print.UseVisualStyleBackColor = true;
+            // 
+            // all_ensure_payed
+            // 
+            this.all_ensure_payed.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.all_ensure_payed.Location = new System.Drawing.Point(116, 3);
+            this.all_ensure_payed.Name = "all_ensure_payed";
+            this.all_ensure_payed.Size = new System.Drawing.Size(100, 30);
+            this.all_ensure_payed.TabIndex = 2;
+            this.all_ensure_payed.Text = "确认支付";
+            this.all_ensure_payed.UseVisualStyleBackColor = true;
+            // 
+            // none_selected
+            // 
+            this.none_selected.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.none_selected.Location = new System.Drawing.Point(59, 3);
+            this.none_selected.Name = "none_selected";
+            this.none_selected.Size = new System.Drawing.Size(50, 30);
+            this.none_selected.TabIndex = 1;
+            this.none_selected.Text = "反选";
+            this.none_selected.UseVisualStyleBackColor = true;
+            // 
+            // all_selected
+            // 
+            this.all_selected.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.all_selected.Location = new System.Drawing.Point(3, 3);
+            this.all_selected.Name = "all_selected";
+            this.all_selected.Size = new System.Drawing.Size(50, 30);
+            this.all_selected.TabIndex = 0;
+            this.all_selected.Text = "全选";
+            this.all_selected.UseVisualStyleBackColor = true;
+            // 
             // statusStrip1
             // 
-            this.statusStrip1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.statusStrip1.AutoSize = false;
-            this.statusStrip1.BackColor = System.Drawing.Color.Transparent;
-            this.statusStrip1.Dock = System.Windows.Forms.DockStyle.None;
+            this.statusStrip1.BackColor = System.Drawing.Color.SkyBlue;
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripStatusLabel1});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 377);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 371);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(1284, 29);
+            this.statusStrip1.Size = new System.Drawing.Size(1284, 35);
             this.statusStrip1.TabIndex = 20;
             this.statusStrip1.Text = "statusStrip1";
             // 
@@ -189,7 +271,7 @@
             // 
             this.toolStripStatusLabel1.BackColor = System.Drawing.Color.Transparent;
             this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
-            this.toolStripStatusLabel1.Size = new System.Drawing.Size(167, 24);
+            this.toolStripStatusLabel1.Size = new System.Drawing.Size(167, 30);
             this.toolStripStatusLabel1.Text = "toolStripStatdsdsdusLabel1";
             // 
             // printers_setting_dialog
@@ -393,7 +475,7 @@
             this.requirements.TabIndex = 13;
             this.requirements.Text = "备注信息";
             this.requirements.UseVisualStyleBackColor = false;
-            this.requirements.Click += new System.EventHandler(this.requirements_Click);
+            //this.requirements.Click += new System.EventHandler(this.requirements_Click);
             // 
             // mydata
             // 
@@ -445,10 +527,11 @@
             this.mydata.RowHeadersVisible = false;
             this.mydata.RowTemplate.Height = 23;
             this.mydata.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.mydata.Size = new System.Drawing.Size(1281, 335);
+            this.mydata.Size = new System.Drawing.Size(1284, 299);
             this.mydata.TabIndex = 12;
             this.mydata.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.mydata_CellClick);
             this.mydata.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.mydata_CellContentClick);
+            this.mydata.CellContentDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.mydata_CellContentDoubleClick);
             // 
             // slect_idex
             // 
@@ -687,30 +770,37 @@
             this.所有文件ToolStripMenuItem.Checked = true;
             this.所有文件ToolStripMenuItem.CheckState = System.Windows.Forms.CheckState.Checked;
             this.所有文件ToolStripMenuItem.Name = "所有文件ToolStripMenuItem";
-            this.所有文件ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.所有文件ToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
             this.所有文件ToolStripMenuItem.Text = "所有文件";
             this.所有文件ToolStripMenuItem.Click += new System.EventHandler(this.所有文件ToolStripMenuItem_Click);
             // 
             // 未下载文件ToolStripMenuItem
             // 
             this.未下载文件ToolStripMenuItem.Name = "未下载文件ToolStripMenuItem";
-            this.未下载文件ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.未下载文件ToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
             this.未下载文件ToolStripMenuItem.Text = "未下载文件";
             this.未下载文件ToolStripMenuItem.Click += new System.EventHandler(this.未下载文件ToolStripMenuItem_Click);
             // 
             // 已下载文件ToolStripMenuItem
             // 
             this.已下载文件ToolStripMenuItem.Name = "已下载文件ToolStripMenuItem";
-            this.已下载文件ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.已下载文件ToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
             this.已下载文件ToolStripMenuItem.Text = "已下载文件";
             this.已下载文件ToolStripMenuItem.Click += new System.EventHandler(this.已下载文件ToolStripMenuItem_Click);
             // 
             // 已打印文件ToolStripMenuItem
             // 
             this.已打印文件ToolStripMenuItem.Name = "已打印文件ToolStripMenuItem";
-            this.已打印文件ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.已打印文件ToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
             this.已打印文件ToolStripMenuItem.Text = "已打印文件";
             this.已打印文件ToolStripMenuItem.Click += new System.EventHandler(this.已打印文件ToolStripMenuItem_Click);
+            // 
+            // 打印完成文件ToolStripMenuItem
+            // 
+            this.打印完成文件ToolStripMenuItem.Name = "打印完成文件ToolStripMenuItem";
+            this.打印完成文件ToolStripMenuItem.Size = new System.Drawing.Size(148, 22);
+            this.打印完成文件ToolStripMenuItem.Text = "打印完成文件";
+            this.打印完成文件ToolStripMenuItem.Click += new System.EventHandler(this.打印完成文件ToolStripMenuItem_Click);
             // 
             // transform
             // 
@@ -881,13 +971,6 @@
             this.pw.TabIndex = 2;
             this.pw.Text = "密码";
             // 
-            // 打印完成文件ToolStripMenuItem
-            // 
-            this.打印完成文件ToolStripMenuItem.Name = "打印完成文件ToolStripMenuItem";
-            this.打印完成文件ToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
-            this.打印完成文件ToolStripMenuItem.Text = "打印完成文件";
-            this.打印完成文件ToolStripMenuItem.Click += new System.EventHandler(this.打印完成文件ToolStripMenuItem_Click);
-            // 
             // login_download
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -904,6 +987,7 @@
             this.Load += new System.EventHandler(this.login_download_Load);
             this.notifyIconmenu.ResumeLayout(false);
             this.download.ResumeLayout(false);
+            this.all_operation_panel.ResumeLayout(false);
             this.statusStrip1.ResumeLayout(false);
             this.statusStrip1.PerformLayout();
             this.printers_setting_dialog.ResumeLayout(false);
@@ -992,6 +1076,13 @@
         private System.Windows.Forms.DataGridViewButtonColumn cancel_idex;
         private System.Windows.Forms.DataGridViewButtonColumn open_file_idex;
         private System.Windows.Forms.ToolStripMenuItem 打印完成文件ToolStripMenuItem;
+        private System.Windows.Forms.Panel all_operation_panel;
+        private System.Windows.Forms.Button all_cancel;
+        private System.Windows.Forms.Button all_TellPrinted;
+        private System.Windows.Forms.Button all_direct_print;
+        private System.Windows.Forms.Button all_ensure_payed;
+        private System.Windows.Forms.Button none_selected;
+        private System.Windows.Forms.Button all_selected;
     }
 }
 

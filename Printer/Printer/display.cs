@@ -96,7 +96,7 @@ namespace Printer
                         data.mydata_buttontext = "手动下载";
                         break;
                 }
-                if (!file.is_exsist)
+                if (!file.is_exsist_file)
                 {
                     data.mydata_buttontext = "重新下载";
                 }

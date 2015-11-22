@@ -270,11 +270,26 @@ namespace Printer
             return result;
         }
 
-        public bool is_exsist
+        public bool is_exsist_file
         {
             get
             {
                 if (File.Exists(file_SavePath+filename))
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+        }
+
+        public bool is_exsist_rawfile
+        {
+            get
+            {
+                if (File.Exists(file_SavePath + name))
                 {
                     return true;
                 }
@@ -312,5 +327,49 @@ namespace Printer
                 MessageBox.Show("列表中不存在该文件");
             }
         }
+
+        public bool OpenFile()
+        {
+            if (!this.is_exsist_file)
+            {
+                return false;
+            }
+            else
+            {
+                System.Diagnostics.Process.Start(file_SavePath + filename);
+                return true;
+            }
+        }
+
+        public bool OpenRawFile()
+        {
+            if (!this.is_exsist_rawfile)
+            {
+                return false;
+            }
+            else
+            {
+                System.Diagnostics.Process.Start(file_SavePath + name);
+                return true;
+            }
+        }
+
+        public userInfo UserMessage
+        {
+            get
+            {
+                string jsonUrl = API.GetMethod("/printer/user/" + use_id);
+                JObject jo = JObject.Parse(jsonUrl);
+                userInfo user = new userInfo();
+                user.name = jo["info"]["name"].ToString();
+                user.sch_id = jo["info"]["sch_id"].ToString();
+                user.student_number = jo["info"]["number"].ToString();
+                jsonUrl = API.GetMethod("/printer/user/" + use_id + "/phone");
+                jo = JObject.Parse(jsonUrl);
+                user.phone = jo["info"].ToString();
+                return user;
+            }
+        }
+
     }
 }
