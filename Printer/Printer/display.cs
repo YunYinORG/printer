@@ -92,7 +92,7 @@ namespace Printer
                     case "打印完成":
                         data.mydata_buttontext = "通知打印完成";
                         break;
-                    case "未下载":
+                    case "已上传":
                         data.mydata_buttontext = "手动下载";
                         break;
                 }

@@ -295,12 +295,12 @@ namespace Printer
         }
         public override void do_operation()
         {
-            DialogResult dr = MessageBox.Show("确认付款？", "", MessageBoxButtons.YesNo);
-            if (dr == DialogResult.Yes)
-            {
+            //DialogResult dr = MessageBox.Show("确认付款？", "", MessageBoxButtons.YesNo);
+            //if (dr == DialogResult.Yes)
+            //{
                 file.ensure_payed();
                 form.mydata.Rows.Remove(form.mydata.Rows[RowIndex]);
-            }
+            //}
         }
     }
 

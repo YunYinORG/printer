@@ -866,6 +866,49 @@ namespace Printer
             display_mode = "mode_printed";
         }
 
+        private void all_selected_Click(object sender, EventArgs e)
+        {
+            for (int i = 0; i < this.mydata.Rows.Count; i++)
+            {
+                //if (this.mydata.Rows[i].Cells["select_idex"].Value != (object)true)
+                //{
+                    this.mydata.Rows[i].Cells["select_idex"].Value = true;
+                //}
+            }
+        }
+
+        private void none_selected_Click(object sender, EventArgs e)
+        {
+            for (int i = 0; i < this.mydata.Rows.Count; i++)
+            {
+                this.mydata.Rows[i].Cells["select_idex"].Value = false;
+            }
+        }
+
+        private void all_ensure_payed_Click(object sender, EventArgs e)
+        {
+            operation_all_EnsurePayed_class operation_class = new operation_all_EnsurePayed_class(this);
+            operation_class.do_operation();
+        }
+
+        private void all_direct_print_Click(object sender, EventArgs e)
+        {
+            operation_all_DirectPrint_class operation_class = new operation_all_DirectPrint_class(this);
+            operation_class.do_operation();
+        }
+
+        private void all_TellPrinted_Click(object sender, EventArgs e)
+        {
+            operation_all_TellPrinted_class operation_class = new operation_all_TellPrinted_class(this);
+            operation_class.do_operation();
+        }
+
+        private void all_cancel_Click(object sender, EventArgs e)
+        {
+            operation_all_cancel_class operation_class = new operation_all_cancel_class(this);
+            operation_class.do_operation();
+        }
+
         //private void mydata_CellContentDoubleClick(object sender, DataGridViewCellEventArgs e)
         //{
 

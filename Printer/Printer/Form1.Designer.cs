@@ -30,22 +30,22 @@
         {
             this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(login_download));
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle16 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle3 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle4 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle5 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle6 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle7 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle8 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle9 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle10 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle11 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle12 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle13 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle14 = new System.Windows.Forms.DataGridViewCellStyle();
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle15 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle97 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle112 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle98 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle99 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle100 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle101 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle102 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle103 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle104 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle105 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle106 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle107 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle108 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle109 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle110 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle111 = new System.Windows.Forms.DataGridViewCellStyle();
             this.notifyIcon1 = new System.Windows.Forms.NotifyIcon(this.components);
             this.notifyIconmenu = new System.Windows.Forms.ContextMenuStrip(this.components);
             this.关闭ToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -80,20 +80,6 @@
             this.dicret_download = new System.Windows.Forms.Button();
             this.requirements = new System.Windows.Forms.Button();
             this.mydata = new System.Windows.Forms.DataGridView();
-            this.slect_idex = new System.Windows.Forms.DataGridViewCheckBoxColumn();
-            this.id = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.status = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.pay_ensure_idex = new System.Windows.Forms.DataGridViewButtonColumn();
-            this.get_pic_idex = new System.Windows.Forms.DataGridViewButtonColumn();
-            this.filename = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.setting_idex = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.use_id = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.time = new System.Windows.Forms.DataGridViewTextBoxColumn();
-            this.print_direct_index = new System.Windows.Forms.DataGridViewButtonColumn();
-            this.print_AfterSet_index = new System.Windows.Forms.DataGridViewButtonColumn();
-            this.operation = new System.Windows.Forms.DataGridViewButtonColumn();
-            this.cancel_idex = new System.Windows.Forms.DataGridViewButtonColumn();
-            this.open_file_idex = new System.Windows.Forms.DataGridViewButtonColumn();
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.tool = new System.Windows.Forms.ToolStripMenuItem();
             this.refreshtime = new System.Windows.Forms.ToolStripMenuItem();
@@ -124,6 +110,20 @@
             this.loginbutton = new System.Windows.Forms.Button();
             this.un = new System.Windows.Forms.Label();
             this.pw = new System.Windows.Forms.Label();
+            this.select_idex = new System.Windows.Forms.DataGridViewCheckBoxColumn();
+            this.id = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.status = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.pay_ensure_idex = new System.Windows.Forms.DataGridViewButtonColumn();
+            this.get_pic_idex = new System.Windows.Forms.DataGridViewButtonColumn();
+            this.filename = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.setting_idex = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.use_id = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.time = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.print_direct_index = new System.Windows.Forms.DataGridViewButtonColumn();
+            this.print_AfterSet_index = new System.Windows.Forms.DataGridViewButtonColumn();
+            this.operation = new System.Windows.Forms.DataGridViewButtonColumn();
+            this.cancel_idex = new System.Windows.Forms.DataGridViewButtonColumn();
+            this.open_file_idex = new System.Windows.Forms.DataGridViewButtonColumn();
             this.notifyIconmenu.SuspendLayout();
             this.download.SuspendLayout();
             this.all_operation_panel.SuspendLayout();
@@ -204,6 +204,7 @@
             this.all_cancel.TabIndex = 5;
             this.all_cancel.Text = "取消选中订单";
             this.all_cancel.UseVisualStyleBackColor = true;
+            this.all_cancel.Click += new System.EventHandler(this.all_cancel_Click);
             // 
             // all_TellPrinted
             // 
@@ -214,6 +215,7 @@
             this.all_TellPrinted.TabIndex = 4;
             this.all_TellPrinted.Text = "通知打印完成";
             this.all_TellPrinted.UseVisualStyleBackColor = true;
+            this.all_TellPrinted.Click += new System.EventHandler(this.all_TellPrinted_Click);
             // 
             // all_direct_print
             // 
@@ -224,6 +226,7 @@
             this.all_direct_print.TabIndex = 3;
             this.all_direct_print.Text = "打印选中文件";
             this.all_direct_print.UseVisualStyleBackColor = true;
+            this.all_direct_print.Click += new System.EventHandler(this.all_direct_print_Click);
             // 
             // all_ensure_payed
             // 
@@ -234,6 +237,7 @@
             this.all_ensure_payed.TabIndex = 2;
             this.all_ensure_payed.Text = "确认支付";
             this.all_ensure_payed.UseVisualStyleBackColor = true;
+            this.all_ensure_payed.Click += new System.EventHandler(this.all_ensure_payed_Click);
             // 
             // none_selected
             // 
@@ -244,6 +248,7 @@
             this.none_selected.TabIndex = 1;
             this.none_selected.Text = "反选";
             this.none_selected.UseVisualStyleBackColor = true;
+            this.none_selected.Click += new System.EventHandler(this.none_selected_Click);
             // 
             // all_selected
             // 
@@ -254,6 +259,7 @@
             this.all_selected.TabIndex = 0;
             this.all_selected.Text = "全选";
             this.all_selected.UseVisualStyleBackColor = true;
+            this.all_selected.Click += new System.EventHandler(this.all_selected_Click);
             // 
             // statusStrip1
             // 
@@ -475,7 +481,6 @@
             this.requirements.TabIndex = 13;
             this.requirements.Text = "备注信息";
             this.requirements.UseVisualStyleBackColor = false;
-            //this.requirements.Click += new System.EventHandler(this.requirements_Click);
             // 
             // mydata
             // 
@@ -488,16 +493,16 @@
             this.mydata.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.mydata.CellBorderStyle = System.Windows.Forms.DataGridViewCellBorderStyle.SingleHorizontal;
             this.mydata.ColumnHeadersBorderStyle = System.Windows.Forms.DataGridViewHeaderBorderStyle.None;
-            dataGridViewCellStyle1.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(185)))), ((int)(((byte)(220)))), ((int)(((byte)(237)))));
-            dataGridViewCellStyle1.Font = new System.Drawing.Font("微软雅黑", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            dataGridViewCellStyle1.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle1.SelectionBackColor = System.Drawing.Color.PowderBlue;
-            dataGridViewCellStyle1.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            this.mydata.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle1;
+            dataGridViewCellStyle97.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle97.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(185)))), ((int)(((byte)(220)))), ((int)(((byte)(237)))));
+            dataGridViewCellStyle97.Font = new System.Drawing.Font("微软雅黑", 15F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            dataGridViewCellStyle97.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle97.SelectionBackColor = System.Drawing.Color.PowderBlue;
+            dataGridViewCellStyle97.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            this.mydata.ColumnHeadersDefaultCellStyle = dataGridViewCellStyle97;
             this.mydata.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.mydata.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
-            this.slect_idex,
+            this.select_idex,
             this.id,
             this.status,
             this.pay_ensure_idex,
@@ -516,14 +521,14 @@
             this.mydata.Location = new System.Drawing.Point(0, 39);
             this.mydata.MultiSelect = false;
             this.mydata.Name = "mydata";
-            dataGridViewCellStyle16.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
-            dataGridViewCellStyle16.BackColor = System.Drawing.SystemColors.Control;
-            dataGridViewCellStyle16.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            dataGridViewCellStyle16.ForeColor = System.Drawing.SystemColors.WindowText;
-            dataGridViewCellStyle16.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(230)))), ((int)(((byte)(230)))));
-            dataGridViewCellStyle16.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
-            dataGridViewCellStyle16.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
-            this.mydata.RowHeadersDefaultCellStyle = dataGridViewCellStyle16;
+            dataGridViewCellStyle112.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleLeft;
+            dataGridViewCellStyle112.BackColor = System.Drawing.SystemColors.Control;
+            dataGridViewCellStyle112.Font = new System.Drawing.Font("宋体", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            dataGridViewCellStyle112.ForeColor = System.Drawing.SystemColors.WindowText;
+            dataGridViewCellStyle112.SelectionBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(230)))), ((int)(((byte)(230)))), ((int)(((byte)(230)))));
+            dataGridViewCellStyle112.SelectionForeColor = System.Drawing.SystemColors.HighlightText;
+            dataGridViewCellStyle112.WrapMode = System.Windows.Forms.DataGridViewTriState.True;
+            this.mydata.RowHeadersDefaultCellStyle = dataGridViewCellStyle112;
             this.mydata.RowHeadersVisible = false;
             this.mydata.RowTemplate.Height = 23;
             this.mydata.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
@@ -532,145 +537,6 @@
             this.mydata.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.mydata_CellClick);
             this.mydata.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.mydata_CellContentClick);
             this.mydata.CellContentDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.mydata_CellContentDoubleClick);
-            // 
-            // slect_idex
-            // 
-            dataGridViewCellStyle2.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle2.BackColor = System.Drawing.Color.AliceBlue;
-            dataGridViewCellStyle2.NullValue = false;
-            this.slect_idex.DefaultCellStyle = dataGridViewCellStyle2;
-            this.slect_idex.HeaderText = "选中";
-            this.slect_idex.Name = "slect_idex";
-            this.slect_idex.Width = 60;
-            // 
-            // id
-            // 
-            dataGridViewCellStyle3.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(228)))), ((int)(((byte)(244)))), ((int)(((byte)(245)))));
-            dataGridViewCellStyle3.Font = new System.Drawing.Font("微软雅黑", 7.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.id.DefaultCellStyle = dataGridViewCellStyle3;
-            this.id.HeaderText = "序号";
-            this.id.Name = "id";
-            this.id.Width = 60;
-            // 
-            // status
-            // 
-            dataGridViewCellStyle4.BackColor = System.Drawing.Color.AliceBlue;
-            dataGridViewCellStyle4.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.status.DefaultCellStyle = dataGridViewCellStyle4;
-            this.status.HeaderText = "状态";
-            this.status.Name = "status";
-            this.status.Width = 60;
-            // 
-            // pay_ensure_idex
-            // 
-            dataGridViewCellStyle5.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle5.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(228)))), ((int)(((byte)(244)))), ((int)(((byte)(245)))));
-            dataGridViewCellStyle5.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.pay_ensure_idex.DefaultCellStyle = dataGridViewCellStyle5;
-            this.pay_ensure_idex.HeaderText = "支付";
-            this.pay_ensure_idex.Name = "pay_ensure_idex";
-            this.pay_ensure_idex.Text = "确认支付";
-            this.pay_ensure_idex.Width = 90;
-            // 
-            // get_pic_idex
-            // 
-            dataGridViewCellStyle6.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle6.BackColor = System.Drawing.Color.AliceBlue;
-            dataGridViewCellStyle6.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.get_pic_idex.DefaultCellStyle = dataGridViewCellStyle6;
-            this.get_pic_idex.HeaderText = "";
-            this.get_pic_idex.Name = "get_pic_idex";
-            this.get_pic_idex.Text = "生成二维码";
-            this.get_pic_idex.Width = 90;
-            // 
-            // filename
-            // 
-            dataGridViewCellStyle7.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(228)))), ((int)(((byte)(244)))), ((int)(((byte)(245)))));
-            dataGridViewCellStyle7.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.filename.DefaultCellStyle = dataGridViewCellStyle7;
-            this.filename.HeaderText = "文件名";
-            this.filename.Name = "filename";
-            this.filename.Width = 135;
-            // 
-            // setting_idex
-            // 
-            dataGridViewCellStyle8.BackColor = System.Drawing.Color.AliceBlue;
-            dataGridViewCellStyle8.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.setting_idex.DefaultCellStyle = dataGridViewCellStyle8;
-            this.setting_idex.HeaderText = "设置";
-            this.setting_idex.Name = "setting_idex";
-            // 
-            // use_id
-            // 
-            dataGridViewCellStyle9.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(228)))), ((int)(((byte)(244)))), ((int)(((byte)(245)))));
-            dataGridViewCellStyle9.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.use_id.DefaultCellStyle = dataGridViewCellStyle9;
-            this.use_id.HeaderText = "用户名";
-            this.use_id.Name = "use_id";
-            this.use_id.Width = 80;
-            // 
-            // time
-            // 
-            dataGridViewCellStyle10.BackColor = System.Drawing.Color.AliceBlue;
-            dataGridViewCellStyle10.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.time.DefaultCellStyle = dataGridViewCellStyle10;
-            this.time.HeaderText = "上传时间";
-            this.time.Name = "time";
-            this.time.Width = 150;
-            // 
-            // print_direct_index
-            // 
-            dataGridViewCellStyle11.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle11.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(228)))), ((int)(((byte)(244)))), ((int)(((byte)(245)))));
-            dataGridViewCellStyle11.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.print_direct_index.DefaultCellStyle = dataGridViewCellStyle11;
-            this.print_direct_index.HeaderText = "打印";
-            this.print_direct_index.Name = "print_direct_index";
-            this.print_direct_index.Text = "一键打印";
-            this.print_direct_index.Width = 90;
-            // 
-            // print_AfterSet_index
-            // 
-            dataGridViewCellStyle12.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle12.BackColor = System.Drawing.Color.AliceBlue;
-            dataGridViewCellStyle12.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.print_AfterSet_index.DefaultCellStyle = dataGridViewCellStyle12;
-            this.print_AfterSet_index.HeaderText = "";
-            this.print_AfterSet_index.Name = "print_AfterSet_index";
-            this.print_AfterSet_index.Text = "设置后打印";
-            this.print_AfterSet_index.Width = 90;
-            // 
-            // operation
-            // 
-            dataGridViewCellStyle13.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle13.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(228)))), ((int)(((byte)(244)))), ((int)(((byte)(245)))));
-            dataGridViewCellStyle13.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.operation.DefaultCellStyle = dataGridViewCellStyle13;
-            this.operation.HeaderText = "操作";
-            this.operation.Name = "operation";
-            this.operation.Width = 90;
-            // 
-            // cancel_idex
-            // 
-            dataGridViewCellStyle14.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle14.BackColor = System.Drawing.Color.AliceBlue;
-            dataGridViewCellStyle14.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.cancel_idex.DefaultCellStyle = dataGridViewCellStyle14;
-            this.cancel_idex.HeaderText = "";
-            this.cancel_idex.Name = "cancel_idex";
-            this.cancel_idex.Text = "取消订单";
-            this.cancel_idex.Width = 90;
-            // 
-            // open_file_idex
-            // 
-            dataGridViewCellStyle15.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
-            dataGridViewCellStyle15.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(228)))), ((int)(((byte)(244)))), ((int)(((byte)(245)))));
-            dataGridViewCellStyle15.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.open_file_idex.DefaultCellStyle = dataGridViewCellStyle15;
-            this.open_file_idex.HeaderText = "";
-            this.open_file_idex.Name = "open_file_idex";
-            this.open_file_idex.Text = "打开源文件";
-            this.open_file_idex.Width = 90;
             // 
             // menuStrip1
             // 
@@ -971,6 +837,158 @@
             this.pw.TabIndex = 2;
             this.pw.Text = "密码";
             // 
+            // select_idex
+            // 
+            dataGridViewCellStyle98.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle98.BackColor = System.Drawing.Color.AliceBlue;
+            dataGridViewCellStyle98.NullValue = false;
+            this.select_idex.DefaultCellStyle = dataGridViewCellStyle98;
+            this.select_idex.HeaderText = "选中";
+            this.select_idex.Name = "select_idex";
+            this.select_idex.Width = 60;
+            // 
+            // id
+            // 
+            dataGridViewCellStyle99.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(228)))), ((int)(((byte)(244)))), ((int)(((byte)(245)))));
+            dataGridViewCellStyle99.Font = new System.Drawing.Font("微软雅黑", 7.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.id.DefaultCellStyle = dataGridViewCellStyle99;
+            this.id.HeaderText = "序号";
+            this.id.Name = "id";
+            this.id.ReadOnly = true;
+            this.id.Width = 60;
+            // 
+            // status
+            // 
+            dataGridViewCellStyle100.BackColor = System.Drawing.Color.AliceBlue;
+            dataGridViewCellStyle100.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.status.DefaultCellStyle = dataGridViewCellStyle100;
+            this.status.HeaderText = "状态";
+            this.status.Name = "status";
+            this.status.ReadOnly = true;
+            this.status.Width = 60;
+            // 
+            // pay_ensure_idex
+            // 
+            dataGridViewCellStyle101.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle101.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(228)))), ((int)(((byte)(244)))), ((int)(((byte)(245)))));
+            dataGridViewCellStyle101.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.pay_ensure_idex.DefaultCellStyle = dataGridViewCellStyle101;
+            this.pay_ensure_idex.HeaderText = "支付";
+            this.pay_ensure_idex.Name = "pay_ensure_idex";
+            this.pay_ensure_idex.ReadOnly = true;
+            this.pay_ensure_idex.Text = "确认支付";
+            this.pay_ensure_idex.Width = 90;
+            // 
+            // get_pic_idex
+            // 
+            dataGridViewCellStyle102.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle102.BackColor = System.Drawing.Color.AliceBlue;
+            dataGridViewCellStyle102.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.get_pic_idex.DefaultCellStyle = dataGridViewCellStyle102;
+            this.get_pic_idex.HeaderText = "";
+            this.get_pic_idex.Name = "get_pic_idex";
+            this.get_pic_idex.ReadOnly = true;
+            this.get_pic_idex.Text = "生成二维码";
+            this.get_pic_idex.Width = 90;
+            // 
+            // filename
+            // 
+            dataGridViewCellStyle103.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(228)))), ((int)(((byte)(244)))), ((int)(((byte)(245)))));
+            dataGridViewCellStyle103.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.filename.DefaultCellStyle = dataGridViewCellStyle103;
+            this.filename.HeaderText = "文件名";
+            this.filename.Name = "filename";
+            this.filename.ReadOnly = true;
+            this.filename.Width = 135;
+            // 
+            // setting_idex
+            // 
+            dataGridViewCellStyle104.BackColor = System.Drawing.Color.AliceBlue;
+            dataGridViewCellStyle104.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.setting_idex.DefaultCellStyle = dataGridViewCellStyle104;
+            this.setting_idex.HeaderText = "设置";
+            this.setting_idex.Name = "setting_idex";
+            this.setting_idex.ReadOnly = true;
+            // 
+            // use_id
+            // 
+            dataGridViewCellStyle105.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(228)))), ((int)(((byte)(244)))), ((int)(((byte)(245)))));
+            dataGridViewCellStyle105.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.use_id.DefaultCellStyle = dataGridViewCellStyle105;
+            this.use_id.HeaderText = "用户名";
+            this.use_id.Name = "use_id";
+            this.use_id.ReadOnly = true;
+            this.use_id.Width = 80;
+            // 
+            // time
+            // 
+            dataGridViewCellStyle106.BackColor = System.Drawing.Color.AliceBlue;
+            dataGridViewCellStyle106.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.time.DefaultCellStyle = dataGridViewCellStyle106;
+            this.time.HeaderText = "上传时间";
+            this.time.Name = "time";
+            this.time.ReadOnly = true;
+            this.time.Width = 150;
+            // 
+            // print_direct_index
+            // 
+            dataGridViewCellStyle107.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle107.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(228)))), ((int)(((byte)(244)))), ((int)(((byte)(245)))));
+            dataGridViewCellStyle107.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.print_direct_index.DefaultCellStyle = dataGridViewCellStyle107;
+            this.print_direct_index.HeaderText = "打印";
+            this.print_direct_index.Name = "print_direct_index";
+            this.print_direct_index.ReadOnly = true;
+            this.print_direct_index.Text = "一键打印";
+            this.print_direct_index.Width = 90;
+            // 
+            // print_AfterSet_index
+            // 
+            dataGridViewCellStyle108.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle108.BackColor = System.Drawing.Color.AliceBlue;
+            dataGridViewCellStyle108.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.print_AfterSet_index.DefaultCellStyle = dataGridViewCellStyle108;
+            this.print_AfterSet_index.HeaderText = "";
+            this.print_AfterSet_index.Name = "print_AfterSet_index";
+            this.print_AfterSet_index.ReadOnly = true;
+            this.print_AfterSet_index.Text = "设置后打印";
+            this.print_AfterSet_index.Width = 90;
+            // 
+            // operation
+            // 
+            dataGridViewCellStyle109.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle109.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(228)))), ((int)(((byte)(244)))), ((int)(((byte)(245)))));
+            dataGridViewCellStyle109.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.operation.DefaultCellStyle = dataGridViewCellStyle109;
+            this.operation.HeaderText = "操作";
+            this.operation.Name = "operation";
+            this.operation.ReadOnly = true;
+            this.operation.Width = 90;
+            // 
+            // cancel_idex
+            // 
+            dataGridViewCellStyle110.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle110.BackColor = System.Drawing.Color.AliceBlue;
+            dataGridViewCellStyle110.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.cancel_idex.DefaultCellStyle = dataGridViewCellStyle110;
+            this.cancel_idex.HeaderText = "";
+            this.cancel_idex.Name = "cancel_idex";
+            this.cancel_idex.ReadOnly = true;
+            this.cancel_idex.Text = "取消订单";
+            this.cancel_idex.Width = 90;
+            // 
+            // open_file_idex
+            // 
+            dataGridViewCellStyle111.Alignment = System.Windows.Forms.DataGridViewContentAlignment.MiddleCenter;
+            dataGridViewCellStyle111.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(228)))), ((int)(((byte)(244)))), ((int)(((byte)(245)))));
+            dataGridViewCellStyle111.Font = new System.Drawing.Font("微软雅黑", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.open_file_idex.DefaultCellStyle = dataGridViewCellStyle111;
+            this.open_file_idex.HeaderText = "";
+            this.open_file_idex.Name = "open_file_idex";
+            this.open_file_idex.ReadOnly = true;
+            this.open_file_idex.Text = "打开源文件";
+            this.open_file_idex.Width = 90;
+            // 
             // login_download
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -1061,7 +1079,15 @@
         private System.Windows.Forms.ToolStripMenuItem transform;
         private System.Windows.Forms.ToolStripMenuItem 自动刷新ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem 手动刷新ToolStripMenuItem;
-        private System.Windows.Forms.DataGridViewCheckBoxColumn slect_idex;
+        private System.Windows.Forms.ToolStripMenuItem 打印完成文件ToolStripMenuItem;
+        private System.Windows.Forms.Panel all_operation_panel;
+        private System.Windows.Forms.Button all_cancel;
+        private System.Windows.Forms.Button all_TellPrinted;
+        private System.Windows.Forms.Button all_direct_print;
+        private System.Windows.Forms.Button all_ensure_payed;
+        private System.Windows.Forms.Button none_selected;
+        private System.Windows.Forms.Button all_selected;
+        private System.Windows.Forms.DataGridViewCheckBoxColumn select_idex;
         private System.Windows.Forms.DataGridViewTextBoxColumn id;
         private System.Windows.Forms.DataGridViewTextBoxColumn status;
         private System.Windows.Forms.DataGridViewButtonColumn pay_ensure_idex;
@@ -1075,14 +1101,6 @@
         private System.Windows.Forms.DataGridViewButtonColumn operation;
         private System.Windows.Forms.DataGridViewButtonColumn cancel_idex;
         private System.Windows.Forms.DataGridViewButtonColumn open_file_idex;
-        private System.Windows.Forms.ToolStripMenuItem 打印完成文件ToolStripMenuItem;
-        private System.Windows.Forms.Panel all_operation_panel;
-        private System.Windows.Forms.Button all_cancel;
-        private System.Windows.Forms.Button all_TellPrinted;
-        private System.Windows.Forms.Button all_direct_print;
-        private System.Windows.Forms.Button all_ensure_payed;
-        private System.Windows.Forms.Button none_selected;
-        private System.Windows.Forms.Button all_selected;
     }
 }
 

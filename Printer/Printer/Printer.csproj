@@ -74,6 +74,7 @@
     </Compile>
     <Compile Include="location_settings.cs" />
     <Compile Include="login_class.cs" />
+    <Compile Include="operation_all_class.cs" />
     <Compile Include="operation_class.cs" />
     <Compile Include="print_class.cs" />
     <Compile Include="Program.cs" />
