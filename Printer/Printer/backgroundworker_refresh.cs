@@ -18,12 +18,13 @@ namespace Printer
 
         private void refresh_fun(object sender, DoWorkEventArgs e)
         {
+            form.StatusLabel.Text = "正在刷新，请稍后";
             database.jsonlist_refresh();   //获取文件列表    
-
         }
 
         void after_refresh_first(object sender, RunWorkerCompletedEventArgs e)
         {
+            form.StatusLabel.Text = "";
             display.display_list(form, database.jsonlist);
             download_list_class download_jsonlist = new download_list_class(form, database.jsonlist);
             download_jsonlist.download();
@@ -33,6 +34,7 @@ namespace Printer
 
         private void after_refresh(object sender, RunWorkerCompletedEventArgs e)
         {
+            form.StatusLabel.Text = "";
             download_list_class download_list = new download_list_class(form, database.jsonlist);
             download_list.download();
         }

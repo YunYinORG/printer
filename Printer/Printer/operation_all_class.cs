@@ -14,7 +14,6 @@ namespace Printer
         {
             foreach (DataGridViewRow dr in form.mydata.Rows)
             {
-
                 if (Convert.ToBoolean(dr.Cells["select_idex"].Value) == true)
                 {
                     stringlist.Add(dr.Cells["id"].Value.ToString());
