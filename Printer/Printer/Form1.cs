@@ -808,6 +808,7 @@ namespace Printer
 
         private void 所有文件ToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            display_mode = "mode_all";
             所有文件ToolStripMenuItem.Checked = true;
             未下载文件ToolStripMenuItem.Checked = false;
             已下载文件ToolStripMenuItem.Checked = false;
@@ -815,11 +816,12 @@ namespace Printer
             已打印文件ToolStripMenuItem.Checked = false;
             mydata.Rows.Clear();
             display.display_list_norefresh(this, database.jsonlist);
-            display_mode = "mode_all";
+            
         }
 
         private void 未下载文件ToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            display_mode = "mode_downloading";
             所有文件ToolStripMenuItem.Checked = false;
             未下载文件ToolStripMenuItem.Checked = true;
             已下载文件ToolStripMenuItem.Checked = false;
@@ -827,11 +829,12 @@ namespace Printer
             打印完成文件ToolStripMenuItem.Checked = false;
             mydata.Rows.Clear();
             display.display_list_norefresh(this, database.jsonlist_err);
-            display_mode = "mode_downloading";
+            
         }
 
         private void 已下载文件ToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            display_mode = "mode_downloaded";
             所有文件ToolStripMenuItem.Checked = false;
             未下载文件ToolStripMenuItem.Checked = false;
             已下载文件ToolStripMenuItem.Checked = true;
@@ -839,11 +842,12 @@ namespace Printer
             打印完成文件ToolStripMenuItem.Checked = false;
             mydata.Rows.Clear();
             display.display_list_norefresh(this, database.jsonlist_downloaded);
-            display_mode = "mode_downloaded";
+            
         }
 
         private void 已打印文件ToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            display_mode = "mode_printing";
             所有文件ToolStripMenuItem.Checked = false;
             未下载文件ToolStripMenuItem.Checked = false;
             已下载文件ToolStripMenuItem.Checked = false;
@@ -851,11 +855,12 @@ namespace Printer
             已打印文件ToolStripMenuItem.Checked = true;
             mydata.Rows.Clear();
             display.display_list_norefresh(this, database.jsonlist_printing);
-            display_mode = "mode_printing";
+            
         }
 
         private void 打印完成文件ToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            display_mode = "mode_printed";
             所有文件ToolStripMenuItem.Checked = false;
             未下载文件ToolStripMenuItem.Checked = false;
             已下载文件ToolStripMenuItem.Checked = false;
@@ -863,7 +868,7 @@ namespace Printer
             已打印文件ToolStripMenuItem.Checked = false;
             mydata.Rows.Clear();
             display.display_list_norefresh(this, database.jsonlist_printed);
-            display_mode = "mode_printed";
+            
         }
 
         private void all_selected_Click(object sender, EventArgs e)
