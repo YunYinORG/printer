@@ -892,8 +892,13 @@ namespace Printer
 
         private void all_ensure_payed_Click(object sender, EventArgs e)
         {
-            operation_all_EnsurePayed_class operation_class = new operation_all_EnsurePayed_class(this);
-            operation_class.do_operation();
+            DialogResult dr = MessageBox.Show("全部确认付款？", "", MessageBoxButtons.YesNo);
+            if (dr == DialogResult.Yes)
+            {
+                operation_all_EnsurePayed_class operation_class = new operation_all_EnsurePayed_class(this);
+                operation_class.do_operation();
+            }
+
         }
 
         private void all_direct_print_Click(object sender, EventArgs e)
