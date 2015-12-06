@@ -71,14 +71,11 @@
             this.label5 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
-            this.set_before_print = new System.Windows.Forms.Button();
             this.set_default_printer = new System.Windows.Forms.Panel();
             this.label2 = new System.Windows.Forms.Label();
             this.close_printer = new System.Windows.Forms.Button();
             this.ensure_printer = new System.Windows.Forms.Button();
             this.printer_comboBox = new System.Windows.Forms.ComboBox();
-            this.dicret_download = new System.Windows.Forms.Button();
-            this.requirements = new System.Windows.Forms.Button();
             this.mydata = new System.Windows.Forms.DataGridView();
             this.select_idex = new System.Windows.Forms.DataGridViewCheckBoxColumn();
             this.id = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -169,10 +166,7 @@
             this.download.Controls.Add(this.all_operation_panel);
             this.download.Controls.Add(this.statusStrip1);
             this.download.Controls.Add(this.printers_setting_dialog);
-            this.download.Controls.Add(this.set_before_print);
             this.download.Controls.Add(this.set_default_printer);
-            this.download.Controls.Add(this.dicret_download);
-            this.download.Controls.Add(this.requirements);
             this.download.Controls.Add(this.mydata);
             this.download.Controls.Add(this.menuStrip1);
             this.download.Location = new System.Drawing.Point(0, 0);
@@ -396,18 +390,6 @@
             this.label3.TabIndex = 0;
             this.label3.Text = "请选择对应的打印机";
             // 
-            // set_before_print
-            // 
-            this.set_before_print.BackColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.set_before_print.Font = new System.Drawing.Font("微软雅黑", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.set_before_print.Location = new System.Drawing.Point(849, 6);
-            this.set_before_print.Name = "set_before_print";
-            this.set_before_print.Size = new System.Drawing.Size(132, 30);
-            this.set_before_print.TabIndex = 17;
-            this.set_before_print.Text = "详细设置并打印";
-            this.set_before_print.UseVisualStyleBackColor = false;
-            this.set_before_print.Click += new System.EventHandler(this.set_before_print_Click);
-            // 
             // set_default_printer
             // 
             this.set_default_printer.BackColor = System.Drawing.Color.WhiteSmoke;
@@ -457,29 +439,6 @@
             this.printer_comboBox.Name = "printer_comboBox";
             this.printer_comboBox.Size = new System.Drawing.Size(121, 20);
             this.printer_comboBox.TabIndex = 0;
-            // 
-            // dicret_download
-            // 
-            this.dicret_download.BackColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.dicret_download.Font = new System.Drawing.Font("微软雅黑", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.dicret_download.Location = new System.Drawing.Point(996, 6);
-            this.dicret_download.Name = "dicret_download";
-            this.dicret_download.Size = new System.Drawing.Size(103, 30);
-            this.dicret_download.TabIndex = 15;
-            this.dicret_download.Text = "一键打印";
-            this.dicret_download.UseVisualStyleBackColor = false;
-            this.dicret_download.Click += new System.EventHandler(this.dicret_download_Click);
-            // 
-            // requirements
-            // 
-            this.requirements.BackColor = System.Drawing.SystemColors.ButtonHighlight;
-            this.requirements.Font = new System.Drawing.Font("微软雅黑", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.requirements.Location = new System.Drawing.Point(1117, 6);
-            this.requirements.Name = "requirements";
-            this.requirements.Size = new System.Drawing.Size(103, 30);
-            this.requirements.TabIndex = 13;
-            this.requirements.Text = "备注信息";
-            this.requirements.UseVisualStyleBackColor = false;
             // 
             // mydata
             // 
@@ -533,7 +492,7 @@
             this.mydata.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.mydata.Size = new System.Drawing.Size(1284, 299);
             this.mydata.TabIndex = 12;
-            this.mydata.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.mydata_CellClick);
+            //this.mydata.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.mydata_CellClick);
             this.mydata.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.mydata_CellContentClick);
             this.mydata.CellContentDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.mydata_CellContentDoubleClick);
             // 
@@ -1046,15 +1005,12 @@
         public System.Windows.Forms.NotifyIcon notifyIcon1;
         private System.Windows.Forms.ContextMenuStrip notifyIconmenu;
         private System.Windows.Forms.ToolStripMenuItem 关闭ToolStripMenuItem;
-        private System.Windows.Forms.Button requirements;
-        private System.Windows.Forms.Button dicret_download;
         private System.Windows.Forms.ToolStripMenuItem 设置默认打印机ToolStripMenuItem;
         private System.Windows.Forms.Panel set_default_printer;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button close_printer;
         private System.Windows.Forms.Button ensure_printer;
         private System.Windows.Forms.ComboBox printer_comboBox;
-        private System.Windows.Forms.Button set_before_print;
         private System.Windows.Forms.Panel printers_setting_dialog;
         private System.Windows.Forms.Button setting_printer_exit;
         private System.Windows.Forms.Button setting_printers_ensure;

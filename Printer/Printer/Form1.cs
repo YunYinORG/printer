@@ -499,31 +499,31 @@ namespace Printer
 
         //}
 
-        /// <summary>
-        /// 单击后判断该文件是否有备注信息
-        /// </summary>
-        /// <param name="sender"></param>
-        /// <param name="e"></param>
-        private void mydata_CellClick(object sender, DataGridViewCellEventArgs e)
-        {
-            if ((e.ColumnIndex > -1) && (e.RowIndex > -1))
-            {
-                string current_id = mydata.Rows[e.RowIndex].Cells["id"].Value.ToString();
-                ToJsonMy file = database.find_myjson(current_id);
-                if (file != null)
-                {
-                    if (file.requirements == "")
-                    {
-                        requirements.Visible = false;
-                    }
-                    else
-                    {
-                        requirements.Visible = true;
-                    }
-                }
+        ///// <summary>
+        ///// 单击后判断该文件是否有备注信息
+        ///// </summary>
+        ///// <param name="sender"></param>
+        ///// <param name="e"></param>
+        //private void mydata_CellClick(object sender, DataGridViewCellEventArgs e)
+        //{
+        //    if ((e.ColumnIndex > -1) && (e.RowIndex > -1))
+        //    {
+        //        string current_id = mydata.Rows[e.RowIndex].Cells["id"].Value.ToString();
+        //        ToJsonMy file = database.find_myjson(current_id);
+        //        if (file != null)
+        //        {
+        //            if (file.requirements == "")
+        //            {
+        //                requirements.Visible = false;
+        //            }
+        //            else
+        //            {
+        //                requirements.Visible = true;
+        //            }
+        //        }
 
-            }
-        }
+        //    }
+        //}
 
         private void dicret_download_Click(object sender, EventArgs e)
         {
