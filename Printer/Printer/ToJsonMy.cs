@@ -30,6 +30,7 @@ namespace Printer
         public string lujing { get; set; }
         public bool is_ibook;
         public bool isfirst;
+        public bool ispayed;
 
         public string file_SavePath
         {
@@ -209,30 +210,11 @@ namespace Printer
             string r = API.PostMethod_noparam("/printer/task/" + id + "/pay", new UTF8Encoding());
             if (JObject.Parse(r)["status"].ToString() != "1")
             {
-                MessageBox.Show((string)JObject.Parse(r)["info"]);
+                throw new Exception ((string)JObject.Parse(r)["info"]);
             }
             else
             {
-                if (database.jsonlist.Contains(this))
-                {
-                    database.jsonlist.Remove(this);
-                }
-                if (database.jsonlist_downloaded.Contains(this))
-                {
-                    database.jsonlist_downloaded.Remove(this);
-                }
-                if (database.jsonlist_err.Contains(this))
-                {
-                    database.jsonlist_err.Remove(this);
-                }
-                if (database.jsonlist_printed.Contains(this))
-                {
-                    database.jsonlist_printed.Remove(this);
-                }
-                if (database.jsonlist_printing.Contains(this))
-                {
-                    database.jsonlist_printing.Remove(this);
-                }
+                this.ispayed = true;
             }
         }
 

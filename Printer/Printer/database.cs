@@ -41,7 +41,7 @@ namespace Printer
                         break;
                     }
                 }
-                if (ja[i]["payed"].ToString() == "1")
+                if ((ja[i]["payed"].ToString() == "1")&&(ja[i]["status"].ToString()=="4"))
                 {
                     flag = false;
                 }
@@ -64,6 +64,14 @@ namespace Printer
                     myJs.ppt_layout = ja[i]["format"].ToString();
                     myJs.requirements = ja[i]["requirements"].ToString();
 
+                    if (ja[i]["payed"].ToString() == "1")
+                    {
+                        myJs.ispayed = true;
+                    }
+                    else
+                    {
+                        myJs.ispayed = false;
+                    }
                     if (ja[i].ToString().Contains("pro"))
                     {
                         myJs.isfirst = true;

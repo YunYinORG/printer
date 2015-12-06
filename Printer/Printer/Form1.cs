@@ -235,7 +235,7 @@ namespace Printer
                 string buttonText = this.mydata.Rows[e.RowIndex].Cells[e.ColumnIndex].Value.ToString();
                 switch (buttonText)
                 {
-                    case "确认付款":
+                    case "确认支付":
                         //DialogResult dr = MessageBox.Show("确认付款？", "", MessageBoxButtons.YesNo);
                         //if (dr == DialogResult.Yes)
                         //{

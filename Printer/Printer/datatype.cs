@@ -51,6 +51,8 @@ namespace Printer
         public string mydata_userName { get; set; }
         public string mydata_time { get; set; }
         public string mydata_buttontext { get; set; }
+        public string mydata_pay_buttontext { get; set; }
+
 
         //public string mydata_copies { get; set; }
 

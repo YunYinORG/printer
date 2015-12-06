@@ -30,39 +30,97 @@ namespace Printer
             {
                 case "mode_downloaded":
                 case "mode_printing":
-                    file.changeStatusById("4");
-                    if (database.jsonlist_downloaded.Contains(file))
+                    if (file.changeStatusById("4"))
                     {
-                        database.jsonlist_downloaded.Remove(file);
+                        form.mydata.Rows.Remove(form.mydata.Rows[RowIndex]);
+                        file.status = "4";
+                        if (file.ispayed == false)
+                        {
+                            if (database.jsonlist_downloaded.Contains(file))
+                            {
+                                database.jsonlist_downloaded.Remove(file);
+                            }
+                            if (database.jsonlist_printing.Contains(file))
+                            {
+                                database.jsonlist_printing.Remove(file);
+                            }
+                            if (!database.jsonlist_printed.Contains(file))
+                            {
+                                database.jsonlist_printed.Add(file);
+                            }
+                        }
+                        else
+                        {
+                            if (database.jsonlist.Contains(file))
+                            {
+                                database.jsonlist.Remove(file);
+                            }
+                            if (database.jsonlist_downloaded.Contains(file))
+                            {
+                                database.jsonlist_downloaded.Remove(file);
+                            }
+                            if (database.jsonlist_err.Contains(file))
+                            {
+                                database.jsonlist_err.Remove(file);
+                            }
+                            if (database.jsonlist_printed.Contains(file))
+                            {
+                                database.jsonlist_printed.Remove(file);
+                            }
+                            if (database.jsonlist_printing.Contains(file))
+                            {
+                                database.jsonlist_printing.Remove(file);
+                            }
+                        }
                     }
-                    if (database.jsonlist_printing.Contains(file))
-                    {
-                        database.jsonlist_printing.Remove(file);
-                    }
-                    if (!database.jsonlist_printed.Contains(file))
-                    {
-                        database.jsonlist_printed.Add(file);
-                    }
-                    form.mydata.Rows.Remove(form.mydata.Rows[RowIndex]);
-                    file.status = "4";
+
                     break;
                 case "mode_all":
-                    file.changeStatusById("4");
-                    form.mydata.Rows[RowIndex].Cells["status"].Value = "打印完成";
-                    if (database.jsonlist_downloaded.Contains(file))
+                    if (file.changeStatusById("4"))                
                     {
-                        database.jsonlist_downloaded.Remove(file);
-                    }
-                    if (database.jsonlist_printing.Contains(file))
-                    {
-                        database.jsonlist_printing.Remove(file);
-                    }
-                    if (!database.jsonlist_printed.Contains(file))
-                    {
-                        database.jsonlist_printed.Add(file);
+                        file.status = "4";
+                        if (file.ispayed == false)
+                        {                        
+                            form.mydata.Rows[RowIndex].Cells["status"].Value = "打印完成";
+                            if (database.jsonlist_downloaded.Contains(file))
+                            {
+                                database.jsonlist_downloaded.Remove(file);
+                            }
+                            if (database.jsonlist_printing.Contains(file))
+                            {
+                                database.jsonlist_printing.Remove(file);
+                            }
+                            if (!database.jsonlist_printed.Contains(file))
+                            {
+                                database.jsonlist_printed.Add(file);
+                            }
+                        }
+                        else
+                        {
+                            form.mydata.Rows.Remove(form.mydata.Rows[RowIndex]);
+                            if (database.jsonlist.Contains(file))
+                            {
+                                database.jsonlist.Remove(file);
+                            }
+                            if (database.jsonlist_downloaded.Contains(file))
+                            {
+                                database.jsonlist_downloaded.Remove(file);
+                            }
+                            if (database.jsonlist_err.Contains(file))
+                            {
+                                database.jsonlist_err.Remove(file);
+                            }
+                            if (database.jsonlist_printed.Contains(file))
+                            {
+                                database.jsonlist_printed.Remove(file);
+                            }
+                            if (database.jsonlist_printing.Contains(file))
+                            {
+                                database.jsonlist_printing.Remove(file);
+                            }
+                        }
 
                     }
-                    file.status = "4";
                     //form.mydata.Rows[RowIndex].Cells["operation"].Value = "确认付款";
                     break;
                 case "mode_downloading":
@@ -298,9 +356,80 @@ namespace Printer
             //DialogResult dr = MessageBox.Show("确认付款？", "", MessageBoxButtons.YesNo);
             //if (dr == DialogResult.Yes)
             //{
-                file.ensure_payed();
-                form.mydata.Rows.Remove(form.mydata.Rows[RowIndex]);
+            //file.ensure_payed();
+            //form.mydata.Rows.Remove(form.mydata.Rows[RowIndex]);
             //}
+            try
+            {
+                switch (form.display_mode)
+                {
+                    case "mode_all":
+                        file.ensure_payed();
+                        if (file.status == "打印完成")
+                        {
+                            form.mydata.Rows.Remove(form.mydata.Rows[RowIndex]);
+                            if (database.jsonlist.Contains(file))
+                            {
+                                database.jsonlist.Remove(file);
+                            }
+                            if (database.jsonlist_downloaded.Contains(file))
+                            {
+                                database.jsonlist_downloaded.Remove(file);
+                            }
+                            if (database.jsonlist_err.Contains(file))
+                            {
+                                database.jsonlist_err.Remove(file);
+                            }
+                            if (database.jsonlist_printed.Contains(file))
+                            {
+                                database.jsonlist_printed.Remove(file);
+                            }
+                            if (database.jsonlist_printing.Contains(file))
+                            {
+                                database.jsonlist_printing.Remove(file);
+                            }
+                        }
+                        else
+                        {
+                            form.mydata.Rows[RowIndex].Cells["pay_ensure_idex"].Value = "已支付";
+                        }
+                        break;
+                    case "mode_downloading":
+                    case "mode_downloaded":
+                    case "mode_printing":
+                        file.ensure_payed();
+                        form.mydata.Rows[RowIndex].Cells["pay_ensure_idex"].Value = "已支付";
+                        break;
+                    case "mode_printed":
+                        form.mydata.Rows.Remove(form.mydata.Rows[RowIndex]);
+                        if (database.jsonlist.Contains(file))
+                        {
+                            database.jsonlist.Remove(file);
+                        }
+                        if (database.jsonlist_downloaded.Contains(file))
+                        {
+                            database.jsonlist_downloaded.Remove(file);
+                        }
+                        if (database.jsonlist_err.Contains(file))
+                        {
+                            database.jsonlist_err.Remove(file);
+                        }
+                        if (database.jsonlist_printed.Contains(file))
+                        {
+                            database.jsonlist_printed.Remove(file);
+                        }
+                        if (database.jsonlist_printing.Contains(file))
+                        {
+                            database.jsonlist_printing.Remove(file);
+                        }
+                        file.ensure_payed();
+                        break;
+                }
+            }
+            catch (Exception excep)
+            {
+                MessageBox.Show(excep.Message, "无法确认支付");
+            }
         }
     }
 
