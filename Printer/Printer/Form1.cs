@@ -245,7 +245,9 @@ namespace Printer
                         operation_EnsurePayed_class operation6 = new operation_EnsurePayed_class(this, file, e.RowIndex);
                         operation6.do_operation();
                         break;
-                    case "生成二维码":
+                    case "备注信息":
+                        operation_GetRequirements_class getrequirements_class = new operation_GetRequirements_class(this, file, e.RowIndex);
+                        getrequirements_class.do_operation();
                         break;
                     case "通知打印完成":
                         operation_TellPrinted_class tellprinted = new operation_TellPrinted_class(this, file, e.RowIndex);

@@ -31,7 +31,7 @@ namespace Printer
 
         static public void display_fun(login_download form, mydata_form data)
         {
-            form.mydata.Rows.Add(false, data.mydata_id, data.mydata_status, "确认付款", "生成二维码", data.mydata_name, data.mydata_setting, data.mydata_userName, data.mydata_time, "一键打印", "设置后打印",data.mydata_buttontext, "取消订单", "打开源文件" );
+            form.mydata.Rows.Add(false, data.mydata_id, data.mydata_status, "确认付款", "备注信息", data.mydata_name, data.mydata_setting, data.mydata_userName, data.mydata_time, "一键打印", "设置后打印",data.mydata_buttontext, "取消订单", "打开源文件" );
         }
         static public void display_single(login_download form, ToJsonMy file)
         {
