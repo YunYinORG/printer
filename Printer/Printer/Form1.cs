@@ -195,6 +195,7 @@ namespace Printer
             this.FormBorderStyle = FormBorderStyle.Sizable;
             set_default_printer.Hide();
             printers_setting_dialog.Hide();
+            exit_panel.Hide();
             download.Show();
 
             String Date = (DateTime.Now.ToLongDateString());
@@ -445,10 +446,11 @@ namespace Printer
             //注意判断关闭事件Reason来源于窗体按钮，否则用菜单退出时无法退出!
             if (e.CloseReason == CloseReason.UserClosing)
             {
+                exit_panel.Show();
                 e.Cancel = true;
-                this.WindowState = FormWindowState.Minimized;    //使关闭时窗口向右下角缩小的效果
-                notifyIcon1.Visible = true;
-                this.ShowInTaskbar = false;
+                //this.WindowState = FormWindowState.Minimized;    //使关闭时窗口向右下角缩小的效果
+                //notifyIcon1.Visible = true;
+                //this.ShowInTaskbar = false;
 
             }
         }
@@ -919,6 +921,29 @@ namespace Printer
         {
             operation_all_cancel_class operation_class = new operation_all_cancel_class(this);
             operation_class.do_operation();
+        }
+
+        private void exit_ensure_Click(object sender, EventArgs e)
+        {
+            if ((ensure_exit.Checked == true)&&(ensure_notifyIcon.Checked==false))
+            {
+                this.Close();
+                Application.Exit();
+            }
+            else if ((ensure_exit.Checked == false) && (ensure_notifyIcon.Checked == true))
+            {
+                //exit_panel.Show();
+                //e.Cancel = true;
+                this.WindowState = FormWindowState.Minimized;    //使关闭时窗口向右下角缩小的效果
+                notifyIcon1.Visible = true;
+                this.ShowInTaskbar = false;
+                exit_panel.Hide();
+            }
+        }
+
+        private void exit_close_Click(object sender, EventArgs e)
+        {
+            exit_panel.Hide();
         }
 
         //private void mydata_CellContentDoubleClick(object sender, DataGridViewCellEventArgs e)
