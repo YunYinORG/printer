@@ -31,7 +31,7 @@ namespace Printer
 
         static public void display_fun(login_download form, mydata_form data)
         {
-            form.mydata.Rows.Add(false, data.mydata_id, data.mydata_status,data.mydata_pay_buttontext, "备注信息", data.mydata_name, data.mydata_setting, data.mydata_userName, data.mydata_time, "一键打印", "设置后打印",data.mydata_buttontext, "取消订单", "打开源文件" );
+            form.mydata.Rows.Add(false, data.mydata_id, data.mydata_status,data.mydata_pay_buttontext, data.mydata_requirements, data.mydata_name, data.mydata_setting, data.mydata_userName, data.mydata_time, "一键打印", "设置后打印",data.mydata_buttontext, "取消订单", "打开源文件" );
         }
         static public void display_single(login_download form, ToJsonMy file)
         {
@@ -149,6 +149,7 @@ namespace Printer
             data.mydata_name = file.name;
             data.mydata_id = file.id;
             data.mydata_time = file.time;
+            data.mydata_requirements = file.requirements;
             //data.mydata_copies = file.copies;
 
             if (database.jsonlist_err.Contains(file))
