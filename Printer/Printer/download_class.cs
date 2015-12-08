@@ -135,6 +135,7 @@ namespace Printer
             else
             {
                 MessageBox.Show("id=" + file.id + "  " + e.Error.Message);
+                form.mydata.Rows[RowIndex].Cells["operation"].Value = "重新下载";
             }
         }
     }

@@ -147,7 +147,6 @@
             this.notifyIcon1.ContextMenuStrip = this.notifyIconmenu;
             this.notifyIcon1.Icon = ((System.Drawing.Icon)(resources.GetObject("notifyIcon1.Icon")));
             this.notifyIcon1.Text = "云印南天";
-            this.notifyIcon1.Visible = true;
             this.notifyIcon1.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.notifyIcon1_MouseDoubleClick);
             // 
             // notifyIconmenu
@@ -993,6 +992,7 @@
             this.operation.HeaderText = "操作";
             this.operation.Name = "operation";
             this.operation.ReadOnly = true;
+            this.operation.Text = "确认打印完成";
             this.operation.Width = 90;
             // 
             // cancel_idex

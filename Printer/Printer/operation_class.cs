@@ -494,8 +494,10 @@ namespace Printer
                         {
                             if (!file.OpenFile())
                             {
-                                MessageBox.Show("该文件不存在，请重新下载！");
-                                form.mydata.Rows[RowIndex].Cells["operation"].Value = "重新下载";
+                                //MessageBox.Show("该文件不存在，请重新下载！");
+                                //form.mydata.Rows[RowIndex].Cells["operation"].Value = "重新下载";
+                                download_single_single_class download_class = new download_single_single_class(form, file, RowIndex);
+                                download_class.download();
                             }
                         }
                         break;
@@ -507,8 +509,11 @@ namespace Printer
                     case "mode_printed":
                         if (!file.OpenFile())
                         {
-                            MessageBox.Show("该文件不存在，请重新下载！");
-                            form.mydata.Rows[RowIndex].Cells["operation"].Value = "重新下载";
+                            //MessageBox.Show("该文件不存在，请重新下载！");
+                            //form.mydata.Rows[RowIndex].Cells["operation"].Value = "重新下载";
+                            //MessageBox.Show("该文件不存在，正在自动下载！");
+                            download_single_single_class download_class = new download_single_single_class(form, file, RowIndex);
+                            download_class.download();
                         }
                         break;
                 }

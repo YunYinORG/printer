@@ -380,8 +380,11 @@ namespace Printer
             }
             if (!file.is_exsist_file)
             {
-                form.mydata.Rows[RowIndex].Cells["operation"].Value = "重新下载";
-                throw new Exception("当前文件不存在，请重新下载");
+                //form.mydata.Rows[RowIndex].Cells["operation"].Value = "重新下载";
+                //throw new Exception("当前文件不存在，请重新下载");
+                //MessageBox.Show("该文件不存在，正在自动下载！");
+                download_single_single_class download_class = new download_single_single_class(form, file, RowIndex);
+                download_class.download();
             }
         }
         public override void ensure_print(PrintDialog dialogprint, PdfDocument doc)
@@ -420,7 +423,7 @@ namespace Printer
         public override void is_print()
         {
             base.is_print();
-            if (file.status == "未下载")
+            if (file.status == "已上传")
             {
                 throw new Exception("请先下载文件后打印");
             }
@@ -479,8 +482,11 @@ namespace Printer
             base.is_print();
             if (!file.is_exsist_file)
             {
-                form.mydata.Rows[RowIndex].Cells["operation"].Value = "重新下载";
-                throw new Exception("当前文件不存在，请重新下载");
+                //form.mydata.Rows[RowIndex].Cells["operation"].Value = "重新下载";
+                //throw new Exception("当前文件不存在，请重新下载");
+                //MessageBox.Show("该文件不存在，正在自动下载！");
+                download_single_single_class download_class = new download_single_single_class(form, file, RowIndex);
+                download_class.download();
             }
         }
         public override void ensure_print(PrintDialog dialogprint, PdfDocument doc)
@@ -522,7 +528,7 @@ namespace Printer
         public override void is_print()
         {
             base.is_print();
-            if (file.status == "未下载")
+            if (file.status == "已上传")
             {
                 throw new Exception("请先下载文件后打印");
             }

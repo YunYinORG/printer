@@ -43,6 +43,7 @@ namespace Printer
             download.Visible = false;    //下载控件隐藏
             login.Enabled = true;        //登录控件使能
             checkbox.Checked = true;
+            notifyIcon1.Visible = true;
             login_class.myLogin = remember.ReadTextFileToList(@"pwd.sjc");
             if (login_class.myLogin.Count == 2)
             {
@@ -196,6 +197,7 @@ namespace Printer
             set_default_printer.Hide();
             printers_setting_dialog.Hide();
             exit_panel.Hide();
+            this.MaximizeBox = true;
             download.Show();
 
             String Date = (DateTime.Now.ToLongDateString());
@@ -250,7 +252,7 @@ namespace Printer
                         operation_GetRequirements_class getrequirements_class = new operation_GetRequirements_class(this, file, e.RowIndex);
                         getrequirements_class.do_operation();
                         break;
-                    case "通知打印完成":
+                    case "确认打印完成":
                         operation_TellPrinted_class tellprinted = new operation_TellPrinted_class(this, file, e.RowIndex);
                         tellprinted.do_operation();
                         break;

@@ -186,7 +186,7 @@ namespace Printer
 
             if (file.copies == "现场打印")
             {
-                data.mydata_buttontext = "通知打印完成";
+                data.mydata_buttontext = "确认打印完成";
 
                 //data.mydata_doubleside = "-";
                 //data.mydata_color = "-";
@@ -200,13 +200,13 @@ namespace Printer
                 switch (file.status)
                 {
                     case "已下载":
-                        data.mydata_buttontext = "通知打印完成";
+                        data.mydata_buttontext = "确认打印完成";
                         break;
                     case "已打印":
-                        data.mydata_buttontext = "通知打印完成";
+                        data.mydata_buttontext = "确认打印完成";
                         break;
                     case "打印完成":
-                        data.mydata_buttontext = "通知打印完成";
+                        data.mydata_buttontext = "确认打印完成";
                         break;
                     case "已上传":
                         data.mydata_buttontext = "手动下载";
