@@ -202,8 +202,8 @@ namespace Printer
 
             String Date = (DateTime.Now.ToLongDateString());
             //location_settings.file_path = @"D:\云印南开\" + Date;
-            location_settings.file_path = @"D:\云印南开\" ;
-            location_settings.ibook_path = @"D:\云印南开_本店电子书\";
+            location_settings.file_path = @"D:\云印南天\" ;
+            location_settings.ibook_path = @"D:\云印南天\电子书\";
             location_settings.creat_path();
 
             backgroundworker_refresh br = new backgroundworker_refresh(this);

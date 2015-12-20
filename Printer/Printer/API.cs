@@ -100,6 +100,7 @@ namespace Printer
             {
                 request.Headers.Add("Session-ID", sid);//修改Headers,添加
             }
+            request.Referer = "http://printer.yunyin.org";
             request.Method = "get";
             request.Accept = "Accept: application/json";
             //request.ContentType = "application/json;charset=UTF-8";
