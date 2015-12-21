@@ -50,9 +50,20 @@ namespace Printer
             {
                 string fileName = id + "_" + copies + "_" + double_side + "_" + student_number + "_" + name;
                 string doc_extension = Path.GetExtension(fileName);
-                if (doc_extension != ".pdf")
+                //if (doc_extension != ".pdf")
+                //{
+                //    fileName = fileName + ".pdf";
+                //}
+                switch (doc_extension)
                 {
-                    fileName = fileName + ".pdf";
+                    case ".doc":
+                    case ".docx":
+                    case ".ppt":
+                    case ".pptx":
+                        fileName = fileName + ".pdf";
+                        break;
+                    default:
+                        break;
                 }
                 return fileName;
             }

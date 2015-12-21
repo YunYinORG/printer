@@ -448,6 +448,7 @@ namespace Printer
             //注意判断关闭事件Reason来源于窗体按钮，否则用菜单退出时无法退出!
             if (e.CloseReason == CloseReason.UserClosing)
             {
+                ensure_notifyIcon.Checked = true;
                 exit_panel.Show();
                 e.Cancel = true;
                 //this.WindowState = FormWindowState.Minimized;    //使关闭时窗口向右下角缩小的效果

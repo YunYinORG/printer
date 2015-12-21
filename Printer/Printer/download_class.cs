@@ -93,6 +93,7 @@ namespace Printer
                 if (!database.jsonlist_err.Contains(file))
                 {
                     database.jsonlist_err.Add(file);
+                    display.display_single(form, this.file);
                 }
 
             }
@@ -130,7 +131,7 @@ namespace Printer
             if (e.Error == null)//下载成功
             {
                 MessageBox.Show("已下载完成\n请再次点击打印按钮");
-                form.mydata.Rows[RowIndex].Cells["operation"].Value = "通知打印完成";
+                form.mydata.Rows[RowIndex].Cells["operation"].Value = "确认打印完成";
             }
             else
             {
@@ -386,7 +387,7 @@ namespace Printer
                 form.notifyIcon1.Visible = true;
                 form.notifyIcon1.ShowBalloonTip(10000);
                 form.mydata.Rows[RowIndex].Cells["status"].Value = "已下载";
-                form.mydata.Rows[RowIndex].Cells["operation"].Value = "通知打印完成";
+                form.mydata.Rows[RowIndex].Cells["operation"].Value = "确认打印完成";
 
                 if (database.jsonlist_err.Contains(file))
                 {
