@@ -7,6 +7,14 @@
         mc:Ignorable="d"
         Title="MainWindow" Height="350" Width="525">
     <Grid>
-        
+        <StackPanel Orientation="Vertical">
+            <Menu Height="20" Width="525">
+                <MenuItem Header="窗口切换">
+                    <MenuItem Header="管理系统"></MenuItem>
+                    <MenuItem Header="自助打印"></MenuItem>
+                </MenuItem>
+            </Menu>
+            <Frame Source="TerminalWindow.xaml" Height="300" Width="525"></Frame>
+        </StackPanel>
     </Grid>
 </Window>

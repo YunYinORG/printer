@@ -19,9 +19,14 @@ namespace Printer
     /// </summary>
     public partial class MainWindow : Window
     {
+        static public DataBase database;
         public MainWindow()
         {
             InitializeComponent();
+            if (database == null)
+            {
+                database = new DataBase();
+            }
         }
     }
 }

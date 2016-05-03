@@ -1,0 +1,114 @@
+﻿<Page x:Class="Printer.TerminalWindow"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:Printer"
+      mc:Ignorable="d" 
+      d:DesignHeight="300" d:DesignWidth="300"
+      Title="TerminalWindow">
+
+    <Page.Resources>
+        <DataTemplate x:Key="listview_checked">
+            <CheckBox></CheckBox>
+        </DataTemplate>
+        <DataTemplate x:Key="listview_id">
+            <TextBlock Text="{Binding Path=Id}"></TextBlock>
+        </DataTemplate>
+        <DataTemplate x:Key="listview_status">
+            <TextBlock Text="{Binding Path=Status}"></TextBlock>
+        </DataTemplate>
+        <DataTemplate x:Key="listview_pay">
+            <Button Content="确认支付"></Button>
+        </DataTemplate>
+        <DataTemplate x:Key="listview_requirement">
+            <TextBlock Text="{Binding Path=Requirement}"></TextBlock>
+        </DataTemplate>
+        <DataTemplate x:Key="listview_fileName">
+            <TextBlock Text="{Binding Path=File_name}"></TextBlock>
+        </DataTemplate>
+        <DataTemplate x:Key="listview_printMessage">
+            <TextBlock Text="{Binding Path=Print_message}"></TextBlock>
+        </DataTemplate>
+        <DataTemplate x:Key="listview_userName">
+            <TextBlock Text="{Binding Path=User_name}"></TextBlock>
+        </DataTemplate>
+        <DataTemplate x:Key="listview_upTime">
+            <TextBlock Text="{Binding Path=Up_time}"></TextBlock>
+        </DataTemplate>
+        <DataTemplate x:Key="listview_print">
+            <StackPanel Orientation="Horizontal">
+                <Button Content="一键打印"></Button>
+                <Button Content="设置后打印"></Button>
+            </StackPanel>
+        </DataTemplate>
+        <DataTemplate x:Key="listview_operation">
+            <StackPanel Orientation="Horizontal">
+                <Button Content="{Binding Path=Status}"></Button>
+                <Button Content="取消订单"></Button>
+                <Button Content="打开源文件"></Button>
+            </StackPanel>
+        </DataTemplate>
+    </Page.Resources>
+    <Grid>
+        <TabControl TabStripPlacement="Left">
+            <TabItem Header="全部文件">
+                <ListView Name="ListView_all" ItemsSource="{Binding}">
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn Header="选中" CellTemplate="{StaticResource ResourceKey=listview_checked}"></GridViewColumn>
+                            <GridViewColumn Header="序号" CellTemplate="{StaticResource ResourceKey=listview_id}"></GridViewColumn>
+                            <GridViewColumn Header="状态" CellTemplate="{StaticResource ResourceKey=listview_status}"></GridViewColumn>
+                            <GridViewColumn Header="支付" CellTemplate="{StaticResource ResourceKey=listview_pay}"></GridViewColumn>
+                            <GridViewColumn Header="备注" CellTemplate="{StaticResource ResourceKey=listview_requirement}"></GridViewColumn>
+                            <GridViewColumn Header="文件名" CellTemplate="{StaticResource ResourceKey=listview_fileName}"></GridViewColumn>
+                            <GridViewColumn Header="设置" CellTemplate="{StaticResource ResourceKey=listview_printMessage}"></GridViewColumn>
+                            <GridViewColumn Header="用户名" CellTemplate="{StaticResource ResourceKey=listview_userName}"></GridViewColumn>
+                            <GridViewColumn Header="上传时间" CellTemplate="{StaticResource ResourceKey=listview_upTime}"></GridViewColumn>
+                            <GridViewColumn Header="打印" CellTemplate="{StaticResource ResourceKey=listview_print}"></GridViewColumn>
+                            <GridViewColumn Header="操作" CellTemplate="{StaticResource ResourceKey=listview_operation}"></GridViewColumn>
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+            </TabItem>
+            <TabItem Header="未下载文件">
+                <ListView Name="ListView_nonDownload" ItemsSource="{Binding}">
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn Header="选中" CellTemplate="{StaticResource ResourceKey=listview_checked}"></GridViewColumn>
+                            <GridViewColumn Header="序号" CellTemplate="{StaticResource ResourceKey=listview_id}"></GridViewColumn>
+                            <GridViewColumn Header="状态" CellTemplate="{StaticResource ResourceKey=listview_status}"></GridViewColumn>
+                            <GridViewColumn Header="支付" CellTemplate="{StaticResource ResourceKey=listview_pay}"></GridViewColumn>
+                            <GridViewColumn Header="备注" CellTemplate="{StaticResource ResourceKey=listview_requirement}"></GridViewColumn>
+                            <GridViewColumn Header="文件名" CellTemplate="{StaticResource ResourceKey=listview_fileName}"></GridViewColumn>
+                            <GridViewColumn Header="设置" CellTemplate="{StaticResource ResourceKey=listview_printMessage}"></GridViewColumn>
+                            <GridViewColumn Header="用户名" CellTemplate="{StaticResource ResourceKey=listview_userName}"></GridViewColumn>
+                            <GridViewColumn Header="上传时间" CellTemplate="{StaticResource ResourceKey=listview_upTime}"></GridViewColumn>
+                            <GridViewColumn Header="打印" CellTemplate="{StaticResource ResourceKey=listview_print}"></GridViewColumn>
+                            <GridViewColumn Header="操作" CellTemplate="{StaticResource ResourceKey=listview_operation}"></GridViewColumn>
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+            </TabItem>
+            <TabItem Header="已下载文件">
+                <ListView Name="ListView_download" ItemsSource="{Binding}">
+                    <ListView.View>
+                        <GridView>
+                            <GridViewColumn Header="选中" CellTemplate="{StaticResource ResourceKey=listview_checked}"></GridViewColumn>
+                            <GridViewColumn Header="序号" CellTemplate="{StaticResource ResourceKey=listview_id}"></GridViewColumn>
+                            <GridViewColumn Header="状态" CellTemplate="{StaticResource ResourceKey=listview_status}"></GridViewColumn>
+                            <GridViewColumn Header="支付" CellTemplate="{StaticResource ResourceKey=listview_pay}"></GridViewColumn>
+                            <GridViewColumn Header="备注" CellTemplate="{StaticResource ResourceKey=listview_requirement}"></GridViewColumn>
+                            <GridViewColumn Header="文件名" CellTemplate="{StaticResource ResourceKey=listview_fileName}"></GridViewColumn>
+                            <GridViewColumn Header="设置" CellTemplate="{StaticResource ResourceKey=listview_printMessage}"></GridViewColumn>
+                            <GridViewColumn Header="用户名" CellTemplate="{StaticResource ResourceKey=listview_userName}"></GridViewColumn>
+                            <GridViewColumn Header="上传时间" CellTemplate="{StaticResource ResourceKey=listview_upTime}"></GridViewColumn>
+                            <GridViewColumn Header="打印" CellTemplate="{StaticResource ResourceKey=listview_print}"></GridViewColumn>
+                            <GridViewColumn Header="操作" CellTemplate="{StaticResource ResourceKey=listview_operation}"></GridViewColumn>
+                        </GridView>
+                    </ListView.View>
+                </ListView>
+            </TabItem>
+        </TabControl>
+    </Grid>
+</Page>
