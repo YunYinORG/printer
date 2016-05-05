@@ -19,6 +19,9 @@ namespace Printer
     /// </summary>
     public partial class MainWindow : Window
     {
+        /// <summary>
+        /// 单例模式实例化数据库
+        /// </summary>
         static public DataBase database;
         public MainWindow()
         {
