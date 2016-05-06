@@ -26,6 +26,17 @@ namespace Printer
         }
 
         /// <summary>
+        /// 更改本地缓存路径
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
+        public bool changeLogPath(string path)
+        {
+            LogPath = path;
+            return true;
+        }
+
+        /// <summary>
         /// 写入缓存
         /// </summary>
         /// <param name="content"></param>

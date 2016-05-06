@@ -34,6 +34,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Newtonsoft.Json.Net35">
+      <HintPath>.\Newtonsoft.Json.Net35.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Data" />
     <Reference Include="System.Runtime.Serialization" />
@@ -55,6 +58,7 @@
     <Compile Include="FileList.cs" />
     <Compile Include="Json.cs" />
     <Compile Include="Log.cs" />
+    <Compile Include="ServiceApi.cs" />
     <Compile Include="ServiceWindow.xaml.cs">
       <DependentUpon>ServiceWindow.xaml</DependentUpon>
     </Compile>
